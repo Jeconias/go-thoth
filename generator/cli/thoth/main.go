@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/jeconias/go-thoth/generator/cmd"
+	"github.com/lab259/go-thoth/generator/cmd"
 )
 
 func main() {

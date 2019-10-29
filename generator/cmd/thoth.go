@@ -1,10 +1,6 @@
 package cmd
 
 import (
-	"fmt"
-
-	template "github.com/jeconias/go-thoth/generator/template"
-	myasthurts "github.com/lab259/go-my-ast-hurts"
 	"github.com/spf13/cobra"
 )
 
@@ -12,30 +8,49 @@ var (
 	directory string
 )
 
-var thoth = &cobra.Command{
+var genCommand = &cobra.Command{
 	Use:   "gen",
 	Short: "This command parse your package and generate the files necessary",
+	//TODO(Jeconias): Add long description
 	RunE: func(cmd *cobra.Command, args []string) error {
-		flag := cmd.Flag("d")
-
-		env, err := myasthurts.NewEnvironment()
-		if err != nil {
+		if err := gen(cmd, args); err != nil {
 			return err
 		}
+		return nil
+	},
+}
 
-		pkg, err := env.ParseDir(flag.Value.String())
-		if err != nil {
+var genTestCommand = &cobra.Command{
+	Use:   "genTest",
+	Short: "This command parse your package and generate the files necessary for test",
+	//TODO(Jeconias): Add long description
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if err := gen(cmd, args); err != nil {
 			return err
 		}
+		return nil
+	},
+}
 
-		fmt.Println(template.Struct(pkg))
+var genTemplate = &cobra.Command{
+	Use:   "tpl",
+	Short: "This command build all templates",
+	//TODO(Jeconias): Add long description
+	RunE: func(cmd *cobra.Command, args []string) error {
+		//TODO(Jeconias): Add command to build template
 		return nil
 	},
 }
 
 func init() {
-	baseCMD.AddCommand(thoth)
+	baseCMD.AddCommand(genCommand)
+	baseCMD.AddCommand(genTestCommand)
 
-	thoth.Flags().String("d", "", "Use this flag to set directory")
-	thoth.MarkFlagRequired("d")
+	genCommand.Flags().String("d", ".", "Use this flag to set directory for parse")
+	genCommand.Flags().String("n", "thothGen", "Use this flag to set name of file")
+	genCommand.Flags().String("s", ".", "Use this flag to set directory for save")
+	// This is temp for tests
+	genTestCommand.Flags().String("d", "tests/parse_dir", "Temp")
+	genTestCommand.Flags().String("n", "thothGenForTest", "Temp")
+	genTestCommand.Flags().String("s", "./tests/gen", "Temp")
 }

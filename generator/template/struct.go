@@ -12,37 +12,29 @@ import (
 )
 
 // Struct generates generator/template/struct.gohtml
-func Struct(pkg *myasthurts.Package) string {
+func Struct(pkg *myasthurts.Package, structsThoth []*myasthurts.Struct) string {
 	var _b strings.Builder
-	RenderStruct(&_b, pkg)
+	RenderStruct(&_b, pkg, structsThoth)
 	return _b.String()
 }
 
 // RenderStruct render generator/template/struct.gohtml
-func RenderStruct(_buffer io.StringWriter, pkg *myasthurts.Package) {
+func RenderStruct(_buffer io.StringWriter, pkg *myasthurts.Package, structsThoth []*myasthurts.Struct) {
 	_buffer.WriteString("\npackage ")
-	_buffer.WriteString(gorazor.HTMLEscape(pkg.Name))
+	_buffer.WriteString(gorazor.HTMLEscStr(pkg.Name))
 	_buffer.WriteString(" ")
 	_buffer.WriteString(("\n\n"))
-	for _, s := range pkg.Structs {
+	for _, s := range structsThoth {
 
-		_buffer.WriteString("type ")
-		_buffer.WriteString(gorazor.HTMLEscape(s.Name()))
-		_buffer.WriteString(" struct { ")
+		_buffer.WriteString(("// Thoth description\n"))
 
-		_buffer.WriteString(("\n"))
-
-		for _, f := range s.Fields {
-
-			_buffer.WriteString("\t")
-			_buffer.WriteString(gorazor.HTMLEscape(f.Name))
-			_buffer.WriteString(" ")
-			_buffer.WriteString(gorazor.HTMLEscape(f.RefType.Name()))
-			_buffer.WriteString(" ")
-			_buffer.WriteString(("\n"))
-		}
-
-		_buffer.WriteString("}")
+		_buffer.WriteString("func(")
+		_buffer.WriteString(gorazor.HTMLEscStr(strings.ToLower(s.Name()[0:1])))
+		_buffer.WriteString(" ")
+		_buffer.WriteString(("*"))
+		_buffer.WriteString(gorazor.HTMLEscStr(s.Name()))
+		_buffer.WriteString(") Thoth() error { ")
+		_buffer.WriteString(("\n return nil \n}\n"))
 
 	}
 

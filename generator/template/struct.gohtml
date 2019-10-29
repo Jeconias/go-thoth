@@ -1,14 +1,12 @@
 @{
 	import "github.com/lab259/go-my-ast-hurts"
+	import "strings"
 	var pkg *myasthurts.Package
+	var structsThoth []*myasthurts.Struct
 -}
 package @pkg.Name @raw("\n\n")
 
-@for _, s := range pkg.Structs {
-@:type @s.Name() struct { 
-	@raw("\n")
-	@for _, f := range s.Fields {
-@	@f.Name @f.RefType.Name() @raw("\n")
-} 
-@:}
+@for _, s := range structsThoth {
+@raw("// Thoth description\n")
+@:func(@strings.ToLower(@s.Name()[0:1]) @raw("*")@s.Name()) Thoth() error { @raw("\n return nil \n}\n")
 }
