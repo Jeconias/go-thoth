@@ -1,0 +1,14 @@
+@{
+	import "github.com/lab259/go-my-ast-hurts"
+	var pkg *myasthurts.Package
+-}
+package @pkg.Name @raw("\n\n")
+
+@for _, s := range pkg.Structs {
+@:type @s.Name() struct { 
+	@raw("\n")
+	@for _, f := range s.Fields {
+@	@f.Name @f.RefType.Name() @raw("\n")
+} 
+@:}
+}
