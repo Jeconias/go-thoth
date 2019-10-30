@@ -17,6 +17,7 @@ require (
 	golang.org/x/sys v0.0.0-20191029155521-f43be2a4598c // indirect
 	golang.org/x/tools v0.0.0-20191029171147-ff30247f344b // indirect
 	golang.org/x/xerrors v0.0.0-20191011141410-1b5146add898 // indirect
+	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 )
 
 replace github.com/lab259/go-my-ast-hurts => ../go-my-ast-hurts

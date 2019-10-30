@@ -5,7 +5,7 @@ import (
 	"os"
 
 	myasthurts "github.com/lab259/go-my-ast-hurts"
-	template "github.com/lab259/go-thoth/generator/template"
+	templates "github.com/lab259/go-thoth/generator/templates"
 	"github.com/spf13/cobra"
 )
 
@@ -20,11 +20,11 @@ func gen(cmd *cobra.Command, args []string) error {
 		flagDirectory = "."
 	}
 	if flagNameFile == "" {
-		flagNameFile = "thothGen"
+		flagNameFile = defaultNameFileGenerated
 	}
 
 	if flagDirectoryToSave == "." {
-		flagDirectoryToSave = "./generator/gen"
+		flagDirectoryToSave = flagDirectory
 	}
 
 	env, err := myasthurts.NewEnvironment()
@@ -39,7 +39,7 @@ func gen(cmd *cobra.Command, args []string) error {
 
 	for _, s := range pkg.Structs {
 		for _, f := range s.Fields {
-			if isThoth := f.Tag.TagParamByName("thoth"); isThoth != nil {
+			if isThoth := f.Tag.TagParamByName(defaultNameTag); isThoth != nil {
 				structsThoth = append(structsThoth, s)
 				break
 			}
@@ -50,11 +50,12 @@ func gen(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	file, err := os.OpenFile(fmt.Sprintf("%s.go", flagNameFile), os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0755)
+	fileName := fmt.Sprintf("%s.go", flagNameFile)
+	file, err := os.OpenFile(fileName, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0755)
 	if err != nil {
 		return err
 	}
 
-	template.RenderStruct(file, pkg, structsThoth)
+	templates.RenderStruct(file, fileName, pkg, structsThoth)
 	return nil
 }

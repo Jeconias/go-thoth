@@ -13,18 +13,13 @@ var genCommand = &cobra.Command{
 	Short: "This command parse your package and generate the files necessary",
 	//TODO(Jeconias): Add long description
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if err := gen(cmd, args); err != nil {
-			return err
-		}
-		return nil
-	},
-}
 
-var genTestCommand = &cobra.Command{
-	Use:   "genTest",
-	Short: "This command parse your package and generate the files necessary for test",
-	//TODO(Jeconias): Add long description
-	RunE: func(cmd *cobra.Command, args []string) error {
+		if cmd.Flag("t").Value.String() == "generate" {
+			cmd.Flag("d").Value.Set("tests/parse_dir")
+			cmd.Flag("n").Value.Set("thothGenForTest")
+			cmd.Flag("s").Value.Set("./tests/gen")
+		}
+
 		if err := gen(cmd, args); err != nil {
 			return err
 		}
@@ -44,13 +39,9 @@ var genTemplate = &cobra.Command{
 
 func init() {
 	baseCMD.AddCommand(genCommand)
-	baseCMD.AddCommand(genTestCommand)
 
 	genCommand.Flags().String("d", ".", "Use this flag to set directory for parse")
-	genCommand.Flags().String("n", "thothGen", "Use this flag to set name of file")
+	genCommand.Flags().String("n", defaultNameFileGenerated, "Use this flag to set name of file")
 	genCommand.Flags().String("s", ".", "Use this flag to set directory for save")
-	// This is temp for tests
-	genTestCommand.Flags().String("d", "tests/parse_dir", "Temp")
-	genTestCommand.Flags().String("n", "thothGenForTest", "Temp")
-	genTestCommand.Flags().String("s", "./tests/gen", "Temp")
+	genCommand.Flags().String("t", "", "Use this flag to generate files to test")
 }
