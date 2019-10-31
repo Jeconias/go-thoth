@@ -34,6 +34,8 @@ github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORN
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
 github.com/lab259/errors v2.1.0+incompatible/go.mod h1:MDDGb8dSRNqu9IVhE4C+nF2qFqPPO+n6/Nn1AqyI6rI=
+github.com/lab259/go-my-ast-hurts v0.0.0-20191029192755-70e0dd09e3eb h1:O/h1tuc0B1A55PxfLdGd/wqpDBYLRYvI07eRNayyJQw=
+github.com/lab259/go-my-ast-hurts v0.0.0-20191029192755-70e0dd09e3eb/go.mod h1:ezp+lyGu0NanL8HChvMz1S+G1ZavPdW9NgcD/mpPkzA=
 github.com/leodido/go-urn v1.1.0 h1:Sm1gr51B1kKyfD2BlRcLSiEkffoG96g6TPv6eRoEiB8=
 github.com/leodido/go-urn v1.1.0/go.mod h1:+cyI34gQWZcE1eQU7NVgKkkzdXDQHr1dBMtdAPozLkw=
 github.com/magiconair/properties v1.8.0/go.mod h1:PppfXfuXeibc/6YijjN8zIbojt8czPbwD3XqdrwzmxQ=

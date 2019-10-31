@@ -1,13 +1,17 @@
 //go:generate gofmt -s -w thothGen.go
-package any 
+package any
 
+// Thoth validate
+func (h *Home) Thoth() error {
+	return nil
+}
 
 // Thoth validate
-func(h *Home) Thoth() error {
- }
+func (c *Client) Thoth() error {
+	return nil
+}
+
 // Thoth validate
-func(c *Client) Thoth() error {
- }
-// Thoth validate
-func(u *User) Thoth() error {
- }
+func (u *User) Thoth() error {
+	return nil
+}

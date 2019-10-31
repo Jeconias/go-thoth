@@ -3,7 +3,7 @@ module github.com/lab259/go-thoth
 go 1.12
 
 require (
-	github.com/lab259/go-my-ast-hurts v0.0.0-00010101000000-000000000000
+	github.com/lab259/go-my-ast-hurts v0.0.0-20191029192755-70e0dd09e3eb
 	github.com/novln/macchiato v1.0.0
 	github.com/onsi/ginkgo v1.10.2
 	github.com/onsi/gomega v1.7.0
@@ -19,5 +19,3 @@ require (
 	golang.org/x/xerrors v0.0.0-20191011141410-1b5146add898 // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 )
-
-replace github.com/lab259/go-my-ast-hurts => ../go-my-ast-hurts

@@ -11,8 +11,6 @@ package @pkg.Name @raw("\n\n")
 @for _, s := range structsThoth { @raw("\n")
 	@raw("// Thoth validate\n")
 	@:func(@strings.ToLower(@s.Name()[0:1]) @raw("*")@s.Name()) Thoth() error {@raw("\n") 
-		
-
-
+		@raw("return nil\n")
 	@:}
 }
