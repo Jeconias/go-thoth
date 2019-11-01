@@ -15,9 +15,9 @@ var genCommand = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 
 		if cmd.Flag("t").Value.String() == "generate" {
-			cmd.Flag("d").Value.Set("tests/parse_dir")
+			cmd.Flag("d").Value.Set("test/parse_dir")
 			cmd.Flag("n").Value.Set("thothGenForTest")
-			cmd.Flag("s").Value.Set("./tests/gen")
+			cmd.Flag("s").Value.Set("./test/gen")
 		}
 
 		if err := gen(cmd, args); err != nil {

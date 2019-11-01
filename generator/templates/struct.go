@@ -41,6 +41,8 @@ func RenderStruct(_buffer io.StringWriter, fileName string, pkg *myasthurts.Pack
 		_buffer.WriteString(("\n"))
 		_buffer.WriteString(" ")
 
+		_buffer.WriteString(("return nil\n"))
+
 		_buffer.WriteString("}")
 
 	}

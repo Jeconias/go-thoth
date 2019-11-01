@@ -10,3 +10,14 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+*.coverprofile
+.cover/
+coverage.txt
+test-results/
+
+# Dependencies
+vendor/
+
+# IDE
+.vscode/
+.idea/
