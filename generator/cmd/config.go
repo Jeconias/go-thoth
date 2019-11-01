@@ -1,4 +1,4 @@
 package cmd
 
 const defaultNameTag string = "thoth"
-const defaultNameFileGenerated string = "thothGen"
+const defaultNameFileGenerated string = "generated"

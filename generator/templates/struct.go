@@ -28,9 +28,8 @@ func RenderStruct(_buffer io.StringWriter, fileName string, pkg *myasthurts.Pack
 	_buffer.WriteString(" ")
 	_buffer.WriteString(("\n\n"))
 	for _, s := range structsThoth {
-		_buffer.WriteString(("\n"))
 
-		_buffer.WriteString(("// Thoth validate\n"))
+		_buffer.WriteString(("\n// Thoth validate\n"))
 
 		_buffer.WriteString("func(")
 		_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
@@ -38,10 +37,31 @@ func RenderStruct(_buffer io.StringWriter, fileName string, pkg *myasthurts.Pack
 		_buffer.WriteString(("*"))
 		_buffer.WriteString(gorazor.HTMLEscape(s.Name()))
 		_buffer.WriteString(") Thoth() error {")
-		_buffer.WriteString(("\n"))
-		_buffer.WriteString(" ")
 
-		_buffer.WriteString(("return nil\n"))
+		for _, field := range s.Fields {
+			for _, tag := range field.Tag.Params {
+				if tag.Value == "required" {
+
+					_buffer.WriteString("if required(\"")
+					_buffer.WriteString(gorazor.HTMLEscape(field.RefType.Name()))
+					_buffer.WriteString("\", ")
+					_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+					_buffer.WriteString(".")
+					_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+					_buffer.WriteString(") {")
+
+					_buffer.WriteString(("return errRequiredString"))
+
+					_buffer.WriteString("}")
+
+					_buffer.WriteString(("\n"))
+
+				}
+
+			}
+		}
+
+		_buffer.WriteString(("return nil"))
 
 		_buffer.WriteString("}")
 

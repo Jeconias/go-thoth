@@ -8,9 +8,20 @@
 @raw("//go:generate gofmt -s -w") @fileName
 package @pkg.Name @raw("\n\n")
 
-@for _, s := range structsThoth { @raw("\n")
-	@raw("// Thoth validate\n")
-	@:func(@strings.ToLower(@s.Name()[0:1]) @raw("*")@s.Name()) Thoth() error {@raw("\n") 
-		@raw("return nil\n")
+@for _, s := range structsThoth {
+	@raw("\n// Thoth validate\n")
+	@:func(@strings.ToLower(@s.Name()[0:1]) @raw("*")@s.Name()) Thoth() error {
+		@for _, field := range s.Fields {
+			@for _, tag := range field.Tag.Params {
+				@if tag.Value == "required" {
+					@:if required("@field.RefType.Name()", @strings.ToLower(@s.Name()[0:1]).@field.Name) {
+						@raw("return errRequiredString")
+					@:}
+					@raw("\n")
+				}
+				
+			@:}
+		@:}
+		@raw("return nil")
 	@:}
 }

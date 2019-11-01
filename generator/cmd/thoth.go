@@ -16,8 +16,8 @@ var genCommand = &cobra.Command{
 
 		if cmd.Flag("t").Value.String() == "generate" {
 			cmd.Flag("d").Value.Set("test/parse_dir")
-			cmd.Flag("n").Value.Set("thothGenForTest")
-			cmd.Flag("s").Value.Set("./test/gen")
+			cmd.Flag("n").Value.Set("generated")
+			cmd.Flag("s").Value.Set("./test/parse_dir")
 		}
 
 		if err := gen(cmd, args); err != nil {
