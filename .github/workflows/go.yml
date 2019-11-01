@@ -25,5 +25,8 @@ jobs:
     - name: Analyse Go code using `vet`
       run: go vet ./...
 
+    - name: Ensure the project can be built without issues for tests
+      run: go run ./generator/cli/thoth/main.go gen --t generate
+
     - name: Test
       run: go run github.com/onsi/ginkgo/ginkgo -r -requireSuite --randomizeAllSpecs --randomizeSuites --failOnPending --cover --trace --race --compilers=2
