@@ -2,16 +2,20 @@ package any
 
 // Home TODO
 type Home struct {
-	ID      int64  `thoth:"required"`
-	Address string `thoth:"required"`
+	ID      int     `thoth:"required"`
+	Address Address `thoth:"required"`
 }
 
-// type Address struct {
-// 	ID     int64
-// 	Street string
-// }
+// Address TODO
+type Address struct {
+	ID     int64
+	Street string
+}
 
-// type Client struct {
-// 	ID   int64  `thoth:"required"`
-// 	Name string `thoth:"required"`
-// }
+// Client TODO
+type Client struct {
+	ID       int64    `thoth:"required"`
+	Name     string   `thoth:"required"`
+	LastName *string  `thoth:"required"`
+	Address  *Address `thoth:"required"`
+}

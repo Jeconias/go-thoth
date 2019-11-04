@@ -5,23 +5,143 @@
 	var pkg *myasthurts.Package
 	var structsThoth []*myasthurts.Struct
 -}
-@raw("//go:generate gofmt -s -w") @fileName
-package @pkg.Name @raw("\n\n")
+package @pkg.Name
+
+import "github.com/lab259/go-thoth/validators"
+@raw("\n")
 
 @for _, s := range structsThoth {
 	@raw("\n// Thoth validate\n")
-	@:func(@strings.ToLower(@s.Name()[0:1]) @raw("*")@s.Name()) Thoth() error {
+	@:func(@strings.ToLower(@s.Name()[0:1]) @raw("*")@s.Name()) Thoth() (err error) {
 		@for _, field := range s.Fields {
 			@for _, tag := range field.Tag.Params {
-				@if tag.Value == "required" {
-					@:if required("@field.RefType.Name()", @strings.ToLower(@s.Name()[0:1]).@field.Name) {
-						@raw("return errRequiredString")
-					@:}
+				@switch tag.Value {
+					case "required":
+						switch field.RefType.Name() {
+						case "string":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:err = validators.Empty(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							case *myasthurts.StarRefType:
+								@:err = validators.EmptyPtr(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							case *myasthurts.ArrayRefType:
+								@:err = validators.IsSliceString(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							}
+						case "uint":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:err = validators.IsUint(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							case *myasthurts.StarRefType:
+								@:err = validators.IsUintPtr(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							}
+						case "uint8":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:err = validators.IsUint8(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							case *myasthurts.StarRefType:
+								@:err = validators.IsUint8Ptr(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							}
+						case "uint16":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:err = validators.IsUint16(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							case *myasthurts.StarRefType:
+								@:err = validators.IsUint16Ptr(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							}
+						case "uint32":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:err = validators.IsUint32(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							case *myasthurts.StarRefType:
+								@:err = validators.IsUint32Ptr(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							}
+						case "uint64":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:err = validators.IsUint64(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							case *myasthurts.StarRefType:
+								@:err = validators.IsUint64Ptr(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							}
+						case "uintptr":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:err = validators.IsUintptr(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							case *myasthurts.StarRefType:
+								@:err = validators.IsUintptrPtr(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							}
+						case "int":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:err = validators.IsInt(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							case *myasthurts.StarRefType:
+								@:err = validators.IsIntPtr(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							}
+						case "int8":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:err = validators.IsInt8(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							case *myasthurts.StarRefType:
+								@:err = validators.IsInt8Ptr(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							}
+						case "int16":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:err = validators.IsInt16(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							case *myasthurts.StarRefType:
+								@:err = validators.IsInt16Ptr(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							}
+						case "int32":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:err = validators.IsInt32(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							case *myasthurts.StarRefType:
+								@:err = validators.IsInt32Ptr(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							}
+						case "int64":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:err = validators.IsInt64(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							case *myasthurts.StarRefType:
+								@:err = validators.IsInt64Ptr(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							}
+						case "float32":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:err = validators.IsFloat32(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							case *myasthurts.StarRefType:
+								@:err = validators.IsFloat32Ptr(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							}
+						case "float64":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:err = validators.IsFloat64(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							case *myasthurts.StarRefType:
+								@:err = validators.IsFloat64Ptr(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							}
+						case "complex64":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:err = validators.IsComplex64(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							case *myasthurts.StarRefType:
+								@:err = validators.IsComplex128Ptr(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							}
+						case "complex128":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:err = validators.IsComplex128(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							case *myasthurts.StarRefType:
+								@:err = validators.IsComplex128Ptr(@strings.ToLower(@s.Name()[0:1]).@field.Name)
+							}
+						}
+					}
 					@raw("\n")
-				}
-				
-			@:}
-		@:}
-		@raw("return nil")
+					@:if err != nil {
+					@:return err
+					@raw("\n")
+					@:}
+					@raw("\n\n")
+			@:} // For tags
+		@:} // For fields
+		@:return nil
 	@:}
 }

@@ -1,8 +1,8 @@
-package validators_test
+package external_test
 
 import (
 	myasthurts "github.com/lab259/go-my-ast-hurts"
-	"github.com/lab259/go-thoth/validators"
+	"github.com/lab259/go-thoth/validators/external"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"gopkg.in/go-playground/validator.v9"
@@ -10,7 +10,7 @@ import (
 
 var _ = Describe("Validator", func() {
 	It("should to check if struct implements validator `StructLevel` interface", func() {
-		var t validator.StructLevel = new(validators.Level)
+		var t validator.StructLevel = new(external.Level)
 		var i interface{} = t
 
 		_, ok := i.(validator.StructLevel)

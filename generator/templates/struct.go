@@ -20,13 +20,10 @@ func Struct(fileName string, pkg *myasthurts.Package, structsThoth []*myasthurts
 
 // RenderStruct render templates/struct.gohtml
 func RenderStruct(_buffer io.StringWriter, fileName string, pkg *myasthurts.Package, structsThoth []*myasthurts.Struct) {
-	_buffer.WriteString(("//go:generate gofmt -s -w"))
-	_buffer.WriteString(" ")
-	_buffer.WriteString(gorazor.HTMLEscape(fileName))
 	_buffer.WriteString("\npackage ")
 	_buffer.WriteString(gorazor.HTMLEscape(pkg.Name))
-	_buffer.WriteString(" ")
-	_buffer.WriteString(("\n\n"))
+	_buffer.WriteString("\n\nimport \"github.com/lab259/go-thoth/validators\"")
+	_buffer.WriteString(("\n"))
 	for _, s := range structsThoth {
 
 		_buffer.WriteString(("\n// Thoth validate\n"))
@@ -36,32 +33,344 @@ func RenderStruct(_buffer io.StringWriter, fileName string, pkg *myasthurts.Pack
 		_buffer.WriteString(" ")
 		_buffer.WriteString(("*"))
 		_buffer.WriteString(gorazor.HTMLEscape(s.Name()))
-		_buffer.WriteString(") Thoth() error {")
+		_buffer.WriteString(") Thoth() (err error) {")
 
 		for _, field := range s.Fields {
 			for _, tag := range field.Tag.Params {
-				if tag.Value == "required" {
+				switch tag.Value {
+				case "required":
+					switch field.RefType.Name() {
+					case "string":
+						switch field.RefType.(type) {
+						case *myasthurts.BaseRefType:
 
-					_buffer.WriteString("if required(\"")
-					_buffer.WriteString(gorazor.HTMLEscape(field.RefType.Name()))
-					_buffer.WriteString("\", ")
-					_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
-					_buffer.WriteString(".")
-					_buffer.WriteString(gorazor.HTMLEscape(field.Name))
-					_buffer.WriteString(") {")
+							_buffer.WriteString("err = validators.Empty(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
 
-					_buffer.WriteString(("return errRequiredString"))
+						case *myasthurts.StarRefType:
 
-					_buffer.WriteString("}")
+							_buffer.WriteString("err = validators.EmptyPtr(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
 
-					_buffer.WriteString(("\n"))
+						case *myasthurts.ArrayRefType:
 
+							_buffer.WriteString("err = validators.IsSliceString(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						}
+					case "uint":
+						switch field.RefType.(type) {
+						case *myasthurts.BaseRefType:
+
+							_buffer.WriteString("err = validators.IsUint(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						case *myasthurts.StarRefType:
+
+							_buffer.WriteString("err = validators.IsUintPtr(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						}
+					case "uint8":
+						switch field.RefType.(type) {
+						case *myasthurts.BaseRefType:
+
+							_buffer.WriteString("err = validators.IsUint8(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						case *myasthurts.StarRefType:
+
+							_buffer.WriteString("err = validators.IsUint8Ptr(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						}
+					case "uint16":
+						switch field.RefType.(type) {
+						case *myasthurts.BaseRefType:
+
+							_buffer.WriteString("err = validators.IsUint16(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						case *myasthurts.StarRefType:
+
+							_buffer.WriteString("err = validators.IsUint16Ptr(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						}
+					case "uint32":
+						switch field.RefType.(type) {
+						case *myasthurts.BaseRefType:
+
+							_buffer.WriteString("err = validators.IsUint32(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						case *myasthurts.StarRefType:
+
+							_buffer.WriteString("err = validators.IsUint32Ptr(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						}
+					case "uint64":
+						switch field.RefType.(type) {
+						case *myasthurts.BaseRefType:
+
+							_buffer.WriteString("err = validators.IsUint64(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						case *myasthurts.StarRefType:
+
+							_buffer.WriteString("err = validators.IsUint64Ptr(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						}
+					case "uintptr":
+						switch field.RefType.(type) {
+						case *myasthurts.BaseRefType:
+
+							_buffer.WriteString("err = validators.IsUintptr(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						case *myasthurts.StarRefType:
+
+							_buffer.WriteString("err = validators.IsUintptrPtr(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						}
+					case "int":
+						switch field.RefType.(type) {
+						case *myasthurts.BaseRefType:
+
+							_buffer.WriteString("err = validators.IsInt(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						case *myasthurts.StarRefType:
+
+							_buffer.WriteString("err = validators.IsIntPtr(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						}
+					case "int8":
+						switch field.RefType.(type) {
+						case *myasthurts.BaseRefType:
+
+							_buffer.WriteString("err = validators.IsInt8(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						case *myasthurts.StarRefType:
+
+							_buffer.WriteString("err = validators.IsInt8Ptr(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						}
+					case "int16":
+						switch field.RefType.(type) {
+						case *myasthurts.BaseRefType:
+
+							_buffer.WriteString("err = validators.IsInt16(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						case *myasthurts.StarRefType:
+
+							_buffer.WriteString("err = validators.IsInt16Ptr(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						}
+					case "int32":
+						switch field.RefType.(type) {
+						case *myasthurts.BaseRefType:
+
+							_buffer.WriteString("err = validators.IsInt32(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						case *myasthurts.StarRefType:
+
+							_buffer.WriteString("err = validators.IsInt32Ptr(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						}
+					case "int64":
+						switch field.RefType.(type) {
+						case *myasthurts.BaseRefType:
+
+							_buffer.WriteString("err = validators.IsInt64(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						case *myasthurts.StarRefType:
+
+							_buffer.WriteString("err = validators.IsInt64Ptr(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						}
+					case "float32":
+						switch field.RefType.(type) {
+						case *myasthurts.BaseRefType:
+
+							_buffer.WriteString("err = validators.IsFloat32(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						case *myasthurts.StarRefType:
+
+							_buffer.WriteString("err = validators.IsFloat32Ptr(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						}
+					case "float64":
+						switch field.RefType.(type) {
+						case *myasthurts.BaseRefType:
+
+							_buffer.WriteString("err = validators.IsFloat64(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						case *myasthurts.StarRefType:
+
+							_buffer.WriteString("err = validators.IsFloat64Ptr(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						}
+					case "complex64":
+						switch field.RefType.(type) {
+						case *myasthurts.BaseRefType:
+
+							_buffer.WriteString("err = validators.IsComplex64(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						case *myasthurts.StarRefType:
+
+							_buffer.WriteString("err = validators.IsComplex128Ptr(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						}
+					case "complex128":
+						switch field.RefType.(type) {
+						case *myasthurts.BaseRefType:
+
+							_buffer.WriteString("err = validators.IsComplex128(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						case *myasthurts.StarRefType:
+
+							_buffer.WriteString("err = validators.IsComplex128Ptr(")
+							_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+							_buffer.WriteString(".")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString(")")
+
+						}
+					}
 				}
 
-			}
-		}
+				_buffer.WriteString(("\n"))
 
-		_buffer.WriteString(("return nil"))
+				_buffer.WriteString("if err != nil {")
+
+				_buffer.WriteString("return err")
+
+				_buffer.WriteString(("\n"))
+
+				_buffer.WriteString("}")
+
+				_buffer.WriteString(("\n\n"))
+
+			} // For tags
+		} // For fields
+
+		_buffer.WriteString("return nil")
 
 		_buffer.WriteString("}")
 

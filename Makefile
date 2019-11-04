@@ -32,3 +32,9 @@ fmt:
 
 generate:
 	@go generate ./...
+
+dev:
+	# @test -d test/parse_dir/generated.go && rm test/parse_dir/generated.go
+	@go generate ./...
+	@go run ./generator/cli/thoth/main.go gen --t generate
+	@go fmt ./...

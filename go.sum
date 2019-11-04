@@ -58,6 +58,7 @@ github.com/lab259/errors v2.1.0+incompatible h1:spmhLIqKUzsog6XhwOpeDY0oX8Q5NguD
 github.com/lab259/errors v2.1.0+incompatible/go.mod h1:MDDGb8dSRNqu9IVhE4C+nF2qFqPPO+n6/Nn1AqyI6rI=
 github.com/lab259/errors/v2 v2.3.1 h1:A3JNDk0urcFMj6az7WmRwVBYmx3Sjipartzs+T/HXUA=
 github.com/lab259/errors/v2 v2.3.1/go.mod h1:s1UHhAYf1aZA7XjPTQje8OZ2QNkE59pcP52YrZ8Zdt0=
+github.com/lab259/go-my-ast-hurts v0.0.0-20191015180506-7e227287cbe7 h1:QQtSUHXNrsYe/LPfdADN7v3S/pxdSNgk3W8iubT4vEQ=
 github.com/lab259/go-my-ast-hurts v0.0.0-20191029192755-70e0dd09e3eb h1:O/h1tuc0B1A55PxfLdGd/wqpDBYLRYvI07eRNayyJQw=
 github.com/lab259/go-my-ast-hurts v0.0.0-20191029192755-70e0dd09e3eb/go.mod h1:ezp+lyGu0NanL8HChvMz1S+G1ZavPdW9NgcD/mpPkzA=
 github.com/lab259/rlog/v2 v2.1.0 h1:yBwAda9dtB1eriF3EbzE5mE1itlR2jg8WpJJVTJmd/g=
