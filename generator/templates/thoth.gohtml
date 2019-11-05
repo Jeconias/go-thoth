@@ -1,0 +1,235 @@
+@{
+	import (
+		"strings"
+		"github.com/lab259/go-my-ast-hurts"
+	)
+	var fileName string
+	var pkg *myasthurts.Package
+	var structsThoth []*myasthurts.Struct
+-}
+package @pkg.Name
+
+@for _, s := range structsThoth {
+	@raw("\n// Validate TODO\n")
+	@:func(@strings.ToLower(@s.Name()[0:1]) @raw("*")@s.Name()) Validate() (errs ValidationErrors) {
+		for _, field := range s.Fields {
+			for _, tag := range field.Tag.Params {
+				value := strings.ToLower(s.Name()[0:1])+"."+field.Name
+				switch tag.Value {
+					case "required":
+						switch field.RefType.Name() {
+						case "string":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType, *myasthurts.ArrayRefType:
+								@:if Empty(len(@value)) {
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if Empty(len(* @value)) {
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "uint":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsUint(& @value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if IsUint(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "uint8":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsUint8(& @value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if IsUint8(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "uint16":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsUint16(& @value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if IsUint16(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "uint32":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsUint32(& @value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if IsUint32(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "uint64":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsUint64(& @value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if IsUint64(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "uintptr":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsUintptr(& @value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if IsUintptr(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "int":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsInt(& @value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if IsInt(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "int8":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsInt8(& @value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if IsInt8(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "int16":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsInt16(& @value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if IsInt16(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "int32":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsInt32(& @value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if IsInt32(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "int64":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsInt64(& @value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if IsInt64(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.ArrayRefType:
+								@:if Empty(len(@value)) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "float32":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsFloat32(& @value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if IsFloat32(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "float64":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsFloat64(& @value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if IsFloat64(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "complex64":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsComplex64(& @value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if IsComplex64(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "complex128":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsComplex128(& @value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if IsComplex128(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "map[string]interface":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsValid(& @value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if IsValid(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							}
+							@: // TODO: To extract map validation
+						default:
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsValid(& @value) {
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if IsValid(@value) {
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.ArrayRefType:
+								@:if Empty(len(@value)) {
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+								@:}
+							}
+						}
+					}
+					@raw("\n")
+			@:} // For tags
+		@:} // For fields
+		@:return errs
+	@:}
+}

@@ -56,6 +56,14 @@ func gen(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	templates.RenderStruct(file, fileName, pkg, structsThoth)
+	templates.RenderThoth(file, fileName, pkg, structsThoth)
+
+	fileName = "validator.go"
+	file, err = os.OpenFile(fileName, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0755)
+	if err != nil {
+		return err
+	}
+
+	templates.RenderValidate(file, pkg)
 	return nil
 }
