@@ -16,6 +16,11 @@ jobs:
     - name: Check out code into the Go module directory
       uses: actions/checkout@v1
 
+    - name: Setup git to be able to pull private repositories
+      env:
+        LAB259_TOKEN: ${{ secrets.LAB259_TOKEN }}
+      run: git config --global url."https://$LAB259_TOKEN@github.com/lab259/".insteadOf "https://github.com/lab259/"
+
     - name: Get dependencies
       run: go mod download
 
