@@ -63,7 +63,7 @@ func (m *MapIntToStruct) Validate() (errs ValidationErrors) {
 
 // Validate TODO
 func (h *Home) Validate() (errs ValidationErrors) {
-	if IsInt(&h.ID) {
+	if IsInt(h.ID) {
 		errs = append(errs, ErrNumberRequired("ID", "required"))
 	}
 	if IsValid(&h.Address) {
@@ -74,7 +74,7 @@ func (h *Home) Validate() (errs ValidationErrors) {
 
 // Validate TODO
 func (c *Client) Validate() (errs ValidationErrors) {
-	if IsInt64(&c.ID) {
+	if IsInt64(c.ID) {
 		errs = append(errs, ErrNumberRequired("ID", "required"))
 	}
 	if Empty(len(c.Name)) {
@@ -99,94 +99,94 @@ func (u *User) Validate() (errs ValidationErrors) {
 
 // Validate TODO
 func (n *Number) Validate() (errs ValidationErrors) {
-	if IsUint(&n.Uint) {
+	if IsUint(n.Uint) {
 		errs = append(errs, ErrNumberRequired("Uint", "required"))
 	}
 	if n.UintPointer == nil {
 		errs = append(errs, ErrNumberRequired("UintPointer", "required"))
 	}
-	if IsUint8(&n.Uint8) {
+	if IsUint8(n.Uint8) {
 		errs = append(errs, ErrNumberRequired("Uint8", "required"))
 	}
-	if IsUint8(n.Uint8Pointer) {
+	if n.Uint8Pointer == nil {
 		errs = append(errs, ErrNumberRequired("Uint8Pointer", "required"))
 	}
-	if IsUint16(&n.Uint16) {
+	if IsUint16(n.Uint16) {
 		errs = append(errs, ErrNumberRequired("Uint16", "required"))
 	}
-	if IsUint16(n.Uint16Pointer) {
+	if n.Uint16Pointer == nil {
 		errs = append(errs, ErrNumberRequired("Uint16Pointer", "required"))
 	}
-	if IsUint32(&n.Uint32) {
+	if IsUint32(n.Uint32) {
 		errs = append(errs, ErrNumberRequired("Uint32", "required"))
 	}
-	if IsUint32(n.Uint32Pointer) {
+	if n.Uint32Pointer == nil {
 		errs = append(errs, ErrNumberRequired("Uint32Pointer", "required"))
 	}
-	if IsUint64(&n.Uint64) {
+	if IsUint64(n.Uint64) {
 		errs = append(errs, ErrNumberRequired("Uint64", "required"))
 	}
-	if IsUint64(n.Uint64Pointer) {
+	if n.Uint64Pointer == nil {
 		errs = append(errs, ErrNumberRequired("Uint64Pointer", "required"))
 	}
-	if IsUintptr(&n.Uintptr) {
+	if IsUintptr(n.Uintptr) {
 		errs = append(errs, ErrNumberRequired("Uintptr", "required"))
 	}
-	if IsUintptr(n.UintptrPointer) {
+	if n.UintptrPointer == nil {
 		errs = append(errs, ErrNumberRequired("UintptrPointer", "required"))
 	}
-	if IsInt(&n.Int) {
+	if IsInt(n.Int) {
 		errs = append(errs, ErrNumberRequired("Int", "required"))
 	}
-	if IsInt(n.IntPointer) {
+	if n.IntPointer == nil {
 		errs = append(errs, ErrNumberRequired("IntPointer", "required"))
 	}
-	if IsInt8(&n.Int8) {
+	if IsInt8(n.Int8) {
 		errs = append(errs, ErrNumberRequired("Int8", "required"))
 	}
-	if IsInt8(n.Int8Pointer) {
+	if n.Int8Pointer == nil {
 		errs = append(errs, ErrNumberRequired("Int8Pointer", "required"))
 	}
-	if IsInt16(&n.Int16) {
+	if IsInt16(n.Int16) {
 		errs = append(errs, ErrNumberRequired("Int16", "required"))
 	}
-	if IsInt16(n.Int16Pointer) {
+	if n.Int16Pointer == nil {
 		errs = append(errs, ErrNumberRequired("Int16Pointer", "required"))
 	}
-	if IsInt32(&n.Int32) {
+	if IsInt32(n.Int32) {
 		errs = append(errs, ErrNumberRequired("Int32", "required"))
 	}
-	if IsInt32(n.Int32Pointer) {
+	if n.Int32Pointer == nil {
 		errs = append(errs, ErrNumberRequired("Int32Pointer", "required"))
 	}
-	if IsInt64(&n.Int64) {
+	if IsInt64(n.Int64) {
 		errs = append(errs, ErrNumberRequired("Int64", "required"))
 	}
-	if IsInt64(n.Int64Pointer) {
+	if n.Int64Pointer == nil {
 		errs = append(errs, ErrNumberRequired("Int64Pointer", "required"))
 	}
-	if IsFloat32(&n.Float32) {
+	if IsFloat32(n.Float32) {
 		errs = append(errs, ErrNumberRequired("Float32", "required"))
 	}
-	if IsFloat32(n.Float32Pointer) {
+	if n.Float32Pointer == nil {
 		errs = append(errs, ErrNumberRequired("Float32Pointer", "required"))
 	}
-	if IsFloat64(&n.Float64) {
+	if IsFloat64(n.Float64) {
 		errs = append(errs, ErrNumberRequired("Float64", "required"))
 	}
-	if IsFloat64(n.Float64Pointer) {
+	if n.Float64Pointer == nil {
 		errs = append(errs, ErrNumberRequired("Float64Pointer", "required"))
 	}
-	if IsComplex64(&n.Complex64) {
+	if IsComplex64(n.Complex64) {
 		errs = append(errs, ErrNumberRequired("Complex64", "required"))
 	}
-	if IsComplex64(n.Complex64Pointer) {
+	if n.Complex64Pointer == nil {
 		errs = append(errs, ErrNumberRequired("Complex64Pointer", "required"))
 	}
-	if IsComplex128(&n.Complex128) {
+	if IsComplex128(n.Complex128) {
 		errs = append(errs, ErrNumberRequired("Complex128", "required"))
 	}
-	if IsComplex128(n.Complex128Pointer) {
+	if n.Complex128Pointer == nil {
 		errs = append(errs, ErrNumberRequired("Complex128Pointer", "required"))
 	}
 	return errs
@@ -212,13 +212,13 @@ func (t *TypeSliceString) Validate() (errs ValidationErrors) {
 // Validate TODO
 func (t *TypeSliceUint) Validate() (errs ValidationErrors) {
 	if Empty(len(t.SliceUint)) {
-		errs = append(errs, ErrNumberRequired("SliceUint", "required"))
+		errs = append(errs, ErrEmpty("SliceUint", "required"))
 	}
 	if t.PointerSliceUint == nil {
 		errs = append(errs, ErrNumberRequired("PointerSliceUint", "required"))
 	}
 	if Empty(len(t.SlicePointerUint)) {
-		errs = append(errs, ErrNumberRequired("SlicePointerUint", "required"))
+		errs = append(errs, ErrEmpty("SlicePointerUint", "required"))
 	}
 	if t.PointerSlicePointerUint == nil {
 		errs = append(errs, ErrNumberRequired("PointerSlicePointerUint", "required"))
@@ -227,12 +227,239 @@ func (t *TypeSliceUint) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
-func (s *SliceInt64) Validate() (errs ValidationErrors) {
-	if Empty(len(s.A)) {
-		errs = append(errs, ErrNumberRequired("A", "required"))
+func (t *TypeSliceUint8) Validate() (errs ValidationErrors) {
+	if Empty(len(t.SliceUint8)) {
+		errs = append(errs, ErrEmpty("SliceUint8", "required"))
 	}
-	if Empty(len(s.C)) {
-		errs = append(errs, ErrNumberRequired("C", "required"))
+	if t.PointerSliceUint8 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSliceUint8", "required"))
+	}
+	if Empty(len(t.SlicePointerUint8)) {
+		errs = append(errs, ErrEmpty("SlicePointerUint8", "required"))
+	}
+	if t.PointerSlicePointerUint8 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSlicePointerUint8", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TypeSliceUint16) Validate() (errs ValidationErrors) {
+	if Empty(len(t.SliceUint16)) {
+		errs = append(errs, ErrEmpty("SliceUint16", "required"))
+	}
+	if t.PointerSliceUint16 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSliceUint16", "required"))
+	}
+	if Empty(len(t.SlicePointerUint16)) {
+		errs = append(errs, ErrEmpty("SlicePointerUint16", "required"))
+	}
+	if t.PointerSlicePointerUint16 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSlicePointerUint16", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TypeSliceUint32) Validate() (errs ValidationErrors) {
+	if Empty(len(t.SliceUint32)) {
+		errs = append(errs, ErrEmpty("SliceUint32", "required"))
+	}
+	if t.PointerSliceUint32 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSliceUint32", "required"))
+	}
+	if Empty(len(t.SlicePointerUint32)) {
+		errs = append(errs, ErrEmpty("SlicePointerUint32", "required"))
+	}
+	if t.PointerSlicePointerUint32 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSlicePointerUint32", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TypeSliceUint64) Validate() (errs ValidationErrors) {
+	if Empty(len(t.SliceUint64)) {
+		errs = append(errs, ErrEmpty("SliceUint64", "required"))
+	}
+	if t.PointerSliceUint64 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSliceUint64", "required"))
+	}
+	if Empty(len(t.SlicePointerUint64)) {
+		errs = append(errs, ErrEmpty("SlicePointerUint64", "required"))
+	}
+	if t.PointerSlicePointerUint64 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSlicePointerUint64", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TypeSliceUintptr) Validate() (errs ValidationErrors) {
+	if Empty(len(t.SliceUintptr)) {
+		errs = append(errs, ErrEmpty("SliceUintptr", "required"))
+	}
+	if t.PointerSliceUintptr == nil {
+		errs = append(errs, ErrNumberRequired("PointerSliceUintptr", "required"))
+	}
+	if Empty(len(t.SlicePointerUintptr)) {
+		errs = append(errs, ErrEmpty("SlicePointerUintptr", "required"))
+	}
+	if t.PointerSlicePointerUintptr == nil {
+		errs = append(errs, ErrNumberRequired("PointerSlicePointerUintptr", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TypeSliceInt) Validate() (errs ValidationErrors) {
+	if Empty(len(t.SliceInt)) {
+		errs = append(errs, ErrEmpty("SliceInt", "required"))
+	}
+	if t.PointerSliceInt == nil {
+		errs = append(errs, ErrNumberRequired("PointerSliceInt", "required"))
+	}
+	if Empty(len(t.SlicePointerInt)) {
+		errs = append(errs, ErrEmpty("SlicePointerInt", "required"))
+	}
+	if t.PointerSlicePointerInt == nil {
+		errs = append(errs, ErrNumberRequired("PointerSlicePointerInt", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TypeSliceInt8) Validate() (errs ValidationErrors) {
+	if Empty(len(t.SliceInt8)) {
+		errs = append(errs, ErrEmpty("SliceInt8", "required"))
+	}
+	if t.PointerSliceInt8 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSliceInt8", "required"))
+	}
+	if Empty(len(t.SlicePointerInt8)) {
+		errs = append(errs, ErrEmpty("SlicePointerInt8", "required"))
+	}
+	if t.PointerSlicePointerInt8 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSlicePointerInt8", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TypeSliceInt16) Validate() (errs ValidationErrors) {
+	if Empty(len(t.SliceInt16)) {
+		errs = append(errs, ErrEmpty("SliceInt16", "required"))
+	}
+	if t.PointerSliceInt16 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSliceInt16", "required"))
+	}
+	if Empty(len(t.SlicePointerInt16)) {
+		errs = append(errs, ErrEmpty("SlicePointerInt16", "required"))
+	}
+	if t.PointerSlicePointerInt16 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSlicePointerInt16", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TypeSliceInt32) Validate() (errs ValidationErrors) {
+	if Empty(len(t.SliceInt32)) {
+		errs = append(errs, ErrEmpty("SliceInt32", "required"))
+	}
+	if t.PointerSliceInt32 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSliceInt32", "required"))
+	}
+	if Empty(len(t.SlicePointerInt32)) {
+		errs = append(errs, ErrEmpty("SlicePointerInt32", "required"))
+	}
+	if t.PointerSlicePointerInt32 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSlicePointerInt32", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TypeSliceInt64) Validate() (errs ValidationErrors) {
+	if Empty(len(t.SliceInt64)) {
+		errs = append(errs, ErrNumberRequired("SliceInt64", "required"))
+	}
+	if t.PointerSliceInt64 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSliceInt64", "required"))
+	}
+	if Empty(len(t.SlicePointerInt64)) {
+		errs = append(errs, ErrNumberRequired("SlicePointerInt64", "required"))
+	}
+	if t.PointerSlicePointerInt64 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSlicePointerInt64", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TypeSliceFloat32) Validate() (errs ValidationErrors) {
+	if Empty(len(t.SliceFloat32)) {
+		errs = append(errs, ErrNumberRequired("SliceFloat32", "required"))
+	}
+	if t.PointerSliceFloat32 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSliceFloat32", "required"))
+	}
+	if Empty(len(t.SlicePointerFloat32)) {
+		errs = append(errs, ErrNumberRequired("SlicePointerFloat32", "required"))
+	}
+	if t.PointerSlicePointerFloat32 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSlicePointerFloat32", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TypeSliceFloat64) Validate() (errs ValidationErrors) {
+	if Empty(len(t.SliceFloat64)) {
+		errs = append(errs, ErrNumberRequired("SliceFloat64", "required"))
+	}
+	if t.PointerSliceFloat64 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSliceFloat64", "required"))
+	}
+	if Empty(len(t.SlicePointerFloat64)) {
+		errs = append(errs, ErrNumberRequired("SlicePointerFloat64", "required"))
+	}
+	if t.PointerSlicePointerFloat64 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSlicePointerFloat64", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TypeSliceComplex64) Validate() (errs ValidationErrors) {
+	if Empty(len(t.SliceComplex64)) {
+		errs = append(errs, ErrNumberRequired("SliceComplex64", "required"))
+	}
+	if t.PointerSliceComplex64 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSliceComplex64", "required"))
+	}
+	if Empty(len(t.SlicePointerComplex64)) {
+		errs = append(errs, ErrNumberRequired("SlicePointerComplex64", "required"))
+	}
+	if t.PointerSlicePointerComplex64 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSlicePointerComplex64", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TypeSliceComplex128) Validate() (errs ValidationErrors) {
+	if Empty(len(t.SliceComplex128)) {
+		errs = append(errs, ErrNumberRequired("SliceComplex128", "required"))
+	}
+	if t.PointerSliceComplex128 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSliceComplex128", "required"))
+	}
+	if Empty(len(t.SlicePointerComplex128)) {
+		errs = append(errs, ErrNumberRequired("SlicePointerComplex128", "required"))
+	}
+	if t.PointerSlicePointerComplex128 == nil {
+		errs = append(errs, ErrNumberRequired("PointerSlicePointerComplex128", "required"))
 	}
 	return errs
 }

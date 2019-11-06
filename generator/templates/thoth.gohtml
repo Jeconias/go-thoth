@@ -32,7 +32,157 @@ package @pkg.Name
 						case "uint":
 							switch field.RefType.(type) {
 							case *myasthurts.BaseRefType:
-								@:if IsUint(& @value) {
+								@:if IsUint(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if @value == nil {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.ArrayRefType:
+								@:if Empty(len(@value)) {
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "uint8":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsUint8(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if @value == nil {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.ArrayRefType:
+								@:if Empty(len(@value)) {
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "uint16":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsUint16(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if @value == nil {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.ArrayRefType:
+								@:if Empty(len(@value)) {
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "uint32":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsUint32(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if @value == nil {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.ArrayRefType:
+								@:if Empty(len(@value)) {
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "uint64":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsUint64(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if @value == nil {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.ArrayRefType:
+								@:if Empty(len(@value)) {
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "uintptr":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsUintptr(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if @value == nil {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.ArrayRefType:
+								@:if Empty(len(@value)) {
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "int":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsInt(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if @value == nil {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.ArrayRefType:
+								@:if Empty(len(@value)) {
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "int8":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsInt8(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if @value == nil {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.ArrayRefType:
+								@:if Empty(len(@value)) {
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "int16":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsInt16(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if @value == nil {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.ArrayRefType:
+								@:if Empty(len(@value)) {
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "int32":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsInt32(@value) {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.StarRefType:
+								@:if @value == nil {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.ArrayRefType:
+								@:if Empty(len(@value)) {
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+								@:}
+							}
+						case "int64":
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
+								@:if IsInt64(@value) {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
 							case *myasthurts.StarRefType:
@@ -44,113 +194,14 @@ package @pkg.Name
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
 							}
-						case "uint8":
+						case "float32":
 							switch field.RefType.(type) {
 							case *myasthurts.BaseRefType:
-								@:if IsUint8(& @value) {
+								@:if IsFloat32(@value) {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
 							case *myasthurts.StarRefType:
-								@:if IsUint8(@value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							}
-						case "uint16":
-							switch field.RefType.(type) {
-							case *myasthurts.BaseRefType:
-								@:if IsUint16(& @value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							case *myasthurts.StarRefType:
-								@:if IsUint16(@value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							}
-						case "uint32":
-							switch field.RefType.(type) {
-							case *myasthurts.BaseRefType:
-								@:if IsUint32(& @value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							case *myasthurts.StarRefType:
-								@:if IsUint32(@value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							}
-						case "uint64":
-							switch field.RefType.(type) {
-							case *myasthurts.BaseRefType:
-								@:if IsUint64(& @value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							case *myasthurts.StarRefType:
-								@:if IsUint64(@value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							}
-						case "uintptr":
-							switch field.RefType.(type) {
-							case *myasthurts.BaseRefType:
-								@:if IsUintptr(& @value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							case *myasthurts.StarRefType:
-								@:if IsUintptr(@value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							}
-						case "int":
-							switch field.RefType.(type) {
-							case *myasthurts.BaseRefType:
-								@:if IsInt(& @value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							case *myasthurts.StarRefType:
-								@:if IsInt(@value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							}
-						case "int8":
-							switch field.RefType.(type) {
-							case *myasthurts.BaseRefType:
-								@:if IsInt8(& @value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							case *myasthurts.StarRefType:
-								@:if IsInt8(@value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							}
-						case "int16":
-							switch field.RefType.(type) {
-							case *myasthurts.BaseRefType:
-								@:if IsInt16(& @value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							case *myasthurts.StarRefType:
-								@:if IsInt16(@value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							}
-						case "int32":
-							switch field.RefType.(type) {
-							case *myasthurts.BaseRefType:
-								@:if IsInt32(& @value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							case *myasthurts.StarRefType:
-								@:if IsInt32(@value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							}
-						case "int64":
-							switch field.RefType.(type) {
-							case *myasthurts.BaseRefType:
-								@:if IsInt64(& @value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							case *myasthurts.StarRefType:
-								@:if IsInt64(@value) {
+								@:if @value == nil {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
 							case *myasthurts.ArrayRefType:
@@ -158,47 +209,48 @@ package @pkg.Name
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
 							}
-						case "float32":
-							switch field.RefType.(type) {
-							case *myasthurts.BaseRefType:
-								@:if IsFloat32(& @value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							case *myasthurts.StarRefType:
-								@:if IsFloat32(@value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							}
 						case "float64":
 							switch field.RefType.(type) {
 							case *myasthurts.BaseRefType:
-								@:if IsFloat64(& @value) {
+								@:if IsFloat64(@value) {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
 							case *myasthurts.StarRefType:
-								@:if IsFloat64(@value) {
+								@:if @value == nil {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.ArrayRefType:
+								@:if Empty(len(@value)) {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
 							}
 						case "complex64":
 							switch field.RefType.(type) {
 							case *myasthurts.BaseRefType:
-								@:if IsComplex64(& @value) {
+								@:if IsComplex64(@value) {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
 							case *myasthurts.StarRefType:
-								@:if IsComplex64(@value) {
+								@:if @value == nil {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.ArrayRefType:
+								@:if Empty(len(@value)) {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
 							}
 						case "complex128":
 							switch field.RefType.(type) {
 							case *myasthurts.BaseRefType:
-								@:if IsComplex128(& @value) {
+								@:if IsComplex128(@value) {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
 							case *myasthurts.StarRefType:
-								@:if IsComplex128(@value) {
+								@:if @value == nil {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.ArrayRefType:
+								@:if Empty(len(@value)) {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
 							}
