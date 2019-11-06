@@ -111,7 +111,7 @@ func (h *Home) Validate() (errs ValidationErrors) {
 	if IsInt(h.ID) {
 		errs = append(errs, ErrNumberRequired("ID", "required"))
 	}
-	if IsValid(h.Address) {
+	if (h.Address == Address{}) {
 		errs = append(errs, ErrEmpty("Address", "required"))
 	}
 	return errs
@@ -522,7 +522,7 @@ func (t *TypeString) Validate() (errs ValidationErrors) {
 
 // Validate TODO
 func (s *Struct) Validate() (errs ValidationErrors) {
-	if IsValid(s.Struct) {
+	if (s.Struct == StructA{}) {
 		errs = append(errs, ErrEmpty("Struct", "required"))
 	}
 	if s.StructPointer == nil {

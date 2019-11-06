@@ -269,14 +269,20 @@ package @pkg.Name
 							} else {
 								switch field.RefType.(type) {
 								case *myasthurts.BaseRefType:
-									@:if IsValid(@value) {
-									@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
-									@:}
+									if 	field.RefType.Type() != nil {
+										@:if (@value == @field.RefType.Type().Name()@raw("{}")) {
+										@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+										@:}
+									} else {
+										@:if IsValid(@value) {
+										@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+										@:}
+									}
 								case *myasthurts.StarRefType:
 									@:if @value == nil {
 									@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 									@:}
-								case *myasthurts.ArrayRefType:
+								case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 									@:if Empty(len(@value)) {
 									@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 									@:}

@@ -780,19 +780,38 @@ func RenderThoth(_buffer io.StringWriter, fileName string, pkg *myasthurts.Packa
 						} else {
 							switch field.RefType.(type) {
 							case *myasthurts.BaseRefType:
+								if field.RefType.Type() != nil {
 
-								_buffer.WriteString("if IsValid(")
-								_buffer.WriteString(gorazor.HTMLEscape(value))
-								_buffer.WriteString(") {")
+									_buffer.WriteString("if (")
+									_buffer.WriteString(gorazor.HTMLEscape(value))
+									_buffer.WriteString(" == ")
+									_buffer.WriteString(gorazor.HTMLEscape(field.RefType.Type().Name()))
+									_buffer.WriteString(("{}"))
+									_buffer.WriteString(") {")
 
-								_buffer.WriteString("\terrs = append(errs, ErrEmpty(\"")
-								_buffer.WriteString(gorazor.HTMLEscape(field.Name))
-								_buffer.WriteString("\", \"")
-								_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
-								_buffer.WriteString("\"))")
+									_buffer.WriteString("\terrs = append(errs, ErrEmpty(\"")
+									_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+									_buffer.WriteString("\", \"")
+									_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
+									_buffer.WriteString("\"))")
 
-								_buffer.WriteString("}")
+									_buffer.WriteString("}")
 
+								} else {
+
+									_buffer.WriteString("if IsValid(")
+									_buffer.WriteString(gorazor.HTMLEscape(value))
+									_buffer.WriteString(") {")
+
+									_buffer.WriteString("\terrs = append(errs, ErrEmpty(\"")
+									_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+									_buffer.WriteString("\", \"")
+									_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
+									_buffer.WriteString("\"))")
+
+									_buffer.WriteString("}")
+
+								}
 							case *myasthurts.StarRefType:
 
 								_buffer.WriteString("if ")
@@ -807,7 +826,7 @@ func RenderThoth(_buffer io.StringWriter, fileName string, pkg *myasthurts.Packa
 
 								_buffer.WriteString("}")
 
-							case *myasthurts.ArrayRefType:
+							case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 
 								_buffer.WriteString("if Empty(len(")
 								_buffer.WriteString(gorazor.HTMLEscape(value))

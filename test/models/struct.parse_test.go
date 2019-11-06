@@ -7,8 +7,8 @@ import (
 )
 
 var _ = Describe("Struct", func() {
-	PDescribe("Required", func() {
-		It("should check if field `Struct`", func() {
+	Describe("Required", func() {
+		It("should fail to validate field `Struct`", func() {
 			structA := models.StructA{
 				A: "Chico Bento!",
 				B: 22,
