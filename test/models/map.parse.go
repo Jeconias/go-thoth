@@ -1,46 +1,46 @@
 package models
 
-// MapStringToInterface TODO
-type MapStringToInterface struct {
-	A map[string]interface{}  `thoth:"required"`
-	B *map[string]interface{} `thoth:"required"`
+// TypeMapStringToInterface TODO
+type TypeMapStringToInterface struct {
+	MapStringToInterface        map[string]interface{}  `thoth:"required"`
+	PointerMapStringToInterface *map[string]interface{} `thoth:"required"`
 }
 
-// MapStringToString TODO
-type MapStringToString struct {
-	A map[string]string  `thoth:"required"`
-	B *map[string]string `thoth:"required"`
+// TypeMapStringToString TODO
+type TypeMapStringToString struct {
+	MapStringToString        map[string]string  `thoth:"required"`
+	PointerMapStringToString *map[string]string `thoth:"required"`
 }
 
-// MapIntToString TODO
-type MapIntToString struct {
-	A map[int]string  `thoth:"required"`
-	B *map[int]string `thoth:"required"`
+// TypeMapIntToString TODO
+type TypeMapIntToString struct {
+	MapIntToString        map[int]string  `thoth:"required"`
+	PointerMapIntToString *map[int]string `thoth:"required"`
 }
 
-// MapIntToBool TODO
-type MapIntToBool struct {
-	A map[int]bool  `thoth:"required"`
-	B *map[int]bool `thoth:"required"`
+// TypeMapIntToBool TODO
+type TypeMapIntToBool struct {
+	MapIntToBool        map[int]bool  `thoth:"required"`
+	PointerMapIntToBool *map[int]bool `thoth:"required"`
 }
 
 // MapTypeA TODO
 type MapTypeA struct {
-	B int
-	C bool
+	Int  int
+	Bool bool
 }
 
 // MapTypeB TODO
 type MapTypeB struct {
-	C bool
-	D string
-	E float64
+	Bool   bool
+	String string
+	Float  float64
 }
 
-// MapIntToStruct TODO
-type MapIntToStruct struct {
-	A        map[int]MapTypeA   `thoth:"required"`
-	APointer map[int]*MapTypeA  `thoth:"required"`
-	B        *map[int]MapTypeB  `thoth:"required"`
-	BPointer *map[int]*MapTypeB `thoth:"required"`
+// TypeMapIntToStruct TODO
+type TypeMapIntToStruct struct {
+	MapIntToStructA               map[int]MapTypeA   `thoth:"required"`
+	PointerMapIntToStructA        map[int]*MapTypeA  `thoth:"required"`
+	MapIntToStructB               *map[int]MapTypeB  `thoth:"required"`
+	PointerMapIntToStructPointerB *map[int]*MapTypeB `thoth:"required"`
 }
