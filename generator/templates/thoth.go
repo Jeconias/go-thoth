@@ -57,9 +57,9 @@ func RenderThoth(_buffer io.StringWriter, fileName string, pkg *myasthurts.Packa
 
 						case *myasthurts.StarRefType:
 
-							_buffer.WriteString("if Empty(len(* ")
+							_buffer.WriteString("if ")
 							_buffer.WriteString(gorazor.HTMLEscape(value))
-							_buffer.WriteString(")) {")
+							_buffer.WriteString(" == nil {")
 
 							_buffer.WriteString("\terrs = append(errs, ErrEmpty(\"")
 							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
@@ -88,9 +88,23 @@ func RenderThoth(_buffer io.StringWriter, fileName string, pkg *myasthurts.Packa
 
 						case *myasthurts.StarRefType:
 
-							_buffer.WriteString("if IsUint(")
+							_buffer.WriteString("if ")
 							_buffer.WriteString(gorazor.HTMLEscape(value))
-							_buffer.WriteString(") {")
+							_buffer.WriteString(" == nil {")
+
+							_buffer.WriteString("\terrs = append(errs, ErrNumberRequired(\"")
+							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+							_buffer.WriteString("\", \"")
+							_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
+							_buffer.WriteString("\"))")
+
+							_buffer.WriteString("}")
+
+						case *myasthurts.ArrayRefType:
+
+							_buffer.WriteString("if Empty(len(")
+							_buffer.WriteString(gorazor.HTMLEscape(value))
+							_buffer.WriteString(")) {")
 
 							_buffer.WriteString("\terrs = append(errs, ErrNumberRequired(\"")
 							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
@@ -549,41 +563,41 @@ func RenderThoth(_buffer io.StringWriter, fileName string, pkg *myasthurts.Packa
 							_buffer.WriteString("}")
 
 						}
-					case "map[string]interface":
-						switch field.RefType.(type) {
-						case *myasthurts.BaseRefType:
+					default:
+						if strings.HasPrefix("map", field.RefType.Name()) {
+							switch field.RefType.(type) {
+							case *myasthurts.BaseRefType:
 
-							_buffer.WriteString("if IsValid(& ")
-							_buffer.WriteString(gorazor.HTMLEscape(value))
-							_buffer.WriteString(") {")
+								_buffer.WriteString("if IsValid(& ")
+								_buffer.WriteString(gorazor.HTMLEscape(value))
+								_buffer.WriteString(") {")
 
-							_buffer.WriteString("\terrs = append(errs, ErrNumberRequired(\"")
-							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
-							_buffer.WriteString("\", \"")
-							_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
-							_buffer.WriteString("\"))")
+								_buffer.WriteString("\terrs = append(errs, ErrNumberRequired(\"")
+								_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+								_buffer.WriteString("\", \"")
+								_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
+								_buffer.WriteString("\"))")
 
-							_buffer.WriteString("}")
+								_buffer.WriteString("}")
 
-						case *myasthurts.StarRefType:
+							case *myasthurts.StarRefType:
 
-							_buffer.WriteString("if IsValid(")
-							_buffer.WriteString(gorazor.HTMLEscape(value))
-							_buffer.WriteString(") {")
+								_buffer.WriteString("if IsValid(")
+								_buffer.WriteString(gorazor.HTMLEscape(value))
+								_buffer.WriteString(") {")
 
-							_buffer.WriteString("\terrs = append(errs, ErrNumberRequired(\"")
-							_buffer.WriteString(gorazor.HTMLEscape(field.Name))
-							_buffer.WriteString("\", \"")
-							_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
-							_buffer.WriteString("\"))")
+								_buffer.WriteString("\terrs = append(errs, ErrNumberRequired(\"")
+								_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+								_buffer.WriteString("\", \"")
+								_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
+								_buffer.WriteString("\"))")
 
-							_buffer.WriteString("}")
+								_buffer.WriteString("}")
 
+							}
+							continue
 						}
 
-						_buffer.WriteString(" // TODO: To extract map")
-
-					default:
 						switch field.RefType.(type) {
 						case *myasthurts.BaseRefType:
 

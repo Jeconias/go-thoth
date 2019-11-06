@@ -1,4 +1,4 @@
-package any
+package models
 
 // Home TODO
 type Home struct {

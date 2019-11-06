@@ -14,10 +14,10 @@ var _ = Describe("GoThoth", func() {
 			env, err := myasthurts.NewEnvironment()
 			Expect(err).ToNot(HaveOccurred())
 
-			pkg, err := env.Parse("./test/gen")
+			pkg, err := env.Parse("./test/models")
 			Expect(err).ToNot(HaveOccurred())
 
-			Expect(pkg.Name).To(Equal("any"))
+			Expect(pkg.Name).To(Equal("models"))
 
 			refType, ok := pkg.RefTypeByName("Home")
 			Expect(ok).To(BeTrue())
@@ -28,10 +28,10 @@ var _ = Describe("GoThoth", func() {
 			env, err := myasthurts.NewEnvironment()
 			Expect(err).ToNot(HaveOccurred())
 
-			pkg, err := env.Parse("./test/gen")
+			pkg, err := env.Parse("./test/models")
 			Expect(err).ToNot(HaveOccurred())
 
-			Expect(pkg.Name).To(Equal("any"))
+			Expect(pkg.Name).To(Equal("models"))
 
 			refType, ok := pkg.RefTypeByName("User")
 			Expect(ok).To(BeTrue())

@@ -1,4 +1,4 @@
-package any
+package models
 
 import "fmt"
 
@@ -95,9 +95,14 @@ func Empty(v int) bool {
 	return v == 0
 }
 
-// Empty TODO
+// IsValid TODO
 func IsValid(v interface{}) bool {
 	return v == nil
+}
+
+// IsNil TODO
+func IsNil(v interface{}) bool {
+	return v != nil
 }
 
 /*

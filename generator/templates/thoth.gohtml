@@ -25,7 +25,7 @@ package @pkg.Name
 								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 								@:}
 							case *myasthurts.StarRefType:
-								@:if Empty(len(* @value)) {
+								@:if @value == nil {
 								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 								@:}
 							}
@@ -36,7 +36,11 @@ package @pkg.Name
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
 							case *myasthurts.StarRefType:
-								@:if IsUint(@value) {
+								@:if @value == nil {
+								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:}
+							case *myasthurts.ArrayRefType:
+								@:if Empty(len(@value)) {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
 							}
@@ -198,19 +202,21 @@ package @pkg.Name
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
 							}
-						case "map[string]interface":
-							switch field.RefType.(type) {
-							case *myasthurts.BaseRefType:
-								@:if IsValid(& @value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							case *myasthurts.StarRefType:
-								@:if IsValid(@value) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
-								@:}
-							}
-							@: // TODO: To extract map validation
 						default:
+							if strings.HasPrefix("map", field.RefType.Name()) {
+								switch field.RefType.(type) {
+								case *myasthurts.BaseRefType:
+									@:if IsValid(& @value) {
+									@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+									@:}
+								case *myasthurts.StarRefType:
+									@:if IsValid(@value) {
+									@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+									@:}
+								}
+								continue
+							}
+
 							switch field.RefType.(type) {
 							case *myasthurts.BaseRefType:
 								@:if IsValid(& @value) {
