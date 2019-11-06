@@ -1,62 +1,107 @@
 package models
 
 // Validate TODO
-func (m *MapStringToInterface) Validate() (errs ValidationErrors) {
-	if IsValid(&m.A) {
-		errs = append(errs, ErrEmpty("A", "required"))
+func (t *TypeChanString) Validate() (errs ValidationErrors) {
+	if Empty(len(t.ChanString)) {
+		errs = append(errs, ErrEmpty("ChanString", "required"))
 	}
-	if IsValid(m.B) {
-		errs = append(errs, ErrEmpty("B", "required"))
+	if Empty(len(t.PointerChanString)) {
+		errs = append(errs, ErrEmpty("PointerChanString", "required"))
 	}
-	return errs
-}
-
-// Validate TODO
-func (m *MapStringToString) Validate() (errs ValidationErrors) {
-	if IsValid(&m.A) {
-		errs = append(errs, ErrEmpty("A", "required"))
+	if Empty(len(t.ChanSliceString)) {
+		errs = append(errs, ErrEmpty("ChanSliceString", "required"))
 	}
-	if IsValid(m.B) {
-		errs = append(errs, ErrEmpty("B", "required"))
+	if Empty(len(t.ChanSlicePointerString)) {
+		errs = append(errs, ErrEmpty("ChanSlicePointerString", "required"))
 	}
 	return errs
 }
 
 // Validate TODO
-func (m *MapIntToString) Validate() (errs ValidationErrors) {
-	if IsValid(&m.A) {
-		errs = append(errs, ErrEmpty("A", "required"))
+func (t *TypeChanUint) Validate() (errs ValidationErrors) {
+	if Empty(len(t.ChanUint)) {
+		errs = append(errs, ErrEmpty("ChanUint", "required"))
 	}
-	if IsValid(m.B) {
-		errs = append(errs, ErrEmpty("B", "required"))
+	if Empty(len(t.PointerChanUint)) {
+		errs = append(errs, ErrEmpty("PointerChanUint", "required"))
 	}
-	return errs
-}
-
-// Validate TODO
-func (m *MapIntToBool) Validate() (errs ValidationErrors) {
-	if IsValid(&m.A) {
-		errs = append(errs, ErrEmpty("A", "required"))
+	if Empty(len(t.ChanSliceUint)) {
+		errs = append(errs, ErrEmpty("ChanSliceUint", "required"))
 	}
-	if IsValid(m.B) {
-		errs = append(errs, ErrEmpty("B", "required"))
+	if Empty(len(t.ChanSlicePointerUint)) {
+		errs = append(errs, ErrEmpty("ChanSlicePointerUint", "required"))
 	}
 	return errs
 }
 
 // Validate TODO
-func (m *MapIntToStruct) Validate() (errs ValidationErrors) {
-	if IsValid(&m.A) {
-		errs = append(errs, ErrEmpty("A", "required"))
+func (t *TypeInterface) Validate() (errs ValidationErrors) {
+	if IsValid(t.Interface) {
+		errs = append(errs, ErrEmpty("Interface", "required"))
 	}
-	if IsValid(&m.APointer) {
-		errs = append(errs, ErrEmpty("APointer", "required"))
+	if t.PointerInterface == nil {
+		errs = append(errs, ErrEmpty("PointerInterface", "required"))
 	}
-	if IsValid(m.B) {
-		errs = append(errs, ErrEmpty("B", "required"))
+	return errs
+}
+
+// Validate TODO
+func (t *TypeMapStringToInterface) Validate() (errs ValidationErrors) {
+	if Empty(len(t.MapStringToInterface)) {
+		errs = append(errs, ErrEmpty("MapStringToInterface", "required"))
 	}
-	if IsValid(m.BPointer) {
-		errs = append(errs, ErrEmpty("BPointer", "required"))
+	if t.PointerMapStringToInterface == nil {
+		errs = append(errs, ErrEmpty("PointerMapStringToInterface", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TypeMapStringToString) Validate() (errs ValidationErrors) {
+	if Empty(len(t.MapStringToString)) {
+		errs = append(errs, ErrEmpty("MapStringToString", "required"))
+	}
+	if t.PointerMapStringToString == nil {
+		errs = append(errs, ErrEmpty("PointerMapStringToString", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TypeMapIntToString) Validate() (errs ValidationErrors) {
+	if Empty(len(t.MapIntToString)) {
+		errs = append(errs, ErrEmpty("MapIntToString", "required"))
+	}
+	if t.PointerMapIntToString == nil {
+		errs = append(errs, ErrEmpty("PointerMapIntToString", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TypeMapIntToBool) Validate() (errs ValidationErrors) {
+	if Empty(len(t.MapIntToBool)) {
+		errs = append(errs, ErrEmpty("MapIntToBool", "required"))
+	}
+	if t.PointerMapIntToBool == nil {
+		errs = append(errs, ErrEmpty("PointerMapIntToBool", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TypeMapIntToStruct) Validate() (errs ValidationErrors) {
+	if Empty(len(t.MapIntToStructA)) {
+		errs = append(errs, ErrEmpty("MapIntToStructA", "required"))
+	}
+	if Empty(len(t.PointerMapIntToStructA)) {
+		errs = append(errs, ErrEmpty("PointerMapIntToStructA", "required"))
+	}
+	if t.MapIntToStructB == nil {
+		errs = append(errs, ErrEmpty("MapIntToStructB", "required"))
+	}
+	if t.PointerMapIntToStructPointerB == nil {
+		errs = append(errs, ErrEmpty("PointerMapIntToStructPointerB", "required"))
 	}
 	return errs
 }
@@ -66,7 +111,7 @@ func (h *Home) Validate() (errs ValidationErrors) {
 	if IsInt(h.ID) {
 		errs = append(errs, ErrNumberRequired("ID", "required"))
 	}
-	if IsValid(&h.Address) {
+	if IsValid(h.Address) {
 		errs = append(errs, ErrEmpty("Address", "required"))
 	}
 	return errs
@@ -83,7 +128,7 @@ func (c *Client) Validate() (errs ValidationErrors) {
 	if c.LastName == nil {
 		errs = append(errs, ErrEmpty("LastName", "required"))
 	}
-	if IsValid(c.Address) {
+	if c.Address == nil {
 		errs = append(errs, ErrEmpty("Address", "required"))
 	}
 	return errs
@@ -382,13 +427,13 @@ func (t *TypeSliceInt32) Validate() (errs ValidationErrors) {
 // Validate TODO
 func (t *TypeSliceInt64) Validate() (errs ValidationErrors) {
 	if Empty(len(t.SliceInt64)) {
-		errs = append(errs, ErrNumberRequired("SliceInt64", "required"))
+		errs = append(errs, ErrEmpty("SliceInt64", "required"))
 	}
 	if t.PointerSliceInt64 == nil {
 		errs = append(errs, ErrNumberRequired("PointerSliceInt64", "required"))
 	}
 	if Empty(len(t.SlicePointerInt64)) {
-		errs = append(errs, ErrNumberRequired("SlicePointerInt64", "required"))
+		errs = append(errs, ErrEmpty("SlicePointerInt64", "required"))
 	}
 	if t.PointerSlicePointerInt64 == nil {
 		errs = append(errs, ErrNumberRequired("PointerSlicePointerInt64", "required"))
@@ -399,13 +444,13 @@ func (t *TypeSliceInt64) Validate() (errs ValidationErrors) {
 // Validate TODO
 func (t *TypeSliceFloat32) Validate() (errs ValidationErrors) {
 	if Empty(len(t.SliceFloat32)) {
-		errs = append(errs, ErrNumberRequired("SliceFloat32", "required"))
+		errs = append(errs, ErrEmpty("SliceFloat32", "required"))
 	}
 	if t.PointerSliceFloat32 == nil {
 		errs = append(errs, ErrNumberRequired("PointerSliceFloat32", "required"))
 	}
 	if Empty(len(t.SlicePointerFloat32)) {
-		errs = append(errs, ErrNumberRequired("SlicePointerFloat32", "required"))
+		errs = append(errs, ErrEmpty("SlicePointerFloat32", "required"))
 	}
 	if t.PointerSlicePointerFloat32 == nil {
 		errs = append(errs, ErrNumberRequired("PointerSlicePointerFloat32", "required"))
@@ -416,13 +461,13 @@ func (t *TypeSliceFloat32) Validate() (errs ValidationErrors) {
 // Validate TODO
 func (t *TypeSliceFloat64) Validate() (errs ValidationErrors) {
 	if Empty(len(t.SliceFloat64)) {
-		errs = append(errs, ErrNumberRequired("SliceFloat64", "required"))
+		errs = append(errs, ErrEmpty("SliceFloat64", "required"))
 	}
 	if t.PointerSliceFloat64 == nil {
 		errs = append(errs, ErrNumberRequired("PointerSliceFloat64", "required"))
 	}
 	if Empty(len(t.SlicePointerFloat64)) {
-		errs = append(errs, ErrNumberRequired("SlicePointerFloat64", "required"))
+		errs = append(errs, ErrEmpty("SlicePointerFloat64", "required"))
 	}
 	if t.PointerSlicePointerFloat64 == nil {
 		errs = append(errs, ErrNumberRequired("PointerSlicePointerFloat64", "required"))
@@ -433,13 +478,13 @@ func (t *TypeSliceFloat64) Validate() (errs ValidationErrors) {
 // Validate TODO
 func (t *TypeSliceComplex64) Validate() (errs ValidationErrors) {
 	if Empty(len(t.SliceComplex64)) {
-		errs = append(errs, ErrNumberRequired("SliceComplex64", "required"))
+		errs = append(errs, ErrEmpty("SliceComplex64", "required"))
 	}
 	if t.PointerSliceComplex64 == nil {
 		errs = append(errs, ErrNumberRequired("PointerSliceComplex64", "required"))
 	}
 	if Empty(len(t.SlicePointerComplex64)) {
-		errs = append(errs, ErrNumberRequired("SlicePointerComplex64", "required"))
+		errs = append(errs, ErrEmpty("SlicePointerComplex64", "required"))
 	}
 	if t.PointerSlicePointerComplex64 == nil {
 		errs = append(errs, ErrNumberRequired("PointerSlicePointerComplex64", "required"))
@@ -450,13 +495,13 @@ func (t *TypeSliceComplex64) Validate() (errs ValidationErrors) {
 // Validate TODO
 func (t *TypeSliceComplex128) Validate() (errs ValidationErrors) {
 	if Empty(len(t.SliceComplex128)) {
-		errs = append(errs, ErrNumberRequired("SliceComplex128", "required"))
+		errs = append(errs, ErrEmpty("SliceComplex128", "required"))
 	}
 	if t.PointerSliceComplex128 == nil {
 		errs = append(errs, ErrNumberRequired("PointerSliceComplex128", "required"))
 	}
 	if Empty(len(t.SlicePointerComplex128)) {
-		errs = append(errs, ErrNumberRequired("SlicePointerComplex128", "required"))
+		errs = append(errs, ErrEmpty("SlicePointerComplex128", "required"))
 	}
 	if t.PointerSlicePointerComplex128 == nil {
 		errs = append(errs, ErrNumberRequired("PointerSlicePointerComplex128", "required"))
@@ -477,10 +522,10 @@ func (t *TypeString) Validate() (errs ValidationErrors) {
 
 // Validate TODO
 func (s *Struct) Validate() (errs ValidationErrors) {
-	if IsValid(&s.Struct) {
+	if IsValid(s.Struct) {
 		errs = append(errs, ErrEmpty("Struct", "required"))
 	}
-	if IsValid(s.StructPointer) {
+	if s.StructPointer == nil {
 		errs = append(errs, ErrEmpty("StructPointer", "required"))
 	}
 	if Empty(len(s.SliceStruct)) {
@@ -489,10 +534,10 @@ func (s *Struct) Validate() (errs ValidationErrors) {
 	if Empty(len(s.SliceStructPointer)) {
 		errs = append(errs, ErrEmpty("SliceStructPointer", "required"))
 	}
-	if IsValid(s.SlicePointerStruct) {
+	if s.SlicePointerStruct == nil {
 		errs = append(errs, ErrEmpty("SlicePointerStruct", "required"))
 	}
-	if IsValid(s.SlicePointerStructPointer) {
+	if s.SlicePointerStructPointer == nil {
 		errs = append(errs, ErrEmpty("SlicePointerStructPointer", "required"))
 	}
 	return errs

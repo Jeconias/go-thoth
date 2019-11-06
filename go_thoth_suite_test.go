@@ -10,5 +10,5 @@ import (
 
 func TestGoThoth(t *testing.T) {
 	RegisterFailHandler(Fail)
-	macchiato.RunSpecs(t, "GoThoth Suite")
+	macchiato.RunSpecs(t, "GoThoth Test Suite")
 }

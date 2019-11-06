@@ -24,5 +24,5 @@ func TestValidatorService(t *testing.T) {
 
 	gomega.RegisterFailHandler(ginkgo.Fail)
 
-	macchiato.RunSpecs(t, "GoThoth TestValidatorService Test Suite")
+	macchiato.RunSpecs(t, "GoThoth Test Suite")
 }

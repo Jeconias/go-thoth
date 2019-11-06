@@ -20,7 +20,7 @@ package @pkg.Name
 						switch field.RefType.Name() {
 						case "string":
 							switch field.RefType.(type) {
-							case *myasthurts.BaseRefType, *myasthurts.ArrayRefType:
+							case *myasthurts.BaseRefType, *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 								@:if Empty(len(@value)) {
 								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 								@:}
@@ -39,7 +39,7 @@ package @pkg.Name
 								@:if @value == nil {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
-							case *myasthurts.ArrayRefType:
+							case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 								@:if Empty(len(@value)) {
 								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 								@:}
@@ -54,7 +54,7 @@ package @pkg.Name
 								@:if @value == nil {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
-							case *myasthurts.ArrayRefType:
+							case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 								@:if Empty(len(@value)) {
 								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 								@:}
@@ -69,7 +69,7 @@ package @pkg.Name
 								@:if @value == nil {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
-							case *myasthurts.ArrayRefType:
+							case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 								@:if Empty(len(@value)) {
 								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 								@:}
@@ -84,7 +84,7 @@ package @pkg.Name
 								@:if @value == nil {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
-							case *myasthurts.ArrayRefType:
+							case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 								@:if Empty(len(@value)) {
 								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 								@:}
@@ -99,7 +99,7 @@ package @pkg.Name
 								@:if @value == nil {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
-							case *myasthurts.ArrayRefType:
+							case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 								@:if Empty(len(@value)) {
 								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 								@:}
@@ -114,7 +114,7 @@ package @pkg.Name
 								@:if @value == nil {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
-							case *myasthurts.ArrayRefType:
+							case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 								@:if Empty(len(@value)) {
 								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 								@:}
@@ -129,7 +129,7 @@ package @pkg.Name
 								@:if @value == nil {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
-							case *myasthurts.ArrayRefType:
+							case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 								@:if Empty(len(@value)) {
 								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 								@:}
@@ -144,7 +144,7 @@ package @pkg.Name
 								@:if @value == nil {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
-							case *myasthurts.ArrayRefType:
+							case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 								@:if Empty(len(@value)) {
 								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 								@:}
@@ -159,7 +159,7 @@ package @pkg.Name
 								@:if @value == nil {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
-							case *myasthurts.ArrayRefType:
+							case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 								@:if Empty(len(@value)) {
 								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 								@:}
@@ -174,7 +174,7 @@ package @pkg.Name
 								@:if @value == nil {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
-							case *myasthurts.ArrayRefType:
+							case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 								@:if Empty(len(@value)) {
 								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 								@:}
@@ -189,9 +189,9 @@ package @pkg.Name
 								@:if @value == nil {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
-							case *myasthurts.ArrayRefType:
+							case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 								@:if Empty(len(@value)) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 								@:}
 							}
 						case "float32":
@@ -204,9 +204,9 @@ package @pkg.Name
 								@:if @value == nil {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
-							case *myasthurts.ArrayRefType:
+							case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 								@:if Empty(len(@value)) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 								@:}
 							}
 						case "float64":
@@ -219,9 +219,9 @@ package @pkg.Name
 								@:if @value == nil {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
-							case *myasthurts.ArrayRefType:
+							case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 								@:if Empty(len(@value)) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 								@:}
 							}
 						case "complex64":
@@ -234,9 +234,9 @@ package @pkg.Name
 								@:if @value == nil {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
-							case *myasthurts.ArrayRefType:
+							case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 								@:if Empty(len(@value)) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 								@:}
 							}
 						case "complex128":
@@ -249,39 +249,38 @@ package @pkg.Name
 								@:if @value == nil {
 								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
 								@:}
-							case *myasthurts.ArrayRefType:
+							case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 								@:if Empty(len(@value)) {
-								@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 								@:}
 							}
 						default:
-							if strings.HasPrefix("map", field.RefType.Name()) {
+							if strings.HasPrefix(field.RefType.Name(), "map") {
 								switch field.RefType.(type) {
 								case *myasthurts.BaseRefType:
-									@:if IsValid(& @value) {
-									@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+									@:if Empty(len(@value)) {
+									@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 									@:}
 								case *myasthurts.StarRefType:
-									@:if IsValid(@value) {
-									@:	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+									@:if @value == nil {
+									@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
 									@:}
 								}
-								continue
-							}
-
-							switch field.RefType.(type) {
-							case *myasthurts.BaseRefType:
-								@:if IsValid(& @value) {
-								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
-								@:}
-							case *myasthurts.StarRefType:
-								@:if IsValid(@value) {
-								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
-								@:}
-							case *myasthurts.ArrayRefType:
-								@:if Empty(len(@value)) {
-								@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
-								@:}
+							} else {
+								switch field.RefType.(type) {
+								case *myasthurts.BaseRefType:
+									@:if IsValid(@value) {
+									@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+									@:}
+								case *myasthurts.StarRefType:
+									@:if @value == nil {
+									@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+									@:}
+								case *myasthurts.ArrayRefType:
+									@:if Empty(len(@value)) {
+									@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+									@:}
+								}
 							}
 						}
 					}
