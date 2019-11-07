@@ -6,7 +6,6 @@ package templates
 
 import (
 	"github.com/lab259/go-my-ast-hurts"
-	"github.com/lab259/go-thoth/generator/templates/rules"
 	"github.com/sipin/gorazor/gorazor"
 	"io"
 	"strings"
@@ -37,10 +36,7 @@ func RenderThoth(_buffer io.StringWriter, fileName string, pkg *myasthurts.Packa
 		for _, field := range s.Fields {
 			for _, tag := range field.Tag.Params {
 				value := strings.ToLower(s.Name()[0:1]) + "." + field.Name
-				switch tag.Value {
-				case "required":
-					rules.RenderRequired(_buffer, field, tag, value)
-				}
+				filterValidate(_buffer, field, tag, value)
 
 				_buffer.WriteString(("\n"))
 

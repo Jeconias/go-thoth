@@ -160,6 +160,101 @@ func (u *User) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (t *TypeEqNumber) Validate() (errs ValidationErrors) {
+	if t.Uint != 1 {
+		errs = append(errs, ErrEmpty("Uint", "eq"))
+	}
+	if t.UintPointer == nil || *t.UintPointer != 2 {
+		errs = append(errs, ErrEmpty("UintPointer", "eq"))
+	}
+	if t.Uint8 != 3 {
+		errs = append(errs, ErrEmpty("Uint8", "eq"))
+	}
+	if t.Uint8Pointer == nil || *t.Uint8Pointer != 4 {
+		errs = append(errs, ErrEmpty("Uint8Pointer", "eq"))
+	}
+	if t.Uint16 != 5 {
+		errs = append(errs, ErrEmpty("Uint16", "eq"))
+	}
+	if t.Uint16Pointer == nil || *t.Uint16Pointer != 6 {
+		errs = append(errs, ErrEmpty("Uint16Pointer", "eq"))
+	}
+	if t.Uint32 != 7 {
+		errs = append(errs, ErrEmpty("Uint32", "eq"))
+	}
+	if t.Uint32Pointer == nil || *t.Uint32Pointer != 8 {
+		errs = append(errs, ErrEmpty("Uint32Pointer", "eq"))
+	}
+	if t.Uint64 != 9 {
+		errs = append(errs, ErrEmpty("Uint64", "eq"))
+	}
+	if t.Uint64Pointer == nil || *t.Uint64Pointer != 10 {
+		errs = append(errs, ErrEmpty("Uint64Pointer", "eq"))
+	}
+	if t.Uintptr != 11 {
+		errs = append(errs, ErrEmpty("Uintptr", "eq"))
+	}
+	if t.UintptrPointer == nil || *t.UintptrPointer != 12 {
+		errs = append(errs, ErrEmpty("UintptrPointer", "eq"))
+	}
+	if t.Int != 13 {
+		errs = append(errs, ErrEmpty("Int", "eq"))
+	}
+	if t.IntPointer == nil || *t.IntPointer != 14 {
+		errs = append(errs, ErrEmpty("IntPointer", "eq"))
+	}
+	if t.Int8 != 15 {
+		errs = append(errs, ErrEmpty("Int8", "eq"))
+	}
+	if t.Int8Pointer == nil || *t.Int8Pointer != 16 {
+		errs = append(errs, ErrEmpty("Int8Pointer", "eq"))
+	}
+	if t.Int16 != 17 {
+		errs = append(errs, ErrEmpty("Int16", "eq"))
+	}
+	if t.Int16Pointer == nil || *t.Int16Pointer != 18 {
+		errs = append(errs, ErrEmpty("Int16Pointer", "eq"))
+	}
+	if t.Int32 != 19 {
+		errs = append(errs, ErrEmpty("Int32", "eq"))
+	}
+	if t.Int32Pointer == nil || *t.Int32Pointer != 20 {
+		errs = append(errs, ErrEmpty("Int32Pointer", "eq"))
+	}
+	if t.Int64 != 21 {
+		errs = append(errs, ErrEmpty("Int64", "eq"))
+	}
+	if t.Int64Pointer == nil || *t.Int64Pointer != 22 {
+		errs = append(errs, ErrEmpty("Int64Pointer", "eq"))
+	}
+	if t.Float32 != 23 {
+		errs = append(errs, ErrEmpty("Float32", "eq"))
+	}
+	if t.Float32Pointer == nil || *t.Float32Pointer != 24 {
+		errs = append(errs, ErrEmpty("Float32Pointer", "eq"))
+	}
+	if t.Float64 != 25 {
+		errs = append(errs, ErrEmpty("Float64", "eq"))
+	}
+	if t.Float64Pointer == nil || *t.Float64Pointer != 26 {
+		errs = append(errs, ErrEmpty("Float64Pointer", "eq"))
+	}
+	if t.Complex64 != 27 {
+		errs = append(errs, ErrEmpty("Complex64", "eq"))
+	}
+	if t.Complex64Pointer == nil || *t.Complex64Pointer != 28 {
+		errs = append(errs, ErrEmpty("Complex64Pointer", "eq"))
+	}
+	if t.Complex128 != 29 {
+		errs = append(errs, ErrEmpty("Complex128", "eq"))
+	}
+	if t.Complex128Pointer == nil || *t.Complex128Pointer != 30 {
+		errs = append(errs, ErrEmpty("Complex128Pointer", "eq"))
+	}
+	return errs
+}
+
+// Validate TODO
 func (n *Number) Validate() (errs ValidationErrors) {
 	if IsUint(n.Uint) {
 		errs = append(errs, ErrNumberRequired("Uint", "required"))
@@ -611,6 +706,17 @@ func (t *TypeString) Validate() (errs ValidationErrors) {
 
 	if t.Pointer == nil {
 		errs = append(errs, ErrEmpty("Pointer", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TypeEqString) Validate() (errs ValidationErrors) {
+	if t.String != "chico" {
+		errs = append(errs, ErrEmpty("String", "eq"))
+	}
+	if t.Pointer == nil || *t.Pointer != "bento" {
+		errs = append(errs, ErrEmpty("Pointer", "eq"))
 	}
 	return errs
 }

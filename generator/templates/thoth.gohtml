@@ -2,7 +2,6 @@
 	import (
 		"strings"
 		"github.com/lab259/go-my-ast-hurts"
-		"github.com/lab259/go-thoth/generator/templates/rules"
 	)
 	var fileName string
 	var pkg *myasthurts.Package
@@ -16,13 +15,11 @@ package @pkg.Name
 		for _, field := range s.Fields {
 			for _, tag := range field.Tag.Params {
 				value := strings.ToLower(s.Name()[0:1])+"."+field.Name
-				switch tag.Value {
-					case "required":
-						rules.RenderRequired(_buffer, field, tag, value)
-					}
-					@raw("\n")
+				filterValidate(_buffer, field, tag, value)
+				@raw("\n")
 			@:} // For tags
 		@:} // For fields
 		@:return errs
 	@:}
 }
+
