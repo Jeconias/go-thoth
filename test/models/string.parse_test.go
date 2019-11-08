@@ -43,6 +43,7 @@ var _ = Describe("String", func() {
 			Expect(errs).To(HaveLen(1))
 			Expect(errs[0].Field()).To(Equal("Pointer"))
 			Expect(errs[0].Tag()).To(Equal("required"))
+			Expect(errs[0].(error).Error()).To(Equal("Error: Validation of field 'Pointer' failed on tag 'required'"))
 		})
 	})
 

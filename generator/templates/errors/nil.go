@@ -22,7 +22,7 @@ func Nil(field *myasthurts.Field, tag myasthurts.TagParam, value interface{}) st
 func RenderNil(_buffer io.StringWriter, field *myasthurts.Field, tag myasthurts.TagParam, value interface{}) {
 	_buffer.WriteString("\nif ")
 	_buffer.WriteString(gorazor.HTMLEscape(value))
-	_buffer.WriteString(" == nil {\n\terrs = append(errs, ErrEmpty(\"")
+	_buffer.WriteString(" == nil {\n\terrs = append(errs, NewError(\"")
 	_buffer.WriteString(gorazor.HTMLEscape(field.Name))
 	_buffer.WriteString("\", \"")
 	_buffer.WriteString(gorazor.HTMLEscape(tag.Value))

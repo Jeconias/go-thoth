@@ -22,7 +22,7 @@ func Empty(field *myasthurts.Field, tag myasthurts.TagParam, value interface{}) 
 func RenderEmpty(_buffer io.StringWriter, field *myasthurts.Field, tag myasthurts.TagParam, value interface{}) {
 	_buffer.WriteString("\nif Empty(len(")
 	_buffer.WriteString(gorazor.HTMLEscape(value))
-	_buffer.WriteString(")) {\n\terrs = append(errs, ErrEmpty(\"")
+	_buffer.WriteString(")) {\n\terrs = append(errs, NewError(\"")
 	_buffer.WriteString(gorazor.HTMLEscape(field.Name))
 	_buffer.WriteString("\", \"")
 	_buffer.WriteString(gorazor.HTMLEscape(tag.Value))

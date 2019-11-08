@@ -9,5 +9,5 @@
 	var value interface{}
 -}
 @:if @filter (@value) {
-	errs = append(errs, ErrNumberRequired("@field.Name", "@tag.Value"))
+	errs = append(errs, NewError("@field.Name", "@tag.Value"))
 }

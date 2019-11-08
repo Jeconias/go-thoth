@@ -24,7 +24,7 @@ func RenderNumber(_buffer io.StringWriter, filter string, field *myasthurts.Fiel
 	_buffer.WriteString(gorazor.HTMLEscape(filter))
 	_buffer.WriteString(" (")
 	_buffer.WriteString(gorazor.HTMLEscape(value))
-	_buffer.WriteString(") {\n\terrs = append(errs, ErrNumberRequired(\"")
+	_buffer.WriteString(") {\n\terrs = append(errs, NewError(\"")
 	_buffer.WriteString(gorazor.HTMLEscape(field.Name))
 	_buffer.WriteString("\", \"")
 	_buffer.WriteString(gorazor.HTMLEscape(tag.Value))

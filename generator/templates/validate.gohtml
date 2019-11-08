@@ -7,14 +7,12 @@
 
 import "fmt"
 
-const fieldErrMsg = "Error:Field validation for '%s' failed on the '%s' tag"
+const fieldErrMsg = "Error: Validation of field '%s' failed on tag '%s'"
 
 // FieldError contains all functions to get error details
 type FieldError interface {
 	Tag() string
 	Field() string
-	Value() interface{}
-	Type() string
 }
 
 // ValidationErrors is an array of FieldError's for use in custom error
@@ -24,17 +22,6 @@ type ValidationErrors []FieldError
 type fieldError struct {
 	tag   string
 	field string
-	typ   string
-	value interface{}
-}
-
-// NewFieldError TODO
-func NewFieldError(field, typ, tag string) *fieldError {
-	return &fieldError{
-		tag:   tag,
-		field: field,
-		typ:   typ,
-	}
 }
 
 // Tag returns the validation tag that failed.
@@ -48,46 +35,18 @@ func (f *fieldError) Field() string {
 	return f.field
 }
 
-// Value returns the actual fields value in case needed for creating the error
-// message
-func (f *fieldError) Value() interface{} {
-	return f.value
-}
-
-// Type returns the Field's string Type
-func (f *fieldError) Type() string {
-	return f.typ
-}
-
 // Error returns the fieldError's error message
 func (f *fieldError) Error() string {
 	return fmt.Sprintf(fieldErrMsg, f.Field(), f.Tag())
 }
 
 var (
-	// ErrEmpty TODO
-	ErrEmpty = func(field, tag string) *fieldError {
+	// NewError TODO
+	NewError = func(field, tag string) *fieldError {
 		return &fieldError{
 			tag:   tag,
 			field: field,
 		}
-	}
-
-	// ErrNumberRequired TODO
-	ErrNumberRequired = func(field, tag string) *fieldError {
-		return &fieldError{
-			tag:   tag,
-			field: field,
-		}
-	}
-
-	// ErrStringEmpty TODO
-	ErrStringEmpty = func(field, tag string) *fieldError {
-		return NewFieldError(field, "string", tag)
-	}
-	// ErrArrayEmpty TODO
-	ErrArrayEmpty = func(field, tag string) *fieldError {
-		return NewFieldError(field, "slice", tag)
 	}
 )
 

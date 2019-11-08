@@ -33,7 +33,7 @@ func RenderEq(_buffer io.StringWriter, field *myasthurts.Field, tag myasthurts.T
 				_buffer.WriteString(gorazor.HTMLEscape(args[0]))
 				_buffer.WriteString("\" {")
 
-				_buffer.WriteString("\terrs = append(errs, ErrEmpty(\"")
+				_buffer.WriteString("\terrs = append(errs, NewError(\"")
 				_buffer.WriteString(gorazor.HTMLEscape(field.Name))
 				_buffer.WriteString("\", \"")
 				_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
@@ -53,7 +53,7 @@ func RenderEq(_buffer io.StringWriter, field *myasthurts.Field, tag myasthurts.T
 				_buffer.WriteString(gorazor.HTMLEscape(args[0]))
 				_buffer.WriteString("\" {")
 
-				_buffer.WriteString("\terrs = append(errs, ErrEmpty(\"")
+				_buffer.WriteString("\terrs = append(errs, NewError(\"")
 				_buffer.WriteString(gorazor.HTMLEscape(field.Name))
 				_buffer.WriteString("\", \"")
 				_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
@@ -74,7 +74,7 @@ func RenderEq(_buffer io.StringWriter, field *myasthurts.Field, tag myasthurts.T
 				_buffer.WriteString(gorazor.HTMLEscape(args[0]))
 				_buffer.WriteString(" {")
 
-				_buffer.WriteString("\terrs = append(errs, ErrEmpty(\"")
+				_buffer.WriteString("\terrs = append(errs, NewError(\"")
 				_buffer.WriteString(gorazor.HTMLEscape(field.Name))
 				_buffer.WriteString("\", \"")
 				_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
@@ -94,7 +94,7 @@ func RenderEq(_buffer io.StringWriter, field *myasthurts.Field, tag myasthurts.T
 				_buffer.WriteString(gorazor.HTMLEscape(args[0]))
 				_buffer.WriteString(" {")
 
-				_buffer.WriteString("\terrs = append(errs, ErrEmpty(\"")
+				_buffer.WriteString("\terrs = append(errs, NewError(\"")
 				_buffer.WriteString(gorazor.HTMLEscape(field.Name))
 				_buffer.WriteString("\", \"")
 				_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
@@ -115,7 +115,7 @@ func RenderEq(_buffer io.StringWriter, field *myasthurts.Field, tag myasthurts.T
 				_buffer.WriteString(gorazor.HTMLEscape(args[0]))
 				_buffer.WriteString(" {")
 
-				_buffer.WriteString("\terrs = append(errs, ErrEmpty(\"")
+				_buffer.WriteString("\terrs = append(errs, NewError(\"")
 				_buffer.WriteString(gorazor.HTMLEscape(field.Name))
 				_buffer.WriteString("\", \"")
 				_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
@@ -135,7 +135,7 @@ func RenderEq(_buffer io.StringWriter, field *myasthurts.Field, tag myasthurts.T
 				_buffer.WriteString(gorazor.HTMLEscape(args[0]))
 				_buffer.WriteString(" {")
 
-				_buffer.WriteString("\terrs = append(errs, ErrEmpty(\"")
+				_buffer.WriteString("\terrs = append(errs, NewError(\"")
 				_buffer.WriteString(gorazor.HTMLEscape(field.Name))
 				_buffer.WriteString("\", \"")
 				_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
@@ -156,7 +156,7 @@ func RenderEq(_buffer io.StringWriter, field *myasthurts.Field, tag myasthurts.T
 				_buffer.WriteString(gorazor.HTMLEscape(args[0]))
 				_buffer.WriteString(" {")
 
-				_buffer.WriteString("\terrs = append(errs, ErrEmpty(\"")
+				_buffer.WriteString("\terrs = append(errs, NewError(\"")
 				_buffer.WriteString(gorazor.HTMLEscape(field.Name))
 				_buffer.WriteString("\", \"")
 				_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
@@ -176,7 +176,7 @@ func RenderEq(_buffer io.StringWriter, field *myasthurts.Field, tag myasthurts.T
 				_buffer.WriteString(gorazor.HTMLEscape(args[0]))
 				_buffer.WriteString(" {")
 
-				_buffer.WriteString("\terrs = append(errs, ErrEmpty(\"")
+				_buffer.WriteString("\terrs = append(errs, NewError(\"")
 				_buffer.WriteString(gorazor.HTMLEscape(field.Name))
 				_buffer.WriteString("\", \"")
 				_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
@@ -208,7 +208,7 @@ func RenderEq(_buffer io.StringWriter, field *myasthurts.Field, tag myasthurts.T
 					_buffer.WriteString(("{}"))
 					_buffer.WriteString(") {")
 
-					_buffer.WriteString("\terrs = append(errs, ErrEmpty(\"")
+					_buffer.WriteString("\terrs = append(errs, NewError(\"")
 					_buffer.WriteString(gorazor.HTMLEscape(field.Name))
 					_buffer.WriteString("\", \"")
 					_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
@@ -222,7 +222,7 @@ func RenderEq(_buffer io.StringWriter, field *myasthurts.Field, tag myasthurts.T
 					_buffer.WriteString(gorazor.HTMLEscape(value))
 					_buffer.WriteString(") {")
 
-					_buffer.WriteString("\terrs = append(errs, ErrEmpty(\"")
+					_buffer.WriteString("\terrs = append(errs, NewError(\"")
 					_buffer.WriteString(gorazor.HTMLEscape(field.Name))
 					_buffer.WriteString("\", \"")
 					_buffer.WriteString(gorazor.HTMLEscape(tag.Value))

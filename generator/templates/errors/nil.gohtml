@@ -8,5 +8,5 @@
 	var value interface{}
 -}
 @:if @value == nil {
-	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+	errs = append(errs, NewError("@field.Name", "@tag.Value"))
 }

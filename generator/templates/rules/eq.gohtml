@@ -16,13 +16,13 @@
 		case *myasthurts.BaseRefType:
 			if len(args) == 1 {
 				@:if @value != "@args[0]" {
-				@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+				@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
 				@:}
 			}
 		case *myasthurts.StarRefType:
 			if len(args) == 1 {
 				@:if @value == nil || * @value != "@args[0]" {
-				@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+				@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
 				@:}
 			}
 		}
@@ -31,13 +31,13 @@
 		case *myasthurts.BaseRefType:
 			if len(args) == 1 {
 				@:if @value != @args[0] {
-				@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+				@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
 				@:}
 			}
 		case *myasthurts.StarRefType:
 			if len(args) == 1 {
 				@:if @value == nil || * @value != @args[0] {
-				@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+				@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
 				@:}
 			}
 		}
@@ -46,13 +46,13 @@
 		case *myasthurts.BaseRefType:
 			if len(args) == 1 {
 				@:if @value != @args[0] {
-				@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+				@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
 				@:}
 			}
 		case *myasthurts.StarRefType:
 			if len(args) == 1 {
 				@:if @value == nil || * @value != @args[0] {
-				@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+				@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
 				@:}
 			}
 		}
@@ -61,13 +61,13 @@
 		case *myasthurts.BaseRefType:
 			if len(args) == 1 {
 				@:if @value != @args[0] {
-				@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+				@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
 				@:}
 			}
 		case *myasthurts.StarRefType:
 			if len(args) == 1 {
 				@:if @value == nil || * @value != @args[0] {
-				@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+				@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
 				@:}
 			}
 		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
@@ -86,11 +86,11 @@
 			case *myasthurts.BaseRefType:
 				if 	field.RefType.Type() != nil {
 					@:if (@value == @field.RefType.Type().Name()@raw("{}")) {
-					@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+					@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
 					@:}
 				} else {
 					@:if IsValid(@value) {
-					@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+					@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
 					@:}
 				}
 			case *myasthurts.StarRefType:

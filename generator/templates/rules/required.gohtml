@@ -165,11 +165,11 @@
 			case *myasthurts.BaseRefType:
 				if 	field.RefType.Type() != nil {
 					@:if (@value == @field.RefType.Type().Name()@raw("{}")) {
-					@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+					@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
 					@:}
 				} else {
 					@:if IsValid(@value) {
-					@:	errs = append(errs, ErrEmpty("@field.Name", "@tag.Value"))
+					@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
 					@:}
 				}
 			case *myasthurts.StarRefType:
