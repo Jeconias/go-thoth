@@ -22,31 +22,33 @@ func Thoth(fileName string, pkg *myasthurts.Package, structsThoth []*myasthurts.
 func RenderThoth(_buffer io.StringWriter, fileName string, pkg *myasthurts.Package, structsThoth []*myasthurts.Struct) {
 	_buffer.WriteString("\npackage ")
 	_buffer.WriteString(gorazor.HTMLEscape(pkg.Name))
-	for _, s := range structsThoth {
+	if hasTag(structsThoth) {
+		for _, s := range structsThoth {
 
-		_buffer.WriteString(("\n// Validate TODO\n"))
+			_buffer.WriteString(("\n// Validate TODO\n"))
 
-		_buffer.WriteString("func(")
-		_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
-		_buffer.WriteString(" ")
-		_buffer.WriteString(("*"))
-		_buffer.WriteString(gorazor.HTMLEscape(s.Name()))
-		_buffer.WriteString(") Validate() (errs ValidationErrors) {")
+			_buffer.WriteString("func(")
+			_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+			_buffer.WriteString(" ")
+			_buffer.WriteString(("*"))
+			_buffer.WriteString(gorazor.HTMLEscape(s.Name()))
+			_buffer.WriteString(") Validate() (errs ValidationErrors) {")
 
-		for _, field := range s.Fields {
-			for _, tag := range field.Tag.Params {
-				value := strings.ToLower(s.Name()[0:1]) + "." + field.Name
-				filterValidate(_buffer, field, tag, value)
+			for _, field := range s.Fields {
+				for _, tag := range field.Tag.Params {
+					value := strings.ToLower(s.Name()[0:1]) + "." + field.Name
+					filterValidate(_buffer, field, tag, value)
 
-				_buffer.WriteString(("\n"))
+					_buffer.WriteString(("\n"))
 
-			} // For tags
-		} // For fields
+				} // For tags
+			} // For fields
 
-		_buffer.WriteString("return errs")
+			_buffer.WriteString("return errs")
 
-		_buffer.WriteString("}")
+			_buffer.WriteString("}")
 
+		}
 	}
 
 }

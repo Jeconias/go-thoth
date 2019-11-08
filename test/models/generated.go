@@ -156,6 +156,7 @@ func (u *User) Validate() (errs ValidationErrors) {
 	if Empty(len(u.Name)) {
 		errs = append(errs, NewError("Name", "required"))
 	}
+
 	return errs
 }
 

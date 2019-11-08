@@ -6,7 +6,6 @@ package rules
 
 import (
 	"github.com/lab259/go-my-ast-hurts"
-	"github.com/lab259/go-thoth/generator/templates/errors"
 	"github.com/sipin/gorazor/gorazor"
 	"io"
 	"strings"
@@ -62,6 +61,10 @@ func RenderEq(_buffer io.StringWriter, field *myasthurts.Field, tag myasthurts.T
 				_buffer.WriteString("}")
 
 			}
+		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
+
+			_buffer.WriteString("panic(\"not implemented\")")
+
 		}
 	case "uint", "uint8", "uint16", "uint32", "uint64", "uintptr", "int", "int8", "int16", "int32", "int64":
 		switch field.RefType.(type) {
@@ -185,58 +188,11 @@ func RenderEq(_buffer io.StringWriter, field *myasthurts.Field, tag myasthurts.T
 				_buffer.WriteString("}")
 
 			}
-		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			errors.RenderEmpty(_buffer, field, tag, value)
 		}
 	default:
-		if strings.HasPrefix(field.RefType.Name(), "map") {
-			switch field.RefType.(type) {
-			case *myasthurts.BaseRefType:
-				errors.RenderEmpty(_buffer, field, tag, value)
-			case *myasthurts.StarRefType:
-				errors.RenderNil(_buffer, field, tag, value)
-			}
-		} else {
-			switch field.RefType.(type) {
-			case *myasthurts.BaseRefType:
-				if field.RefType.Type() != nil {
 
-					_buffer.WriteString("if (")
-					_buffer.WriteString(gorazor.HTMLEscape(value))
-					_buffer.WriteString(" == ")
-					_buffer.WriteString(gorazor.HTMLEscape(field.RefType.Type().Name()))
-					_buffer.WriteString(("{}"))
-					_buffer.WriteString(") {")
+		_buffer.WriteString("panic(\"not implemented\")")
 
-					_buffer.WriteString("\terrs = append(errs, NewError(\"")
-					_buffer.WriteString(gorazor.HTMLEscape(field.Name))
-					_buffer.WriteString("\", \"")
-					_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
-					_buffer.WriteString("\"))")
-
-					_buffer.WriteString("}")
-
-				} else {
-
-					_buffer.WriteString("if IsValid(")
-					_buffer.WriteString(gorazor.HTMLEscape(value))
-					_buffer.WriteString(") {")
-
-					_buffer.WriteString("\terrs = append(errs, NewError(\"")
-					_buffer.WriteString(gorazor.HTMLEscape(field.Name))
-					_buffer.WriteString("\", \"")
-					_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
-					_buffer.WriteString("\"))")
-
-					_buffer.WriteString("}")
-
-				}
-			case *myasthurts.StarRefType:
-				errors.RenderNil(_buffer, field, tag, value)
-			case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-				errors.RenderEmpty(_buffer, field, tag, value)
-			}
-		}
 	}
 
 }
