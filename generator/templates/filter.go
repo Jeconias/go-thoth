@@ -1,7 +1,6 @@
 package templates
 
 import (
-	"fmt"
 	"io"
 	"strings"
 
@@ -20,32 +19,40 @@ func hasTag(structsThoth []*myasthurts.Struct) bool {
 	return false
 }
 
-func filterValidate(_buffer io.StringWriter, field *myasthurts.Field, tag myasthurts.TagParam, value interface{}, args ...string) {
+func filterValidate(_buffer io.StringWriter, str *myasthurts.Struct, field *myasthurts.Field, tag myasthurts.TagParam, attribute interface{}, args ...string) {
 	switch tag.Value {
 	case "-":
 		// Skip field...
 	case "required":
-		rules.RenderRequired(_buffer, field, tag, value)
+		rules.RenderRequired(_buffer, field, tag, attribute)
+	case "required_with":
+		for _, s := range args {
+			for _, f := range str.Fields {
+				if f.Name == s {
+					for _, param := range f.Tag.Params {
+						rules.RenderRequired_with(_buffer, field, param, attribute)
+					}
+				}
+			}
+		}
 	case "eq":
-		rules.RenderEq(_buffer, field, tag, value, args)
+		rules.RenderEq(_buffer, field, tag, attribute, args)
 	default:
 		k, v := splitArgs(tag)
 		tag.Value = k
-		filterValidate(_buffer, field, tag, value, v...)
+		filterValidate(_buffer, str, field, tag, attribute, v...)
 	}
 }
 
-func splitArgs(tag myasthurts.TagParam) (key string, value []string) {
+func splitArgs(tag myasthurts.TagParam) (string, []string) {
 	args := strings.Split(tag.Value, "=")
-	if len(args) > 0 {
-		key = args[0]
-		value = args[1:]
-		if len(value) == 2 {
-			v := strings.Split(args[1], " ")
-			fmt.Println("Args\t", len(args), args)
-			fmt.Println("Values\t", len(v), v)
-			return key, v
-		}
+	switch len(args) {
+	case 1:
+		return args[0], args[1:]
+	case 2:
+		v := strings.Split(args[1], " ")
+		return args[0], v
+	default:
+		return "", nil
 	}
-	return
 }

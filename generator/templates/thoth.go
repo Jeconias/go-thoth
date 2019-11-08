@@ -27,8 +27,10 @@ func RenderThoth(_buffer io.StringWriter, fileName string, pkg *myasthurts.Packa
 
 			_buffer.WriteString(("\n// Validate TODO\n"))
 
+			obj := strings.ToLower(s.Name()[0:1])
+
 			_buffer.WriteString("func(")
-			_buffer.WriteString(gorazor.HTMLEscape(strings.ToLower(s.Name()[0:1])))
+			_buffer.WriteString(gorazor.HTMLEscape(obj))
 			_buffer.WriteString(" ")
 			_buffer.WriteString(("*"))
 			_buffer.WriteString(gorazor.HTMLEscape(s.Name()))
@@ -36,8 +38,8 @@ func RenderThoth(_buffer io.StringWriter, fileName string, pkg *myasthurts.Packa
 
 			for _, field := range s.Fields {
 				for _, tag := range field.Tag.Params {
-					value := strings.ToLower(s.Name()[0:1]) + "." + field.Name
-					filterValidate(_buffer, field, tag, value)
+					attribute := obj + "." + field.Name
+					filterValidate(_buffer, s, field, tag, attribute)
 
 					_buffer.WriteString(("\n"))
 

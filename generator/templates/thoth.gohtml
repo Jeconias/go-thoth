@@ -13,11 +13,12 @@ package @pkg.Name
 @if hasTag(structsThoth) {
 	for _, s := range structsThoth {
 		@raw("\n// Validate TODO\n")
-		@:func(@strings.ToLower(@s.Name()[0:1]) @raw("*")@s.Name()) Validate() (errs ValidationErrors) {
+		obj := strings.ToLower(s.Name()[0:1])
+		@:func(@obj @raw("*")@s.Name()) Validate() (errs ValidationErrors) {
 			for _, field := range s.Fields {
 				for _, tag := range field.Tag.Params {
-					value := strings.ToLower(s.Name()[0:1])+"."+field.Name
-					filterValidate(_buffer, field, tag, value)
+					attribute := obj+"."+field.Name
+					filterValidate(_buffer, s, field, tag, attribute)
 					@raw("\n")
 				@:} // For tags
 			@:} // For fields

@@ -380,6 +380,17 @@ func (n *Number) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (r *RequiredWith) Validate() (errs ValidationErrors) {
+	if Empty(len(r.Name)) {
+		errs = append(errs, NewError("Name", "required"))
+	}
+	if IsValid(r.Age) {
+		errs = append(errs, NewError("Age", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
 func (t *TypeSliceString) Validate() (errs ValidationErrors) {
 	if Empty(len(t.SliceString)) {
 		errs = append(errs, NewError("SliceString", "required"))
