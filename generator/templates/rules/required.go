@@ -13,181 +13,221 @@ import (
 )
 
 // Required generates templates/rules/required.gohtml
-func Required(field *myasthurts.Field, tag myasthurts.TagParam, value interface{}) string {
+func Required(input *RequiredInput) string {
 	var _b strings.Builder
-	RenderRequired(&_b, field, tag, value)
+	RenderRequired(&_b, input)
 	return _b.String()
 }
 
 // RenderRequired render templates/rules/required.gohtml
-func RenderRequired(_buffer io.StringWriter, field *myasthurts.Field, tag myasthurts.TagParam, value interface{}) {
-	switch field.RefType.Name() {
+func RenderRequired(_buffer io.StringWriter, input *RequiredInput) {
+	switch input.Field.RefType.Name() {
 	case "string":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType, *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			errors.RenderEmpty(_buffer, field, tag, value)
+			errors.RenderEmpty(_buffer, input.Field, input.Tag, input.Ref)
 		case *myasthurts.StarRefType:
-			errors.RenderNil(_buffer, field, tag, value)
+			errors.RenderNil(_buffer, input.Field, input.Tag, input.Ref)
 		}
 	case "uint":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			errors.RenderNumber(_buffer, "IsUint", field, tag, value)
+			errors.RenderNumber(_buffer, "IsUint", input.Field, input.Tag, input.Ref)
 		case *myasthurts.StarRefType:
-			errors.RenderZero(_buffer, field, tag, value)
+			errors.RenderZero(_buffer, input.Field, input.Tag, input.Ref)
 		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			errors.RenderEmpty(_buffer, field, tag, value)
+			errors.RenderEmpty(_buffer, input.Field, input.Tag, input.Ref)
 		}
 	case "uint8":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			errors.RenderNumber(_buffer, "IsUint8", field, tag, value)
+			errors.RenderNumber(_buffer, "IsUint8", input.Field, input.Tag, input.Ref)
 		case *myasthurts.StarRefType:
-			errors.RenderZero(_buffer, field, tag, value)
+			errors.RenderZero(_buffer, input.Field, input.Tag, input.Ref)
 		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			errors.RenderEmpty(_buffer, field, tag, value)
+			errors.RenderEmpty(_buffer, input.Field, input.Tag, input.Ref)
 		}
 	case "uint16":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			errors.RenderNumber(_buffer, "IsUint16", field, tag, value)
+			errors.RenderNumber(_buffer, "IsUint16", input.Field, input.Tag, input.Ref)
 		case *myasthurts.StarRefType:
-			errors.RenderZero(_buffer, field, tag, value)
+			errors.RenderZero(_buffer, input.Field, input.Tag, input.Ref)
 		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			errors.RenderEmpty(_buffer, field, tag, value)
+			errors.RenderEmpty(_buffer, input.Field, input.Tag, input.Ref)
 		}
 	case "uint32":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			errors.RenderNumber(_buffer, "IsUint32", field, tag, value)
+			errors.RenderNumber(_buffer, "IsUint32", input.Field, input.Tag, input.Ref)
 		case *myasthurts.StarRefType:
-			errors.RenderZero(_buffer, field, tag, value)
+			errors.RenderZero(_buffer, input.Field, input.Tag, input.Ref)
 		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			errors.RenderEmpty(_buffer, field, tag, value)
+			errors.RenderEmpty(_buffer, input.Field, input.Tag, input.Ref)
 		}
 	case "uint64":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			errors.RenderNumber(_buffer, "IsUint64", field, tag, value)
+			errors.RenderNumber(_buffer, "IsUint64", input.Field, input.Tag, input.Ref)
 		case *myasthurts.StarRefType:
-			errors.RenderZero(_buffer, field, tag, value)
+			errors.RenderZero(_buffer, input.Field, input.Tag, input.Ref)
 		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			errors.RenderEmpty(_buffer, field, tag, value)
+			errors.RenderEmpty(_buffer, input.Field, input.Tag, input.Ref)
 		}
 	case "uintptr":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			errors.RenderNumber(_buffer, "IsUintptr", field, tag, value)
+			errors.RenderNumber(_buffer, "IsUintptr", input.Field, input.Tag, input.Ref)
 		case *myasthurts.StarRefType:
-			errors.RenderZero(_buffer, field, tag, value)
+			errors.RenderZero(_buffer, input.Field, input.Tag, input.Ref)
 		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			errors.RenderEmpty(_buffer, field, tag, value)
+			errors.RenderEmpty(_buffer, input.Field, input.Tag, input.Ref)
 		}
 	case "int":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			errors.RenderNumber(_buffer, "IsInt", field, tag, value)
+			errors.RenderNumber(_buffer, "IsInt", input.Field, input.Tag, input.Ref)
 		case *myasthurts.StarRefType:
-			errors.RenderZero(_buffer, field, tag, value)
+			errors.RenderZero(_buffer, input.Field, input.Tag, input.Ref)
 		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			errors.RenderEmpty(_buffer, field, tag, value)
+			errors.RenderEmpty(_buffer, input.Field, input.Tag, input.Ref)
 		}
 	case "int8":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			errors.RenderNumber(_buffer, "IsInt8", field, tag, value)
+			errors.RenderNumber(_buffer, "IsInt8", input.Field, input.Tag, input.Ref)
 		case *myasthurts.StarRefType:
-			errors.RenderZero(_buffer, field, tag, value)
+			errors.RenderZero(_buffer, input.Field, input.Tag, input.Ref)
 		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			errors.RenderEmpty(_buffer, field, tag, value)
+			errors.RenderEmpty(_buffer, input.Field, input.Tag, input.Ref)
 		}
 	case "int16":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			errors.RenderNumber(_buffer, "IsInt16", field, tag, value)
+			errors.RenderNumber(_buffer, "IsInt16", input.Field, input.Tag, input.Ref)
 		case *myasthurts.StarRefType:
-			errors.RenderZero(_buffer, field, tag, value)
+			errors.RenderZero(_buffer, input.Field, input.Tag, input.Ref)
 		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			errors.RenderEmpty(_buffer, field, tag, value)
+			errors.RenderEmpty(_buffer, input.Field, input.Tag, input.Ref)
 		}
 	case "int32":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			errors.RenderNumber(_buffer, "IsInt32", field, tag, value)
+			errors.RenderNumber(_buffer, "IsInt32", input.Field, input.Tag, input.Ref)
 		case *myasthurts.StarRefType:
-			errors.RenderZero(_buffer, field, tag, value)
+			errors.RenderZero(_buffer, input.Field, input.Tag, input.Ref)
 		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			errors.RenderEmpty(_buffer, field, tag, value)
+			errors.RenderEmpty(_buffer, input.Field, input.Tag, input.Ref)
 		}
 	case "int64":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			errors.RenderNumber(_buffer, "IsInt64", field, tag, value)
+			errors.RenderNumber(_buffer, "IsInt64", input.Field, input.Tag, input.Ref)
 		case *myasthurts.StarRefType:
-			errors.RenderZero(_buffer, field, tag, value)
+			errors.RenderZero(_buffer, input.Field, input.Tag, input.Ref)
 		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			errors.RenderEmpty(_buffer, field, tag, value)
+			errors.RenderEmpty(_buffer, input.Field, input.Tag, input.Ref)
 		}
 	case "float32":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			errors.RenderNumber(_buffer, "IsFloat32", field, tag, value)
+			errors.RenderNumber(_buffer, "IsFloat32", input.Field, input.Tag, input.Ref)
 		case *myasthurts.StarRefType:
-			errors.RenderZero(_buffer, field, tag, value)
+			errors.RenderZero(_buffer, input.Field, input.Tag, input.Ref)
 		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			errors.RenderEmpty(_buffer, field, tag, value)
+			errors.RenderEmpty(_buffer, input.Field, input.Tag, input.Ref)
 		}
 	case "float64":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			errors.RenderNumber(_buffer, "IsFloat64", field, tag, value)
+			errors.RenderNumber(_buffer, "IsFloat64", input.Field, input.Tag, input.Ref)
 		case *myasthurts.StarRefType:
-			errors.RenderZero(_buffer, field, tag, value)
+			errors.RenderZero(_buffer, input.Field, input.Tag, input.Ref)
 		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			errors.RenderEmpty(_buffer, field, tag, value)
+			errors.RenderEmpty(_buffer, input.Field, input.Tag, input.Ref)
 		}
 	case "complex64":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			errors.RenderNumber(_buffer, "IsComplex64", field, tag, value)
+			errors.RenderNumber(_buffer, "IsComplex64", input.Field, input.Tag, input.Ref)
 		case *myasthurts.StarRefType:
-			errors.RenderZero(_buffer, field, tag, value)
+			errors.RenderZero(_buffer, input.Field, input.Tag, input.Ref)
 		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			errors.RenderEmpty(_buffer, field, tag, value)
+			errors.RenderEmpty(_buffer, input.Field, input.Tag, input.Ref)
 		}
 	case "complex128":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			errors.RenderNumber(_buffer, "IsComplex128", field, tag, value)
+			errors.RenderNumber(_buffer, "IsComplex128", input.Field, input.Tag, input.Ref)
 		case *myasthurts.StarRefType:
-			errors.RenderZero(_buffer, field, tag, value)
+			errors.RenderZero(_buffer, input.Field, input.Tag, input.Ref)
 		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			errors.RenderEmpty(_buffer, field, tag, value)
+			errors.RenderEmpty(_buffer, input.Field, input.Tag, input.Ref)
+		}
+	case "bool":
+		switch input.Field.RefType.(type) {
+		case *myasthurts.BaseRefType:
+
+			_buffer.WriteString("if ! ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Ref))
+			_buffer.WriteString(" {")
+
+			_buffer.WriteString("\terrs = append(errs, NewError(\"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Field.Name))
+			_buffer.WriteString("\", \"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Tag.Value))
+			_buffer.WriteString("\"))")
+
+			_buffer.WriteString("}")
+
+			if c, ok := Condition[input.Ref]; ok {
+				Condition[input.Ref] = (c + " || ! " + input.Ref)
+			} else {
+				Condition[input.Ref] = input.Ref
+			}
+		case *myasthurts.StarRefType:
+
+			_buffer.WriteString("if ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Ref))
+			_buffer.WriteString(" == nil || * ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Ref))
+			_buffer.WriteString(" == 0{")
+
+			_buffer.WriteString("\terrs = append(errs, NewError(\"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Field.Name))
+			_buffer.WriteString("\", \"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Tag.Value))
+			_buffer.WriteString("\"))")
+
+			_buffer.WriteString("}")
+
+		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
+			errors.RenderEmpty(_buffer, input.Field, input.Tag, input.Ref)
 		}
 	default:
-		if strings.HasPrefix(field.RefType.Name(), "map") {
-			switch field.RefType.(type) {
+		if strings.HasPrefix(input.Field.RefType.Name(), "map") {
+			switch input.Field.RefType.(type) {
 			case *myasthurts.BaseRefType:
-				errors.RenderEmpty(_buffer, field, tag, value)
+				errors.RenderEmpty(_buffer, input.Field, input.Tag, input.Ref)
 			case *myasthurts.StarRefType:
-				errors.RenderNil(_buffer, field, tag, value)
+				errors.RenderNil(_buffer, input.Field, input.Tag, input.Ref)
 			}
 		} else {
-			switch field.RefType.(type) {
+			switch input.Field.RefType.(type) {
 			case *myasthurts.BaseRefType:
-				if field.RefType.Type() != nil {
+				if input.Field.RefType.Type() != nil {
 
 					_buffer.WriteString("if (")
-					_buffer.WriteString(gorazor.HTMLEscape(value))
+					_buffer.WriteString(gorazor.HTMLEscape(input.Ref))
 					_buffer.WriteString(" == ")
-					_buffer.WriteString(gorazor.HTMLEscape(field.RefType.Type().Name()))
+					_buffer.WriteString(gorazor.HTMLEscape(input.Field.RefType.Type().Name()))
 					_buffer.WriteString(("{}"))
 					_buffer.WriteString(") {")
 
 					_buffer.WriteString("\terrs = append(errs, NewError(\"")
-					_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+					_buffer.WriteString(gorazor.HTMLEscape(input.Field.Name))
 					_buffer.WriteString("\", \"")
-					_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
+					_buffer.WriteString(gorazor.HTMLEscape(input.Tag.Value))
 					_buffer.WriteString("\"))")
 
 					_buffer.WriteString("}")
@@ -195,22 +235,22 @@ func RenderRequired(_buffer io.StringWriter, field *myasthurts.Field, tag myasth
 				} else {
 
 					_buffer.WriteString("if IsValid(")
-					_buffer.WriteString(gorazor.HTMLEscape(value))
+					_buffer.WriteString(gorazor.HTMLEscape(input.Ref))
 					_buffer.WriteString(") {")
 
 					_buffer.WriteString("\terrs = append(errs, NewError(\"")
-					_buffer.WriteString(gorazor.HTMLEscape(field.Name))
+					_buffer.WriteString(gorazor.HTMLEscape(input.Field.Name))
 					_buffer.WriteString("\", \"")
-					_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
+					_buffer.WriteString(gorazor.HTMLEscape(input.Tag.Value))
 					_buffer.WriteString("\"))")
 
 					_buffer.WriteString("}")
 
 				}
 			case *myasthurts.StarRefType:
-				errors.RenderNil(_buffer, field, tag, value)
+				errors.RenderNil(_buffer, input.Field, input.Tag, input.Ref)
 			case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-				errors.RenderEmpty(_buffer, field, tag, value)
+				errors.RenderEmpty(_buffer, input.Field, input.Tag, input.Ref)
 			}
 		}
 	}

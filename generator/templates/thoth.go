@@ -6,6 +6,7 @@ package templates
 
 import (
 	"github.com/lab259/go-my-ast-hurts"
+	"github.com/lab259/go-thoth/generator/templates/rules"
 	"github.com/sipin/gorazor/gorazor"
 	"io"
 	"strings"
@@ -24,22 +25,31 @@ func RenderThoth(_buffer io.StringWriter, fileName string, pkg *myasthurts.Packa
 	_buffer.WriteString(gorazor.HTMLEscape(pkg.Name))
 	if hasTag(structsThoth) {
 		for _, s := range structsThoth {
+			// Clean conditions
+			rules.Condition = make(map[string]string, 10)
 
 			_buffer.WriteString(("\n// Validate TODO\n"))
 
-			obj := strings.ToLower(s.Name()[0:1])
+			strRef := strings.ToLower(s.Name()[0:1])
 
 			_buffer.WriteString("func(")
-			_buffer.WriteString(gorazor.HTMLEscape(obj))
+			_buffer.WriteString(gorazor.HTMLEscape(strRef))
 			_buffer.WriteString(" ")
 			_buffer.WriteString(("*"))
 			_buffer.WriteString(gorazor.HTMLEscape(s.Name()))
 			_buffer.WriteString(") Validate() (errs ValidationErrors) {")
 
 			for _, field := range s.Fields {
+
 				for _, tag := range field.Tag.Params {
-					attribute := obj + "." + field.Name
-					filterValidate(_buffer, s, field, tag, attribute)
+					attribute := strRef + "." + field.Name
+					filterValidate(_buffer, &FilterInput{
+						Struct:       s,
+						StructRef:    strRef,
+						Field:        field,
+						Tag:          tag,
+						AttributeRef: attribute,
+					})
 
 					_buffer.WriteString(("\n"))
 
@@ -51,6 +61,7 @@ func RenderThoth(_buffer io.StringWriter, fileName string, pkg *myasthurts.Packa
 			_buffer.WriteString("}")
 
 		}
+
 	}
 
 }

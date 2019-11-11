@@ -380,12 +380,40 @@ func (n *Number) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
-func (r *RequiredWith) Validate() (errs ValidationErrors) {
-	if Empty(len(r.Name)) {
-		errs = append(errs, NewError("Name", "required"))
+func (r *RequiredWithField) Validate() (errs ValidationErrors) {
+	if !r.Status {
+		errs = append(errs, NewError("Status", "required"))
 	}
-	if IsValid(r.Age) {
-		errs = append(errs, NewError("Age", "required"))
+
+	if Empty(len(r.Name)) || r.Status {
+		errs = append(errs, NewError("Name", "required_with"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (r *RequiredWithFieldStrPointer) Validate() (errs ValidationErrors) {
+	if !r.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if r.Name == nil || r.Status {
+		errs = append(errs, NewError("Name", "required_with"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (r *RequiredWithFields) Validate() (errs ValidationErrors) {
+	if r.ID != 1 {
+		errs = append(errs, NewError("ID", "eq"))
+	}
+	if !r.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if r.Name == nil || r.ID == 1 || r.Status {
+		errs = append(errs, NewError("Name", "required_with"))
 	}
 	return errs
 }

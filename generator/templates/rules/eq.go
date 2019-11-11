@@ -12,182 +12,178 @@ import (
 )
 
 // Eq generates templates/rules/eq.gohtml
-func Eq(field *myasthurts.Field, tag myasthurts.TagParam, value interface{}, args []string) string {
+func Eq(input *EqInput) string {
 	var _b strings.Builder
-	RenderEq(&_b, field, tag, value, args)
+	RenderEq(&_b, input)
 	return _b.String()
 }
 
 // RenderEq render templates/rules/eq.gohtml
-func RenderEq(_buffer io.StringWriter, field *myasthurts.Field, tag myasthurts.TagParam, value interface{}, args []string) {
-	switch field.RefType.Name() {
+func RenderEq(_buffer io.StringWriter, input *EqInput) {
+	switch input.Field.RefType.Name() {
 	case "string":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			if len(args) == 1 {
 
-				_buffer.WriteString("if ")
-				_buffer.WriteString(gorazor.HTMLEscape(value))
-				_buffer.WriteString(" != \"")
-				_buffer.WriteString(gorazor.HTMLEscape(args[0]))
-				_buffer.WriteString("\" {")
+			_buffer.WriteString("if ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Ref))
+			_buffer.WriteString(" != \"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Value))
+			_buffer.WriteString("\" {")
 
-				_buffer.WriteString("\terrs = append(errs, NewError(\"")
-				_buffer.WriteString(gorazor.HTMLEscape(field.Name))
-				_buffer.WriteString("\", \"")
-				_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
-				_buffer.WriteString("\"))")
+			_buffer.WriteString("\terrs = append(errs, NewError(\"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Field.Name))
+			_buffer.WriteString("\", \"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Tag.Value))
+			_buffer.WriteString("\"))")
 
-				_buffer.WriteString("}")
+			_buffer.WriteString("}")
 
-			}
+			Condition[input.Ref] = (input.Ref + " != " + input.Value.(string))
 		case *myasthurts.StarRefType:
-			if len(args) == 1 {
 
-				_buffer.WriteString("if ")
-				_buffer.WriteString(gorazor.HTMLEscape(value))
-				_buffer.WriteString(" == nil || * ")
-				_buffer.WriteString(gorazor.HTMLEscape(value))
-				_buffer.WriteString(" != \"")
-				_buffer.WriteString(gorazor.HTMLEscape(args[0]))
-				_buffer.WriteString("\" {")
+			_buffer.WriteString("if ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Ref))
+			_buffer.WriteString(" == nil || * ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Ref))
+			_buffer.WriteString(" != \"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Value))
+			_buffer.WriteString("\" {")
 
-				_buffer.WriteString("\terrs = append(errs, NewError(\"")
-				_buffer.WriteString(gorazor.HTMLEscape(field.Name))
-				_buffer.WriteString("\", \"")
-				_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
-				_buffer.WriteString("\"))")
+			_buffer.WriteString("\terrs = append(errs, NewError(\"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Field.Name))
+			_buffer.WriteString("\", \"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Tag.Value))
+			_buffer.WriteString("\"))")
 
-				_buffer.WriteString("}")
+			_buffer.WriteString("}")
 
-			}
+			Condition[input.Ref] = (input.Ref + " == nil || * " + input.Ref + " != \"" + input.Value.(string) + "\"")
 		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 
 			_buffer.WriteString("panic(\"not implemented\")")
 
 		}
 	case "uint", "uint8", "uint16", "uint32", "uint64", "uintptr", "int", "int8", "int16", "int32", "int64":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			if len(args) == 1 {
 
-				_buffer.WriteString("if ")
-				_buffer.WriteString(gorazor.HTMLEscape(value))
-				_buffer.WriteString(" != ")
-				_buffer.WriteString(gorazor.HTMLEscape(args[0]))
-				_buffer.WriteString(" {")
+			_buffer.WriteString("if ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Ref))
+			_buffer.WriteString(" != ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Value))
+			_buffer.WriteString(" {")
 
-				_buffer.WriteString("\terrs = append(errs, NewError(\"")
-				_buffer.WriteString(gorazor.HTMLEscape(field.Name))
-				_buffer.WriteString("\", \"")
-				_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
-				_buffer.WriteString("\"))")
+			_buffer.WriteString("\terrs = append(errs, NewError(\"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Field.Name))
+			_buffer.WriteString("\", \"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Tag.Value))
+			_buffer.WriteString("\"))")
 
-				_buffer.WriteString("}")
+			_buffer.WriteString("}")
 
+			if c, ok := Condition[input.Ref]; ok {
+				Condition[input.Ref] = (c + " || " + input.Ref + " == " + input.Value.(string))
+			} else {
+				Condition[input.Ref] = (input.Ref + " == " + input.Value.(string))
 			}
 		case *myasthurts.StarRefType:
-			if len(args) == 1 {
 
-				_buffer.WriteString("if ")
-				_buffer.WriteString(gorazor.HTMLEscape(value))
-				_buffer.WriteString(" == nil || * ")
-				_buffer.WriteString(gorazor.HTMLEscape(value))
-				_buffer.WriteString(" != ")
-				_buffer.WriteString(gorazor.HTMLEscape(args[0]))
-				_buffer.WriteString(" {")
+			_buffer.WriteString("if ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Ref))
+			_buffer.WriteString(" == nil || * ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Ref))
+			_buffer.WriteString(" != ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Value))
+			_buffer.WriteString(" {")
 
-				_buffer.WriteString("\terrs = append(errs, NewError(\"")
-				_buffer.WriteString(gorazor.HTMLEscape(field.Name))
-				_buffer.WriteString("\", \"")
-				_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
-				_buffer.WriteString("\"))")
+			_buffer.WriteString("\terrs = append(errs, NewError(\"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Field.Name))
+			_buffer.WriteString("\", \"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Tag.Value))
+			_buffer.WriteString("\"))")
 
-				_buffer.WriteString("}")
+			_buffer.WriteString("}")
 
-			}
+			Condition[input.Ref] = (input.Ref + " == nil || * " + input.Ref + " != " + input.Value.(string))
 		}
 	case "float32", "float64":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			if len(args) == 1 {
 
-				_buffer.WriteString("if ")
-				_buffer.WriteString(gorazor.HTMLEscape(value))
-				_buffer.WriteString(" != ")
-				_buffer.WriteString(gorazor.HTMLEscape(args[0]))
-				_buffer.WriteString(" {")
+			_buffer.WriteString("if ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Ref))
+			_buffer.WriteString(" != ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Value))
+			_buffer.WriteString(" {")
 
-				_buffer.WriteString("\terrs = append(errs, NewError(\"")
-				_buffer.WriteString(gorazor.HTMLEscape(field.Name))
-				_buffer.WriteString("\", \"")
-				_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
-				_buffer.WriteString("\"))")
+			_buffer.WriteString("\terrs = append(errs, NewError(\"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Field.Name))
+			_buffer.WriteString("\", \"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Tag.Value))
+			_buffer.WriteString("\"))")
 
-				_buffer.WriteString("}")
+			_buffer.WriteString("}")
 
-			}
+			Condition[input.Ref] = (input.Ref + " != " + input.Value.(string))
 		case *myasthurts.StarRefType:
-			if len(args) == 1 {
 
-				_buffer.WriteString("if ")
-				_buffer.WriteString(gorazor.HTMLEscape(value))
-				_buffer.WriteString(" == nil || * ")
-				_buffer.WriteString(gorazor.HTMLEscape(value))
-				_buffer.WriteString(" != ")
-				_buffer.WriteString(gorazor.HTMLEscape(args[0]))
-				_buffer.WriteString(" {")
+			_buffer.WriteString("if ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Ref))
+			_buffer.WriteString(" == nil || * ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Ref))
+			_buffer.WriteString(" != ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Value))
+			_buffer.WriteString(" {")
 
-				_buffer.WriteString("\terrs = append(errs, NewError(\"")
-				_buffer.WriteString(gorazor.HTMLEscape(field.Name))
-				_buffer.WriteString("\", \"")
-				_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
-				_buffer.WriteString("\"))")
+			_buffer.WriteString("\terrs = append(errs, NewError(\"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Field.Name))
+			_buffer.WriteString("\", \"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Tag.Value))
+			_buffer.WriteString("\"))")
 
-				_buffer.WriteString("}")
+			_buffer.WriteString("}")
 
-			}
+			Condition[input.Ref] = (input.Ref + " == nil || * " + input.Ref + " != " + input.Value.(string))
 		}
 	case "complex64", "complex128":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			if len(args) == 1 {
 
-				_buffer.WriteString("if ")
-				_buffer.WriteString(gorazor.HTMLEscape(value))
-				_buffer.WriteString(" != ")
-				_buffer.WriteString(gorazor.HTMLEscape(args[0]))
-				_buffer.WriteString(" {")
+			_buffer.WriteString("if ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Ref))
+			_buffer.WriteString(" != ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Value))
+			_buffer.WriteString(" {")
 
-				_buffer.WriteString("\terrs = append(errs, NewError(\"")
-				_buffer.WriteString(gorazor.HTMLEscape(field.Name))
-				_buffer.WriteString("\", \"")
-				_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
-				_buffer.WriteString("\"))")
+			_buffer.WriteString("\terrs = append(errs, NewError(\"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Field.Name))
+			_buffer.WriteString("\", \"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Tag.Value))
+			_buffer.WriteString("\"))")
 
-				_buffer.WriteString("}")
+			_buffer.WriteString("}")
 
-			}
+			Condition[input.Ref] = (input.Ref + " != " + input.Value.(string))
 		case *myasthurts.StarRefType:
-			if len(args) == 1 {
 
-				_buffer.WriteString("if ")
-				_buffer.WriteString(gorazor.HTMLEscape(value))
-				_buffer.WriteString(" == nil || * ")
-				_buffer.WriteString(gorazor.HTMLEscape(value))
-				_buffer.WriteString(" != ")
-				_buffer.WriteString(gorazor.HTMLEscape(args[0]))
-				_buffer.WriteString(" {")
+			_buffer.WriteString("if ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Ref))
+			_buffer.WriteString(" == nil || * ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Ref))
+			_buffer.WriteString(" != ")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Value))
+			_buffer.WriteString(" {")
 
-				_buffer.WriteString("\terrs = append(errs, NewError(\"")
-				_buffer.WriteString(gorazor.HTMLEscape(field.Name))
-				_buffer.WriteString("\", \"")
-				_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
-				_buffer.WriteString("\"))")
+			_buffer.WriteString("\terrs = append(errs, NewError(\"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Field.Name))
+			_buffer.WriteString("\", \"")
+			_buffer.WriteString(gorazor.HTMLEscape(input.Tag.Value))
+			_buffer.WriteString("\"))")
 
-				_buffer.WriteString("}")
+			_buffer.WriteString("}")
 
-			}
+			Condition[input.Ref] = (input.Ref + " == nil || * " + input.Ref + " != " + input.Value.(string))
 		}
 	default:
 

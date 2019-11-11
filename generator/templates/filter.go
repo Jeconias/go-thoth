@@ -19,28 +19,66 @@ func hasTag(structsThoth []*myasthurts.Struct) bool {
 	return false
 }
 
-func filterValidate(_buffer io.StringWriter, str *myasthurts.Struct, field *myasthurts.Field, tag myasthurts.TagParam, attribute interface{}, args ...string) {
-	switch tag.Value {
+// FilterInput TODO
+type FilterInput struct {
+	Struct       *myasthurts.Struct
+	StructRef    string
+	Field        *myasthurts.Field
+	Tag          myasthurts.TagParam
+	AttributeRef string
+}
+
+func requiredWith(field *myasthurts.Field, ref string) string {
+	switch field.RefType.Name() {
+	case "string":
+		switch field.RefType.(type) {
+		case *myasthurts.BaseRefType, *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
+			return " Empty(len(" + ref + "))"
+		case *myasthurts.StarRefType:
+			return ref + " == nil"
+		}
+	}
+	return ""
+}
+
+func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string) {
+	switch input.Tag.Value {
 	case "-":
 		// Skip field...
 	case "required":
-		rules.RenderRequired(_buffer, field, tag, attribute)
+		rules.RenderRequired(_buffer, &rules.RequiredInput{
+			Field: input.Field,
+			Tag:   input.Tag,
+			Ref:   input.AttributeRef,
+		})
 	case "required_with":
+		var expressions = append(make([]string, 0), requiredWith(input.Field, input.AttributeRef))
 		for _, s := range args {
-			for _, f := range str.Fields {
+			for _, f := range input.Struct.Fields {
 				if f.Name == s {
-					for _, param := range f.Tag.Params {
-						rules.RenderRequired_with(_buffer, field, param, attribute)
+					ref := input.StructRef + "." + f.Name
+					for range f.Tag.Params {
+						expressions = append(expressions, rules.Condition[ref])
 					}
+
 				}
 			}
 		}
+		condition := strings.Join(expressions, " || ")
+		rules.RenderEvaluation(_buffer, condition, input.Field, input.Tag)
 	case "eq":
-		rules.RenderEq(_buffer, field, tag, attribute, args)
+		if len(args) == 1 {
+			rules.RenderEq(_buffer, &rules.EqInput{
+				Field: input.Field,
+				Tag:   input.Tag,
+				Ref:   input.AttributeRef,
+				Value: args[0],
+			})
+		}
 	default:
-		k, v := splitArgs(tag)
-		tag.Value = k
-		filterValidate(_buffer, str, field, tag, attribute, v...)
+		k, v := splitArgs(input.Tag)
+		input.Tag.Value = k
+		filterValidate(_buffer, input, v...)
 	}
 }
 

@@ -3,74 +3,67 @@
 		"strings"
 		"github.com/lab259/go-my-ast-hurts"
 	)
-	var field *myasthurts.Field
-	var tag myasthurts.TagParam
-	var value interface{}
-	var args []string
+	var input *EqInput
 -}
 
-@switch field.RefType.Name() {
+@switch input.Field.RefType.Name() {
 	case "string":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			if len(args) == 1 {
-				@:if @value != "@args[0]" {
-				@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
-				@:}
-			}
+			@:if @input.Ref != "@input.Value" {
+			@:	errs = append(errs, NewError("@input.Field.Name", "@input.Tag.Value"))
+			@:}
+			Condition[input.Ref] = (input.Ref+" != "+input.Value.(string))
 		case *myasthurts.StarRefType:
-			if len(args) == 1 {
-				@:if @value == nil || * @value != "@args[0]" {
-				@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
-				@:}
-			}
+			@:if @input.Ref == nil || * @input.Ref != "@input.Value" {
+			@:	errs = append(errs, NewError("@input.Field.Name", "@input.Tag.Value"))
+			@:}
+			Condition[input.Ref] = (input.Ref+" == nil || * "+input.Ref+" != \""+input.Value.(string)+"\"")
 		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 			@:panic("not implemented")
 		}
 	case "uint", "uint8", "uint16", "uint32", "uint64", "uintptr", "int", "int8", "int16", "int32", "int64":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			if len(args) == 1 {
-				@:if @value != @args[0] {
-				@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
-				@:}
+			@:if @input.Ref != @input.Value {
+			@:	errs = append(errs, NewError("@input.Field.Name", "@input.Tag.Value"))
+			@:}
+			if c, ok := Condition[input.Ref]; ok {
+				Condition[input.Ref] = (c+" || "+input.Ref+" == "+input.Value.(string))
+			} else {
+				Condition[input.Ref] = (input.Ref+" == "+input.Value.(string))
 			}
 		case *myasthurts.StarRefType:
-			if len(args) == 1 {
-				@:if @value == nil || * @value != @args[0] {
-				@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
-				@:}
-			}
+			@:if @input.Ref == nil || * @input.Ref != @input.Value {
+			@:	errs = append(errs, NewError("@input.Field.Name", "@input.Tag.Value"))
+			@:}
+			Condition[input.Ref] = (input.Ref+" == nil || * "+input.Ref+" != "+input.Value.(string))
 		}
 	case "float32", "float64":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			if len(args) == 1 {
-				@:if @value != @args[0] {
-				@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
-				@:}
-			}
+			@:if @input.Ref != @input.Value {
+			@:	errs = append(errs, NewError("@input.Field.Name", "@input.Tag.Value"))
+			@:}
+			Condition[input.Ref] = (input.Ref+" != "+input.Value.(string))
 		case *myasthurts.StarRefType:
-			if len(args) == 1 {
-				@:if @value == nil || * @value != @args[0] {
-				@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
-				@:}
-			}
+			@:if @input.Ref == nil || * @input.Ref != @input.Value {
+			@:	errs = append(errs, NewError("@input.Field.Name", "@input.Tag.Value"))
+			@:}
+			Condition[input.Ref] = (input.Ref+" == nil || * "+input.Ref+" != "+input.Value.(string))
 		}
 	case "complex64", "complex128":
-		switch field.RefType.(type) {
+		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
-			if len(args) == 1 {
-				@:if @value != @args[0] {
-				@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
-				@:}
-			}
+			@:if @input.Ref != @input.Value {
+			@:	errs = append(errs, NewError("@input.Field.Name", "@input.Tag.Value"))
+			@:}
+			Condition[input.Ref] = (input.Ref+" != "+input.Value.(string))
 		case *myasthurts.StarRefType:
-			if len(args) == 1 {
-				@:if @value == nil || * @value != @args[0] {
-				@:	errs = append(errs, NewError("@field.Name", "@tag.Value"))
-				@:}
-			}
+			@:if @input.Ref == nil || * @input.Ref != @input.Value {
+			@:	errs = append(errs, NewError("@input.Field.Name", "@input.Tag.Value"))
+			@:}
+			Condition[input.Ref] = (input.Ref+" == nil || * "+input.Ref+" != "+input.Value.(string))
 		}
 	default:
 		@:panic("not implemented")
