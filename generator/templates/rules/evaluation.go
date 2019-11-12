@@ -12,19 +12,19 @@ import (
 )
 
 // Evaluation generates templates/rules/evaluation.gohtml
-func Evaluation(preCondition string, condition string, field *myasthurts.Field, tag myasthurts.TagParam) string {
+func Evaluation(condition string, expressions []string, operator string, field *myasthurts.Field, tag myasthurts.TagParam) string {
 	var _b strings.Builder
-	RenderEvaluation(&_b, preCondition, condition, field, tag)
+	RenderEvaluation(&_b, condition, expressions, operator, field, tag)
 	return _b.String()
 }
 
 // RenderEvaluation render templates/rules/evaluation.gohtml
-func RenderEvaluation(_buffer io.StringWriter, preCondition string, condition string, field *myasthurts.Field, tag myasthurts.TagParam) {
-	_buffer.WriteString("\nif ")
-	_buffer.WriteString(gorazor.HTMLEscape(preCondition))
-	_buffer.WriteString(" && ")
+func RenderEvaluation(_buffer io.StringWriter, condition string, expressions []string, operator string, field *myasthurts.Field, tag myasthurts.TagParam) {
+	_buffer.WriteString("\n\nif ")
 	_buffer.WriteString(gorazor.HTMLEscape(condition))
-	_buffer.WriteString(" {\n\terrs = append(errs, NewError(\"")
+	_buffer.WriteString(" && ( ")
+	_buffer.WriteString((strings.Join(expressions, operator)))
+	_buffer.WriteString(" ) {\n\terrs = append(errs, NewError(\"")
 	_buffer.WriteString(gorazor.HTMLEscape(field.Name))
 	_buffer.WriteString("\", \"")
 	_buffer.WriteString(gorazor.HTMLEscape(tag.Value))
