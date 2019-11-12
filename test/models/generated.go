@@ -333,7 +333,7 @@ func (n *NeFieldStrPointer) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
-func (t *TypeEqNumber) Validate() (errs ValidationErrors) {
+func (t *EqNumber) Validate() (errs ValidationErrors) {
 
 	if t.Uint != 1 {
 		errs = append(errs, NewError("Uint", "eq"))
@@ -1222,7 +1222,7 @@ func (r *RequiredWithoutAllFields) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
-func (t *TypeEqString) Validate() (errs ValidationErrors) {
+func (t *EqString) Validate() (errs ValidationErrors) {
 
 	if t.String != "chico" {
 		errs = append(errs, NewError("String", "eq"))

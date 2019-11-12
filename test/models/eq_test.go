@@ -6,8 +6,8 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("Numbers", func() {
-	Describe("Equal", func() {
+var _ = Describe("Equal", func() {
+	When("Numbers", func() {
 
 		var (
 			uintPointer       uint       = 2
@@ -28,7 +28,7 @@ var _ = Describe("Numbers", func() {
 		)
 
 		It("should fail to validate all numbers", func() {
-			m := models.TypeEqNumber{}
+			m := models.EqNumber{}
 
 			errs := m.Validate()
 			Expect(errs).To(HaveLen(30))
@@ -37,7 +37,7 @@ var _ = Describe("Numbers", func() {
 		})
 
 		It("should fail to validate field (Uint)", func() {
-			m := models.TypeEqNumber{
+			m := models.EqNumber{
 				// Uint:           1,
 				UintPointer:    &uintPointer,
 				Uint8:          3,
@@ -80,7 +80,7 @@ var _ = Describe("Numbers", func() {
 		})
 
 		It("should fail to validate field (UintPointer)", func() {
-			m := models.TypeEqNumber{
+			m := models.EqNumber{
 				Uint: 1,
 				// UintPointer:    &uintPointer,
 				Uint8:          3,
@@ -119,6 +119,45 @@ var _ = Describe("Numbers", func() {
 			errs := m.Validate()
 			Expect(errs).To(HaveLen(1))
 			Expect(errs[0].Field()).To(Equal("UintPointer"))
+			Expect(errs[0].Tag()).To(Equal("eq"))
+		})
+	})
+
+	When("String", func() {
+		It("should empty validation", func() {
+			s := "bento"
+			m := models.TypeEqString{
+				String:  "chico",
+				Pointer: &s,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(0))
+		})
+
+		It("should to validate field `String`", func() {
+			s := "bento"
+			m := models.TypeEqString{
+				// String: s,
+				Pointer: &s,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("String"))
+			Expect(errs[0].Tag()).To(Equal("eq"))
+		})
+
+		It("should check if field `String Pointer`", func() {
+			s := "chico"
+			m := models.TypeEqString{
+				String: s,
+				// Pointer: &s,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("Pointer"))
 			Expect(errs[0].Tag()).To(Equal("eq"))
 		})
 	})

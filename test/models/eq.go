@@ -1,7 +1,7 @@
 package models
 
-// TypeEqNumber TODO
-type TypeEqNumber struct {
+// EqNumber TODO
+type EqNumber struct {
 	//  uint is an unsigned integer type
 	Uint           uint     `thoth:"eq=1"`
 	UintPointer    *uint    `thoth:"eq=2"`
@@ -39,4 +39,10 @@ type TypeEqNumber struct {
 	Complex64Pointer  *complex64  `thoth:"eq=28"`
 	Complex128        complex128  `thoth:"eq=29"`
 	Complex128Pointer *complex128 `thoth:"eq=30"`
+}
+
+// EqString TODO
+type EqString struct {
+	String  string  `thoth:"eq=chico"`
+	Pointer *string `thoth:"eq=bento"`
 }
