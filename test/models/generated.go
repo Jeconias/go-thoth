@@ -53,6 +53,49 @@ func (t *TypeInterface) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (l *LenField) Validate() (errs ValidationErrors) {
+	if !l.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if len(l.Name) == 10 {
+		errs = append(errs, NewError("Name", "len"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (l *LenFieldStrPointer) Validate() (errs ValidationErrors) {
+	if !l.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if l.Name == nil {
+		errs = append(errs, NewError("Name", "len"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (l *LenFields) Validate() (errs ValidationErrors) {
+	if l.ID != 1 {
+		errs = append(errs, NewError("ID", "eq"))
+	}
+	if !l.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if len(l.Names) == 2 {
+		errs = append(errs, NewError("Names", "len"))
+	}
+
+	if l.Subjects == nil {
+		errs = append(errs, NewError("Subjects", "len"))
+	}
+	return errs
+}
+
+// Validate TODO
 func (t *TypeMapStringToInterface) Validate() (errs ValidationErrors) {
 	if Empty(len(t.MapStringToInterface)) {
 		errs = append(errs, NewError("MapStringToInterface", "required"))
@@ -453,6 +496,84 @@ func (r *RequiredWithAllFields) Validate() (errs ValidationErrors) {
 
 	if r.Name == nil && (r.ID == 1 && r.Status != false) {
 		errs = append(errs, NewError("Name", "required_with_all"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (r *RequiredWithoutField) Validate() (errs ValidationErrors) {
+	if !r.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if Empty(len(r.Name)) && (r.Status != false) {
+		errs = append(errs, NewError("Name", "required_without"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (r *RequiredWithoutFieldStrPointer) Validate() (errs ValidationErrors) {
+	if !r.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if r.Name == nil && (r.Status != false) {
+		errs = append(errs, NewError("Name", "required_without"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (r *RequiredWithoutFields) Validate() (errs ValidationErrors) {
+	if r.ID != 1 {
+		errs = append(errs, NewError("ID", "eq"))
+	}
+	if !r.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if r.Name == nil && (r.ID == 1 || r.Status != false) {
+		errs = append(errs, NewError("Name", "required_without"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (r *RequiredWithoutAllField) Validate() (errs ValidationErrors) {
+	if !r.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if Empty(len(r.Name)) && (r.Status != false) {
+		errs = append(errs, NewError("Name", "required_without_all"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (r *RequiredWithoutAllFieldStrPointer) Validate() (errs ValidationErrors) {
+	if !r.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if r.Name == nil && (r.Status != false) {
+		errs = append(errs, NewError("Name", "required_without_all"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (r *RequiredWithoutAllFields) Validate() (errs ValidationErrors) {
+	if r.ID != 1 {
+		errs = append(errs, NewError("ID", "eq"))
+	}
+	if !r.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if r.Name == nil && (r.ID == 1 && r.Status != false) {
+		errs = append(errs, NewError("Name", "required_without_all"))
 	}
 	return errs
 }

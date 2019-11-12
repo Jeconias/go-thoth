@@ -9,11 +9,11 @@ import (
 
 // RequiredWithAllInput TODO
 type RequiredWithAllInput struct {
-	Struct       *myasthurts.Struct
-	StructRef    string
-	Field        *myasthurts.Field
-	Tag          myasthurts.TagParam
-	AttributeRef string
+	Struct    *myasthurts.Struct
+	StructRef string
+	Field     *myasthurts.Field
+	Tag       myasthurts.TagParam
+	Ref       string
 }
 
 // RequiredWithAll TODO
@@ -24,12 +24,12 @@ func RequiredWithAll(_buffer io.StringWriter, input *RequiredWithAllInput, args 
 			if f.Name == s {
 				ref := input.StructRef + "." + f.Name
 				for range f.Tag.Params {
-					expressions = append(expressions, rules.Condition[ref])
+					expressions = append(expressions, rules.MapCondition[ref])
 				}
 			}
 		}
 	}
-	exp := requiredWith(input.Field, input.AttributeRef)
+	exp := requiredWith(input.Field, input.Ref)
 	rules.RenderEvaluation(_buffer, exp, expressions, " && ", input.Field, input.Tag)
 }
 

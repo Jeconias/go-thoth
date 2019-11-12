@@ -39,7 +39,7 @@ func RenderEq(_buffer io.StringWriter, input *EqInput) {
 
 			_buffer.WriteString("}")
 
-			Condition[input.Ref] = (input.Ref + " != " + input.Value.(string))
+			MapCondition[input.Ref] = (input.Ref + " != " + input.Value.(string))
 		case *myasthurts.StarRefType:
 
 			_buffer.WriteString("if ")
@@ -58,7 +58,7 @@ func RenderEq(_buffer io.StringWriter, input *EqInput) {
 
 			_buffer.WriteString("}")
 
-			Condition[input.Ref] = (input.Ref + " == nil || * " + input.Ref + " != \"" + input.Value.(string) + "\"")
+			MapCondition[input.Ref] = (input.Ref + " == nil || * " + input.Ref + " != \"" + input.Value.(string) + "\"")
 		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
 
 			_buffer.WriteString("panic(\"not implemented\")")
@@ -82,10 +82,10 @@ func RenderEq(_buffer io.StringWriter, input *EqInput) {
 
 			_buffer.WriteString("}")
 
-			if c, ok := Condition[input.Ref]; ok {
-				Condition[input.Ref] = (c + " || " + input.Ref + " == " + input.Value.(string))
+			if c, ok := MapCondition[input.Ref]; ok {
+				MapCondition[input.Ref] = (c + " || " + input.Ref + " == " + input.Value.(string))
 			} else {
-				Condition[input.Ref] = (input.Ref + " == " + input.Value.(string))
+				MapCondition[input.Ref] = (input.Ref + " == " + input.Value.(string))
 			}
 		case *myasthurts.StarRefType:
 
@@ -105,7 +105,7 @@ func RenderEq(_buffer io.StringWriter, input *EqInput) {
 
 			_buffer.WriteString("}")
 
-			Condition[input.Ref] = (input.Ref + " == nil || * " + input.Ref + " != " + input.Value.(string))
+			MapCondition[input.Ref] = (input.Ref + " == nil || * " + input.Ref + " != " + input.Value.(string))
 		}
 	case "float32", "float64":
 		switch input.Field.RefType.(type) {
@@ -125,7 +125,7 @@ func RenderEq(_buffer io.StringWriter, input *EqInput) {
 
 			_buffer.WriteString("}")
 
-			Condition[input.Ref] = (input.Ref + " != " + input.Value.(string))
+			MapCondition[input.Ref] = (input.Ref + " != " + input.Value.(string))
 		case *myasthurts.StarRefType:
 
 			_buffer.WriteString("if ")
@@ -144,7 +144,7 @@ func RenderEq(_buffer io.StringWriter, input *EqInput) {
 
 			_buffer.WriteString("}")
 
-			Condition[input.Ref] = (input.Ref + " == nil || * " + input.Ref + " != " + input.Value.(string))
+			MapCondition[input.Ref] = (input.Ref + " == nil || * " + input.Ref + " != " + input.Value.(string))
 		}
 	case "complex64", "complex128":
 		switch input.Field.RefType.(type) {
@@ -164,7 +164,7 @@ func RenderEq(_buffer io.StringWriter, input *EqInput) {
 
 			_buffer.WriteString("}")
 
-			Condition[input.Ref] = (input.Ref + " != " + input.Value.(string))
+			MapCondition[input.Ref] = (input.Ref + " != " + input.Value.(string))
 		case *myasthurts.StarRefType:
 
 			_buffer.WriteString("if ")
@@ -183,7 +183,7 @@ func RenderEq(_buffer io.StringWriter, input *EqInput) {
 
 			_buffer.WriteString("}")
 
-			Condition[input.Ref] = (input.Ref + " == nil || * " + input.Ref + " != " + input.Value.(string))
+			MapCondition[input.Ref] = (input.Ref + " == nil || * " + input.Ref + " != " + input.Value.(string))
 		}
 	default:
 

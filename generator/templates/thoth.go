@@ -26,7 +26,7 @@ func RenderThoth(_buffer io.StringWriter, fileName string, pkg *myasthurts.Packa
 	if hasTag(structsThoth) {
 		for _, s := range structsThoth {
 			// Clean conditions
-			rules.Condition = make(map[string]string, 10)
+			rules.MapCondition = make(map[string]string, 10)
 
 			_buffer.WriteString(("\n// Validate TODO\n"))
 
@@ -40,15 +40,14 @@ func RenderThoth(_buffer io.StringWriter, fileName string, pkg *myasthurts.Packa
 			_buffer.WriteString(") Validate() (errs ValidationErrors) {")
 
 			for _, field := range s.Fields {
-
 				for _, tag := range field.Tag.Params {
 					attribute := strRef + "." + field.Name
 					filterValidate(_buffer, &FilterInput{
-						Struct:       s,
-						StructRef:    strRef,
-						Field:        field,
-						Tag:          tag,
-						AttributeRef: attribute,
+						Struct:    s,
+						StructRef: strRef,
+						Field:     field,
+						Tag:       tag,
+						Ref:       attribute,
 					})
 
 					_buffer.WriteString(("\n"))

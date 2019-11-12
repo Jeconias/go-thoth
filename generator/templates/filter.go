@@ -21,11 +21,11 @@ func hasTag(structsThoth []*myasthurts.Struct) bool {
 
 // FilterInput TODO
 type FilterInput struct {
-	Struct       *myasthurts.Struct
-	StructRef    string
-	Field        *myasthurts.Field
-	Tag          myasthurts.TagParam
-	AttributeRef string
+	Struct    *myasthurts.Struct
+	StructRef string
+	Field     *myasthurts.Field
+	Tag       myasthurts.TagParam
+	Ref       string
 }
 
 func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string) {
@@ -36,42 +36,60 @@ func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string)
 		validation.HasValue(_buffer, &validation.RequiredInput{
 			Field: input.Field,
 			Tag:   input.Tag,
-			Ref:   input.AttributeRef,
+			Ref:   input.Ref,
 		})
 	case "required_with":
 		validation.RequiredWith(_buffer, &validation.RequiredWithInput{
-			Struct:       input.Struct,
-			StructRef:    input.StructRef,
-			Field:        input.Field,
-			Tag:          input.Tag,
-			AttributeRef: input.AttributeRef,
+			Struct:    input.Struct,
+			StructRef: input.StructRef,
+			Field:     input.Field,
+			Tag:       input.Tag,
+			Ref:       input.Ref,
 		}, args...)
 	case "required_with_all":
 		validation.RequiredWithAll(_buffer, &validation.RequiredWithAllInput{
-			Struct:       input.Struct,
-			StructRef:    input.StructRef,
-			Field:        input.Field,
-			Tag:          input.Tag,
-			AttributeRef: input.AttributeRef,
+			Struct:    input.Struct,
+			StructRef: input.StructRef,
+			Field:     input.Field,
+			Tag:       input.Tag,
+			Ref:       input.Ref,
 		}, args...)
 	case "required_without":
 		validation.RequiredWithout(_buffer, &validation.RequiredWithoutInput{
-			Struct:       input.Struct,
-			StructRef:    input.StructRef,
-			Field:        input.Field,
-			Tag:          input.Tag,
-			AttributeRef: input.AttributeRef,
+			Struct:    input.Struct,
+			StructRef: input.StructRef,
+			Field:     input.Field,
+			Tag:       input.Tag,
+			Ref:       input.Ref,
 		}, args...)
+	case "required_without_all":
+		validation.RequiredWithoutAll(_buffer, &validation.RequiredWithoutAllInput{
+			Struct:    input.Struct,
+			StructRef: input.StructRef,
+			Field:     input.Field,
+			Tag:       input.Tag,
+			Ref:       input.Ref,
+		}, args...)
+	case "len":
+		if len(args) == 1 {
+			validation.HasLengthOf(_buffer, &validation.HasLengthOfInput{
+				Field: input.Field,
+				Tag:   input.Tag,
+				Ref:   input.Ref,
+				Value: args[0],
+			})
+		}
 	case "eq":
 		if len(args) == 1 {
 			validation.IsEq(_buffer, &validation.IsEqInput{
 				Field: input.Field,
 				Tag:   input.Tag,
-				Ref:   input.AttributeRef,
+				Ref:   input.Ref,
 				Value: args[0],
 			})
 		}
 	default:
+		// TODO: (@edumarcal) to fix not match rule
 		k, v := splitArgs(input.Tag)
 		input.Tag.Value = k
 		filterValidate(_buffer, input, v...)

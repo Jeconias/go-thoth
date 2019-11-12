@@ -1,0 +1,12 @@
+@{
+	import (
+		"github.com/lab259/go-my-ast-hurts"
+	)
+	var condition string
+	var field *myasthurts.Field
+	var tag myasthurts.TagParam
+-}
+
+@:if @condition {
+	errs = append(errs, NewError("@field.Name", "@tag.Value"))
+}

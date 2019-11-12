@@ -30,8 +30,8 @@ type RequiredInput struct {
 	Ref   string
 }
 
-// Condition TODO
-var Condition = make(map[string]string, 10)
+// MapCondition TODO
+var MapCondition = make(map[string]string, 10)
 
 // Expression TODO
 var Expression string
