@@ -6,15 +6,541 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("Slice", func() {
-	Describe("Required", func() {
+var _ = Describe("Required", func() {
+	When("Channel of String", func() {
+		It("should return empty validation", func() {
+			d := "Chico Bento"
+
+			s := make(chan string, 1)
+			s <- d
+
+			sPtr := make(chan *string, 1)
+			sPtr <- &d
+
+			sSlice := make(chan []string, 1)
+			sSlice <- []string{d}
+
+			sSlicePtr := make(chan []*string, 1)
+			sSlicePtr <- []*string{&d}
+
+			m := models.RequiredChanString{
+				ChanString:             s,
+				PointerChanString:      sPtr,
+				ChanSliceString:        sSlice,
+				ChanSlicePointerString: sSlicePtr,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(0))
+
+			close(s)
+			close(sPtr)
+			close(sSlice)
+			close(sSlicePtr)
+		})
+
+		It("should fail to validate field `Chan`", func() {
+			d := "Chico Bento!"
+			sPtr := make(chan *string, 1)
+			sPtr <- &d
+
+			sSlice := make(chan []string, 1)
+			sSlice <- []string{d}
+
+			sSlicePtr := make(chan []*string, 1)
+			sSlicePtr <- []*string{&d}
+
+			m := models.RequiredChanString{
+				// ChanString: s,
+				PointerChanString:      sPtr,
+				ChanSliceString:        sSlice,
+				ChanSlicePointerString: sSlicePtr,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("ChanString"))
+			Expect(errs[0].Tag()).To(Equal("required"))
+
+			close(sPtr)
+			close(sSlice)
+			close(sSlicePtr)
+		})
+
+		It("should fail to validate field `PointerChanString`", func() {
+			d := "Chico Bento!"
+			s := make(chan string, 1)
+			s <- d
+
+			sSlice := make(chan []string, 1)
+			sSlice <- []string{d}
+
+			sSlicePtr := make(chan []*string, 1)
+			sSlicePtr <- []*string{&d}
+
+			m := models.RequiredChanString{
+				ChanString: s,
+				// PointerChanString: &s,
+				ChanSliceString:        sSlice,
+				ChanSlicePointerString: sSlicePtr,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("PointerChanString"))
+			Expect(errs[0].Tag()).To(Equal("required"))
+
+			close(s)
+			close(sSlice)
+			close(sSlicePtr)
+		})
+
+		It("should fail to validate field `ChanSliceString`", func() {
+			d := "Chico Bento!"
+			s := make(chan string, 1)
+			s <- d
+
+			sPtr := make(chan *string, 1)
+			sPtr <- &d
+
+			sSlicePtr := make(chan []*string, 1)
+			sSlicePtr <- []*string{&d}
+
+			m := models.RequiredChanString{
+				ChanString:             s,
+				PointerChanString:      sPtr,
+				ChanSlicePointerString: sSlicePtr,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("ChanSliceString"))
+			Expect(errs[0].Tag()).To(Equal("required"))
+
+			close(s)
+			close(sPtr)
+			close(sSlicePtr)
+		})
+
+		It("should fail to validate field `ChanSlicePointerString`", func() {
+			d := "Chico Bento!"
+			s := make(chan string, 1)
+			s <- d
+
+			sPtr := make(chan *string, 1)
+			sPtr <- &d
+
+			sSlice := make(chan []string, 1)
+			sSlice <- []string{d}
+
+			m := models.RequiredChanString{
+				ChanString:        s,
+				PointerChanString: sPtr,
+				ChanSliceString:   sSlice,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("ChanSlicePointerString"))
+			Expect(errs[0].Tag()).To(Equal("required"))
+
+			close(s)
+			close(sPtr)
+			close(sSlice)
+		})
+	})
+
+	When("Channel of uint", func() {
+		It("should return empty validation", func() {
+			var d uint = 1
+
+			s := make(chan uint, 1)
+			s <- d
+
+			sPtr := make(chan *uint, 1)
+			sPtr <- &d
+
+			sSlice := make(chan []uint, 1)
+			sSlice <- []uint{d}
+
+			sSlicePtr := make(chan []*uint, 1)
+			sSlicePtr <- []*uint{&d}
+
+			m := models.RequiredChanUint{
+				ChanUint:             s,
+				PointerChanUint:      sPtr,
+				ChanSliceUint:        sSlice,
+				ChanSlicePointerUint: sSlicePtr,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(0))
+
+			close(s)
+			close(sPtr)
+			close(sSlice)
+			close(sSlicePtr)
+		})
+
+		It("should fail to validate field `Chan`", func() {
+			var d uint = 1
+
+			sPtr := make(chan *uint, 1)
+			sPtr <- &d
+
+			sSlice := make(chan []uint, 1)
+			sSlice <- []uint{d}
+
+			sSlicePtr := make(chan []*uint, 1)
+			sSlicePtr <- []*uint{&d}
+
+			m := models.RequiredChanUint{
+				// ChanUint: s,
+				PointerChanUint:      sPtr,
+				ChanSliceUint:        sSlice,
+				ChanSlicePointerUint: sSlicePtr,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("ChanUint"))
+			Expect(errs[0].Tag()).To(Equal("required"))
+
+			close(sPtr)
+			close(sSlice)
+			close(sSlicePtr)
+		})
+
+		It("should fail to validate field `PointerChanUint`", func() {
+			var d uint = 1
+			s := make(chan uint, 1)
+			s <- d
+
+			sSlice := make(chan []uint, 1)
+			sSlice <- []uint{d}
+
+			sSlicePtr := make(chan []*uint, 1)
+			sSlicePtr <- []*uint{&d}
+
+			m := models.RequiredChanUint{
+				ChanUint: s,
+				// PointerChanUint: &s,
+				ChanSliceUint:        sSlice,
+				ChanSlicePointerUint: sSlicePtr,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("PointerChanUint"))
+			Expect(errs[0].Tag()).To(Equal("required"))
+
+			close(s)
+			close(sSlice)
+			close(sSlicePtr)
+		})
+
+		It("should fail to validate field `ChanSliceUint`", func() {
+			var d uint = 1
+			s := make(chan uint, 1)
+			s <- d
+
+			sPtr := make(chan *uint, 1)
+			sPtr <- &d
+
+			sSlicePtr := make(chan []*uint, 1)
+			sSlicePtr <- []*uint{&d}
+
+			m := models.RequiredChanUint{
+				ChanUint:             s,
+				PointerChanUint:      sPtr,
+				ChanSlicePointerUint: sSlicePtr,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("ChanSliceUint"))
+			Expect(errs[0].Tag()).To(Equal("required"))
+
+			close(s)
+			close(sPtr)
+			close(sSlicePtr)
+		})
+
+		It("should fail to validate field `ChanSlicePointerUint`", func() {
+			var d uint = 1
+			s := make(chan uint, 1)
+			s <- d
+
+			sPtr := make(chan *uint, 1)
+			sPtr <- &d
+
+			sSlice := make(chan []uint, 1)
+			sSlice <- []uint{d}
+
+			m := models.RequiredChanUint{
+				ChanUint:        s,
+				PointerChanUint: sPtr,
+				ChanSliceUint:   sSlice,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("ChanSlicePointerUint"))
+			Expect(errs[0].Tag()).To(Equal("required"))
+
+			close(s)
+			close(sPtr)
+			close(sSlice)
+		})
+	})
+
+	When("String", func() {
+		It("should empty validation", func() {
+			s := "Chico Bento!"
+			m := models.RequiredString{
+				String:  s,
+				Pointer: &s,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(0))
+		})
+
+		It("should check if field `String`", func() {
+			s := "Chico Bento!"
+			m := models.RequiredString{
+				// String: s,
+				Pointer: &s,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("String"))
+			Expect(errs[0].Tag()).To(Equal("required"))
+		})
+
+		It("should check if field `String Pointer`", func() {
+			s := "Chico Bento!"
+			m := models.RequiredString{
+				String: s,
+				// Pointer: &s,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("Pointer"))
+			Expect(errs[0].Tag()).To(Equal("required"))
+			Expect(errs[0].(error).Error()).To(Equal("Error: Validation of field 'Pointer' failed on tag 'required'"))
+		})
+	})
+
+	When("Interface", func() {
+		It("should return empty validation (struct)", func() {
+			var s interface{}
+			s = models.MapTypeA{
+				Int:  123,
+				Bool: true,
+			}
+
+			m := models.RequiredInterface{
+				Interface:        s,
+				PointerInterface: &s,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(0))
+		})
+
+		It("should return empty validation", func() {
+			var s interface{}
+			s = "Chico Bento!"
+
+			m := models.RequiredInterface{
+				Interface:        s,
+				PointerInterface: &s,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(0))
+		})
+
+		It("should fail to validate without field `Interface`", func() {
+			var s interface{}
+			s = false
+			m := models.RequiredInterface{
+				// Interface: s,
+				PointerInterface: &s,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("Interface"))
+			Expect(errs[0].Tag()).To(Equal("required"))
+		})
+
+		It("should fail to validate without field `PointerInterface`", func() {
+			var s interface{}
+			s = 222
+			m := models.RequiredInterface{
+				Interface: s,
+				// PointerInterface: &s,
+			}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("PointerInterface"))
+			Expect(errs[0].Tag()).To(Equal("required"))
+		})
+	})
+
+	When("Struct", func() {
+		It("should fail to validate field `Struct`", func() {
+			structA := models.RequiredStructA{
+				A: "Chico Bento!",
+				B: 22,
+			}
+
+			sliceStructA := []models.RequiredStructA{structA}
+			sliceStructAPtr := []*models.RequiredStructA{&structA}
+			t := models.RequiredStruct{
+				// Struct: structA,
+				StructPointer:             &structA,
+				SliceStruct:               sliceStructA,
+				SliceStructPointer:        sliceStructAPtr,
+				SlicePointerStruct:        &sliceStructA,
+				SlicePointerStructPointer: &sliceStructAPtr,
+			}
+
+			errs := t.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("Struct"))
+			Expect(errs[0].Tag()).To(Equal("required"))
+		})
+
+		It("should check if field `StructPointer`", func() {
+			structA := models.RequiredStructA{
+				A: "Chico Bento!",
+				B: 22,
+			}
+
+			sliceStructA := []models.RequiredStructA{structA}
+			sliceStructAPtr := []*models.RequiredStructA{&structA}
+			t := models.RequiredStruct{
+				Struct: structA,
+				// StructPointer: &structA,
+				SliceStruct:               sliceStructA,
+				SliceStructPointer:        sliceStructAPtr,
+				SlicePointerStruct:        &sliceStructA,
+				SlicePointerStructPointer: &sliceStructAPtr,
+			}
+
+			errs := t.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("StructPointer"))
+			Expect(errs[0].Tag()).To(Equal("required"))
+		})
+
+		It("should check if field `SliceStruct`", func() {
+			structA := models.RequiredStructA{
+				A: "Chico Bento!",
+				B: 22,
+			}
+
+			sliceStructA := []models.RequiredStructA{structA}
+			sliceStructAPtr := []*models.RequiredStructA{&structA}
+			t := models.RequiredStruct{
+				Struct:        structA,
+				StructPointer: &structA,
+				// SliceStruct:               sliceStructA,
+				SliceStructPointer:        sliceStructAPtr,
+				SlicePointerStruct:        &sliceStructA,
+				SlicePointerStructPointer: &sliceStructAPtr,
+			}
+
+			errs := t.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("SliceStruct"))
+			Expect(errs[0].Tag()).To(Equal("required"))
+		})
+
+		It("should check if field `SliceStructPointer`", func() {
+			structA := models.RequiredStructA{
+				A: "Chico Bento!",
+				B: 22,
+			}
+
+			sliceStructA := []models.RequiredStructA{structA}
+			sliceStructAPtr := []*models.RequiredStructA{&structA}
+			t := models.RequiredStruct{
+				Struct:        structA,
+				StructPointer: &structA,
+				SliceStruct:   sliceStructA,
+				// SliceStructPointer:        sliceStructAPtr,
+				SlicePointerStruct:        &sliceStructA,
+				SlicePointerStructPointer: &sliceStructAPtr,
+			}
+
+			errs := t.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("SliceStructPointer"))
+			Expect(errs[0].Tag()).To(Equal("required"))
+		})
+
+		It("should check if field `SlicePointerStruct`", func() {
+			structA := models.RequiredStructA{
+				A: "Chico Bento!",
+				B: 22,
+			}
+
+			sliceStructA := []models.RequiredStructA{structA}
+			sliceStructAPtr := []*models.RequiredStructA{&structA}
+			t := models.RequiredStruct{
+				Struct:             structA,
+				StructPointer:      &structA,
+				SliceStruct:        sliceStructA,
+				SliceStructPointer: sliceStructAPtr,
+				// SlicePointerStruct:        &sliceStructA,
+				SlicePointerStructPointer: &sliceStructAPtr,
+			}
+
+			errs := t.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("SlicePointerStruct"))
+			Expect(errs[0].Tag()).To(Equal("required"))
+		})
+
+		It("should check if field `SlicePointerStructPointer`", func() {
+			structA := models.RequiredStructA{
+				A: "Chico Bento!",
+				B: 22,
+			}
+
+			sliceStructA := []models.RequiredStructA{structA}
+			sliceStructAPtr := []*models.RequiredStructA{&structA}
+			t := models.RequiredStruct{
+				Struct:             structA,
+				StructPointer:      &structA,
+				SliceStruct:        sliceStructA,
+				SliceStructPointer: sliceStructAPtr,
+				SlicePointerStruct: &sliceStructA,
+				// SlicePointerStructPointer: &sliceStructAPtr,
+			}
+
+			errs := t.Validate()
+			Expect(errs).To(HaveLen(1))
+			Expect(errs[0].Field()).To(Equal("SlicePointerStructPointer"))
+			Expect(errs[0].Tag()).To(Equal("required"))
+		})
+	})
+
+	When("Slice", func() {
 		When("String", func() {
 			It("should empty validation", func() {
 				el := "Chico Bento!"
 				s := []string{el}
 				sPtr := []*string{&el}
 
-				m := models.TypeSliceString{
+				m := models.RequiredSliceString{
 					SliceString:               s,
 					PointerSliceString:        &s,
 					SlicePointerString:        sPtr,
@@ -30,7 +556,7 @@ var _ = Describe("Slice", func() {
 				s := []string{el}
 				sPtr := []*string{&el}
 
-				m := models.TypeSliceString{
+				m := models.RequiredSliceString{
 					// SliceString:               s,
 					PointerSliceString:        &s,
 					SlicePointerString:        sPtr,
@@ -48,7 +574,7 @@ var _ = Describe("Slice", func() {
 				s := []string{el}
 				sPtr := []*string{&el}
 
-				m := models.TypeSliceString{
+				m := models.RequiredSliceString{
 					SliceString: s,
 					// PointerSliceString:        &s,
 					SlicePointerString:        sPtr,
@@ -66,7 +592,7 @@ var _ = Describe("Slice", func() {
 				s := []string{el}
 				sPtr := []*string{&el}
 
-				m := models.TypeSliceString{
+				m := models.RequiredSliceString{
 					SliceString:        s,
 					PointerSliceString: &s,
 					// SlicePointerString:        sPtr,
@@ -84,7 +610,7 @@ var _ = Describe("Slice", func() {
 				s := []string{el}
 				sPtr := []*string{&el}
 
-				m := models.TypeSliceString{
+				m := models.RequiredSliceString{
 					SliceString:        s,
 					PointerSliceString: &s,
 					SlicePointerString: sPtr,
@@ -104,7 +630,7 @@ var _ = Describe("Slice", func() {
 				s := []uint{el}
 				sPtr := []*uint{&el}
 
-				m := models.TypeSliceUint{
+				m := models.RequiredSliceUint{
 					SliceUint:               s,
 					PointerSliceUint:        &s,
 					SlicePointerUint:        sPtr,
@@ -120,7 +646,7 @@ var _ = Describe("Slice", func() {
 				s := []uint{el}
 				sPtr := []*uint{&el}
 
-				m := models.TypeSliceUint{
+				m := models.RequiredSliceUint{
 					// SliceUint:               s,
 					PointerSliceUint:        &s,
 					SlicePointerUint:        sPtr,
@@ -138,7 +664,7 @@ var _ = Describe("Slice", func() {
 				s := []uint{el}
 				sPtr := []*uint{&el}
 
-				m := models.TypeSliceUint{
+				m := models.RequiredSliceUint{
 					SliceUint: s,
 					// PointerSliceUint:        &s,
 					SlicePointerUint:        sPtr,
@@ -156,7 +682,7 @@ var _ = Describe("Slice", func() {
 				s := []uint{el}
 				sPtr := []*uint{&el}
 
-				m := models.TypeSliceUint{
+				m := models.RequiredSliceUint{
 					SliceUint:        s,
 					PointerSliceUint: &s,
 					// SlicePointerUint:        sPtr,
@@ -174,7 +700,7 @@ var _ = Describe("Slice", func() {
 				s := []uint{el}
 				sPtr := []*uint{&el}
 
-				m := models.TypeSliceUint{
+				m := models.RequiredSliceUint{
 					SliceUint:        s,
 					PointerSliceUint: &s,
 					SlicePointerUint: sPtr,
@@ -194,7 +720,7 @@ var _ = Describe("Slice", func() {
 				s := []uint8{el}
 				sPtr := []*uint8{&el}
 
-				m := models.TypeSliceUint8{
+				m := models.RequiredSliceUint8{
 					SliceUint8:               s,
 					PointerSliceUint8:        &s,
 					SlicePointerUint8:        sPtr,
@@ -210,7 +736,7 @@ var _ = Describe("Slice", func() {
 				s := []uint8{el}
 				sPtr := []*uint8{&el}
 
-				m := models.TypeSliceUint8{
+				m := models.RequiredSliceUint8{
 					// SliceUint8:               s,
 					PointerSliceUint8:        &s,
 					SlicePointerUint8:        sPtr,
@@ -228,7 +754,7 @@ var _ = Describe("Slice", func() {
 				s := []uint8{el}
 				sPtr := []*uint8{&el}
 
-				m := models.TypeSliceUint8{
+				m := models.RequiredSliceUint8{
 					SliceUint8: s,
 					// PointerSliceUint8:        &s,
 					SlicePointerUint8:        sPtr,
@@ -246,7 +772,7 @@ var _ = Describe("Slice", func() {
 				s := []uint8{el}
 				sPtr := []*uint8{&el}
 
-				m := models.TypeSliceUint8{
+				m := models.RequiredSliceUint8{
 					SliceUint8:        s,
 					PointerSliceUint8: &s,
 					// SlicePointerUint8:        sPtr,
@@ -264,7 +790,7 @@ var _ = Describe("Slice", func() {
 				s := []uint8{el}
 				sPtr := []*uint8{&el}
 
-				m := models.TypeSliceUint8{
+				m := models.RequiredSliceUint8{
 					SliceUint8:        s,
 					PointerSliceUint8: &s,
 					SlicePointerUint8: sPtr,
@@ -284,7 +810,7 @@ var _ = Describe("Slice", func() {
 				s := []uint16{el}
 				sPtr := []*uint16{&el}
 
-				m := models.TypeSliceUint16{
+				m := models.RequiredSliceUint16{
 					SliceUint16:               s,
 					PointerSliceUint16:        &s,
 					SlicePointerUint16:        sPtr,
@@ -300,7 +826,7 @@ var _ = Describe("Slice", func() {
 				s := []uint16{el}
 				sPtr := []*uint16{&el}
 
-				m := models.TypeSliceUint16{
+				m := models.RequiredSliceUint16{
 					// SliceUint16:               s,
 					PointerSliceUint16:        &s,
 					SlicePointerUint16:        sPtr,
@@ -318,7 +844,7 @@ var _ = Describe("Slice", func() {
 				s := []uint16{el}
 				sPtr := []*uint16{&el}
 
-				m := models.TypeSliceUint16{
+				m := models.RequiredSliceUint16{
 					SliceUint16: s,
 					// PointerSliceUint16:        &s,
 					SlicePointerUint16:        sPtr,
@@ -336,7 +862,7 @@ var _ = Describe("Slice", func() {
 				s := []uint16{el}
 				sPtr := []*uint16{&el}
 
-				m := models.TypeSliceUint16{
+				m := models.RequiredSliceUint16{
 					SliceUint16:        s,
 					PointerSliceUint16: &s,
 					// SlicePointerUint16:        sPtr,
@@ -354,7 +880,7 @@ var _ = Describe("Slice", func() {
 				s := []uint16{el}
 				sPtr := []*uint16{&el}
 
-				m := models.TypeSliceUint16{
+				m := models.RequiredSliceUint16{
 					SliceUint16:        s,
 					PointerSliceUint16: &s,
 					SlicePointerUint16: sPtr,
@@ -374,7 +900,7 @@ var _ = Describe("Slice", func() {
 				s := []uint32{el}
 				sPtr := []*uint32{&el}
 
-				m := models.TypeSliceUint32{
+				m := models.RequiredSliceUint32{
 					SliceUint32:               s,
 					PointerSliceUint32:        &s,
 					SlicePointerUint32:        sPtr,
@@ -390,7 +916,7 @@ var _ = Describe("Slice", func() {
 				s := []uint32{el}
 				sPtr := []*uint32{&el}
 
-				m := models.TypeSliceUint32{
+				m := models.RequiredSliceUint32{
 					// SliceUint32:               s,
 					PointerSliceUint32:        &s,
 					SlicePointerUint32:        sPtr,
@@ -408,7 +934,7 @@ var _ = Describe("Slice", func() {
 				s := []uint32{el}
 				sPtr := []*uint32{&el}
 
-				m := models.TypeSliceUint32{
+				m := models.RequiredSliceUint32{
 					SliceUint32: s,
 					// PointerSliceUint32:        &s,
 					SlicePointerUint32:        sPtr,
@@ -426,7 +952,7 @@ var _ = Describe("Slice", func() {
 				s := []uint32{el}
 				sPtr := []*uint32{&el}
 
-				m := models.TypeSliceUint32{
+				m := models.RequiredSliceUint32{
 					SliceUint32:        s,
 					PointerSliceUint32: &s,
 					// SlicePointerUint32:        sPtr,
@@ -444,7 +970,7 @@ var _ = Describe("Slice", func() {
 				s := []uint32{el}
 				sPtr := []*uint32{&el}
 
-				m := models.TypeSliceUint32{
+				m := models.RequiredSliceUint32{
 					SliceUint32:        s,
 					PointerSliceUint32: &s,
 					SlicePointerUint32: sPtr,
@@ -464,7 +990,7 @@ var _ = Describe("Slice", func() {
 				s := []uint64{el}
 				sPtr := []*uint64{&el}
 
-				m := models.TypeSliceUint64{
+				m := models.RequiredSliceUint64{
 					SliceUint64:               s,
 					PointerSliceUint64:        &s,
 					SlicePointerUint64:        sPtr,
@@ -480,7 +1006,7 @@ var _ = Describe("Slice", func() {
 				s := []uint64{el}
 				sPtr := []*uint64{&el}
 
-				m := models.TypeSliceUint64{
+				m := models.RequiredSliceUint64{
 					// SliceUint64:               s,
 					PointerSliceUint64:        &s,
 					SlicePointerUint64:        sPtr,
@@ -498,7 +1024,7 @@ var _ = Describe("Slice", func() {
 				s := []uint64{el}
 				sPtr := []*uint64{&el}
 
-				m := models.TypeSliceUint64{
+				m := models.RequiredSliceUint64{
 					SliceUint64: s,
 					// PointerSliceUint64:        &s,
 					SlicePointerUint64:        sPtr,
@@ -516,7 +1042,7 @@ var _ = Describe("Slice", func() {
 				s := []uint64{el}
 				sPtr := []*uint64{&el}
 
-				m := models.TypeSliceUint64{
+				m := models.RequiredSliceUint64{
 					SliceUint64:        s,
 					PointerSliceUint64: &s,
 					// SlicePointerUint64:        sPtr,
@@ -534,7 +1060,7 @@ var _ = Describe("Slice", func() {
 				s := []uint64{el}
 				sPtr := []*uint64{&el}
 
-				m := models.TypeSliceUint64{
+				m := models.RequiredSliceUint64{
 					SliceUint64:        s,
 					PointerSliceUint64: &s,
 					SlicePointerUint64: sPtr,
@@ -554,7 +1080,7 @@ var _ = Describe("Slice", func() {
 				s := []uintptr{el}
 				sPtr := []*uintptr{&el}
 
-				m := models.TypeSliceUintptr{
+				m := models.RequiredSliceUintptr{
 					SliceUintptr:               s,
 					PointerSliceUintptr:        &s,
 					SlicePointerUintptr:        sPtr,
@@ -570,7 +1096,7 @@ var _ = Describe("Slice", func() {
 				s := []uintptr{el}
 				sPtr := []*uintptr{&el}
 
-				m := models.TypeSliceUintptr{
+				m := models.RequiredSliceUintptr{
 					// SliceUintptr:               s,
 					PointerSliceUintptr:        &s,
 					SlicePointerUintptr:        sPtr,
@@ -588,7 +1114,7 @@ var _ = Describe("Slice", func() {
 				s := []uintptr{el}
 				sPtr := []*uintptr{&el}
 
-				m := models.TypeSliceUintptr{
+				m := models.RequiredSliceUintptr{
 					SliceUintptr: s,
 					// PointerSliceUintptr:        &s,
 					SlicePointerUintptr:        sPtr,
@@ -606,7 +1132,7 @@ var _ = Describe("Slice", func() {
 				s := []uintptr{el}
 				sPtr := []*uintptr{&el}
 
-				m := models.TypeSliceUintptr{
+				m := models.RequiredSliceUintptr{
 					SliceUintptr:        s,
 					PointerSliceUintptr: &s,
 					// SlicePointerUintptr:        sPtr,
@@ -624,7 +1150,7 @@ var _ = Describe("Slice", func() {
 				s := []uintptr{el}
 				sPtr := []*uintptr{&el}
 
-				m := models.TypeSliceUintptr{
+				m := models.RequiredSliceUintptr{
 					SliceUintptr:        s,
 					PointerSliceUintptr: &s,
 					SlicePointerUintptr: sPtr,
@@ -644,7 +1170,7 @@ var _ = Describe("Slice", func() {
 				s := []int{el}
 				sPtr := []*int{&el}
 
-				m := models.TypeSliceInt{
+				m := models.RequiredSliceInt{
 					SliceInt:               s,
 					PointerSliceInt:        &s,
 					SlicePointerInt:        sPtr,
@@ -660,7 +1186,7 @@ var _ = Describe("Slice", func() {
 				s := []int{el}
 				sPtr := []*int{&el}
 
-				m := models.TypeSliceInt{
+				m := models.RequiredSliceInt{
 					// SliceInt:               s,
 					PointerSliceInt:        &s,
 					SlicePointerInt:        sPtr,
@@ -678,7 +1204,7 @@ var _ = Describe("Slice", func() {
 				s := []int{el}
 				sPtr := []*int{&el}
 
-				m := models.TypeSliceInt{
+				m := models.RequiredSliceInt{
 					SliceInt: s,
 					// PointerSliceInt:        &s,
 					SlicePointerInt:        sPtr,
@@ -696,7 +1222,7 @@ var _ = Describe("Slice", func() {
 				s := []int{el}
 				sPtr := []*int{&el}
 
-				m := models.TypeSliceInt{
+				m := models.RequiredSliceInt{
 					SliceInt:        s,
 					PointerSliceInt: &s,
 					// SlicePointerInt:        sPtr,
@@ -714,7 +1240,7 @@ var _ = Describe("Slice", func() {
 				s := []int{el}
 				sPtr := []*int{&el}
 
-				m := models.TypeSliceInt{
+				m := models.RequiredSliceInt{
 					SliceInt:        s,
 					PointerSliceInt: &s,
 					SlicePointerInt: sPtr,
@@ -734,7 +1260,7 @@ var _ = Describe("Slice", func() {
 				s := []int8{el}
 				sPtr := []*int8{&el}
 
-				m := models.TypeSliceInt8{
+				m := models.RequiredSliceInt8{
 					SliceInt8:               s,
 					PointerSliceInt8:        &s,
 					SlicePointerInt8:        sPtr,
@@ -750,7 +1276,7 @@ var _ = Describe("Slice", func() {
 				s := []int8{el}
 				sPtr := []*int8{&el}
 
-				m := models.TypeSliceInt8{
+				m := models.RequiredSliceInt8{
 					// SliceInt8:               s,
 					PointerSliceInt8:        &s,
 					SlicePointerInt8:        sPtr,
@@ -768,7 +1294,7 @@ var _ = Describe("Slice", func() {
 				s := []int8{el}
 				sPtr := []*int8{&el}
 
-				m := models.TypeSliceInt8{
+				m := models.RequiredSliceInt8{
 					SliceInt8: s,
 					// PointerSliceInt8:        &s,
 					SlicePointerInt8:        sPtr,
@@ -786,7 +1312,7 @@ var _ = Describe("Slice", func() {
 				s := []int8{el}
 				sPtr := []*int8{&el}
 
-				m := models.TypeSliceInt8{
+				m := models.RequiredSliceInt8{
 					SliceInt8:        s,
 					PointerSliceInt8: &s,
 					// SlicePointerInt8:        sPtr,
@@ -804,7 +1330,7 @@ var _ = Describe("Slice", func() {
 				s := []int8{el}
 				sPtr := []*int8{&el}
 
-				m := models.TypeSliceInt8{
+				m := models.RequiredSliceInt8{
 					SliceInt8:        s,
 					PointerSliceInt8: &s,
 					SlicePointerInt8: sPtr,
@@ -824,7 +1350,7 @@ var _ = Describe("Slice", func() {
 				s := []int16{el}
 				sPtr := []*int16{&el}
 
-				m := models.TypeSliceInt16{
+				m := models.RequiredSliceInt16{
 					SliceInt16:               s,
 					PointerSliceInt16:        &s,
 					SlicePointerInt16:        sPtr,
@@ -840,7 +1366,7 @@ var _ = Describe("Slice", func() {
 				s := []int16{el}
 				sPtr := []*int16{&el}
 
-				m := models.TypeSliceInt16{
+				m := models.RequiredSliceInt16{
 					// SliceInt16:               s,
 					PointerSliceInt16:        &s,
 					SlicePointerInt16:        sPtr,
@@ -858,7 +1384,7 @@ var _ = Describe("Slice", func() {
 				s := []int16{el}
 				sPtr := []*int16{&el}
 
-				m := models.TypeSliceInt16{
+				m := models.RequiredSliceInt16{
 					SliceInt16: s,
 					// PointerSliceInt16:        &s,
 					SlicePointerInt16:        sPtr,
@@ -876,7 +1402,7 @@ var _ = Describe("Slice", func() {
 				s := []int16{el}
 				sPtr := []*int16{&el}
 
-				m := models.TypeSliceInt16{
+				m := models.RequiredSliceInt16{
 					SliceInt16:        s,
 					PointerSliceInt16: &s,
 					// SlicePointerInt16:        sPtr,
@@ -894,7 +1420,7 @@ var _ = Describe("Slice", func() {
 				s := []int16{el}
 				sPtr := []*int16{&el}
 
-				m := models.TypeSliceInt16{
+				m := models.RequiredSliceInt16{
 					SliceInt16:        s,
 					PointerSliceInt16: &s,
 					SlicePointerInt16: sPtr,
@@ -914,7 +1440,7 @@ var _ = Describe("Slice", func() {
 				s := []int32{el}
 				sPtr := []*int32{&el}
 
-				m := models.TypeSliceInt32{
+				m := models.RequiredSliceInt32{
 					SliceInt32:               s,
 					PointerSliceInt32:        &s,
 					SlicePointerInt32:        sPtr,
@@ -930,7 +1456,7 @@ var _ = Describe("Slice", func() {
 				s := []int32{el}
 				sPtr := []*int32{&el}
 
-				m := models.TypeSliceInt32{
+				m := models.RequiredSliceInt32{
 					// SliceInt32:               s,
 					PointerSliceInt32:        &s,
 					SlicePointerInt32:        sPtr,
@@ -948,7 +1474,7 @@ var _ = Describe("Slice", func() {
 				s := []int32{el}
 				sPtr := []*int32{&el}
 
-				m := models.TypeSliceInt32{
+				m := models.RequiredSliceInt32{
 					SliceInt32: s,
 					// PointerSliceInt32:        &s,
 					SlicePointerInt32:        sPtr,
@@ -966,7 +1492,7 @@ var _ = Describe("Slice", func() {
 				s := []int32{el}
 				sPtr := []*int32{&el}
 
-				m := models.TypeSliceInt32{
+				m := models.RequiredSliceInt32{
 					SliceInt32:        s,
 					PointerSliceInt32: &s,
 					// SlicePointerInt32:        sPtr,
@@ -984,7 +1510,7 @@ var _ = Describe("Slice", func() {
 				s := []int32{el}
 				sPtr := []*int32{&el}
 
-				m := models.TypeSliceInt32{
+				m := models.RequiredSliceInt32{
 					SliceInt32:        s,
 					PointerSliceInt32: &s,
 					SlicePointerInt32: sPtr,
@@ -1004,7 +1530,7 @@ var _ = Describe("Slice", func() {
 				s := []int64{el}
 				sPtr := []*int64{&el}
 
-				m := models.TypeSliceInt64{
+				m := models.RequiredSliceInt64{
 					SliceInt64:               s,
 					PointerSliceInt64:        &s,
 					SlicePointerInt64:        sPtr,
@@ -1020,7 +1546,7 @@ var _ = Describe("Slice", func() {
 				s := []int64{el}
 				sPtr := []*int64{&el}
 
-				m := models.TypeSliceInt64{
+				m := models.RequiredSliceInt64{
 					// SliceInt64:               s,
 					PointerSliceInt64:        &s,
 					SlicePointerInt64:        sPtr,
@@ -1038,7 +1564,7 @@ var _ = Describe("Slice", func() {
 				s := []int64{el}
 				sPtr := []*int64{&el}
 
-				m := models.TypeSliceInt64{
+				m := models.RequiredSliceInt64{
 					SliceInt64: s,
 					// PointerSliceInt64:        &s,
 					SlicePointerInt64:        sPtr,
@@ -1056,7 +1582,7 @@ var _ = Describe("Slice", func() {
 				s := []int64{el}
 				sPtr := []*int64{&el}
 
-				m := models.TypeSliceInt64{
+				m := models.RequiredSliceInt64{
 					SliceInt64:        s,
 					PointerSliceInt64: &s,
 					// SlicePointerInt64:        sPtr,
@@ -1074,7 +1600,7 @@ var _ = Describe("Slice", func() {
 				s := []int64{el}
 				sPtr := []*int64{&el}
 
-				m := models.TypeSliceInt64{
+				m := models.RequiredSliceInt64{
 					SliceInt64:        s,
 					PointerSliceInt64: &s,
 					SlicePointerInt64: sPtr,
@@ -1094,7 +1620,7 @@ var _ = Describe("Slice", func() {
 				s := []float32{el}
 				sPtr := []*float32{&el}
 
-				m := models.TypeSliceFloat32{
+				m := models.RequiredSliceFloat32{
 					SliceFloat32:               s,
 					PointerSliceFloat32:        &s,
 					SlicePointerFloat32:        sPtr,
@@ -1110,7 +1636,7 @@ var _ = Describe("Slice", func() {
 				s := []float32{el}
 				sPtr := []*float32{&el}
 
-				m := models.TypeSliceFloat32{
+				m := models.RequiredSliceFloat32{
 					// SliceFloat32:               s,
 					PointerSliceFloat32:        &s,
 					SlicePointerFloat32:        sPtr,
@@ -1128,7 +1654,7 @@ var _ = Describe("Slice", func() {
 				s := []float32{el}
 				sPtr := []*float32{&el}
 
-				m := models.TypeSliceFloat32{
+				m := models.RequiredSliceFloat32{
 					SliceFloat32: s,
 					// PointerSliceFloat32:        &s,
 					SlicePointerFloat32:        sPtr,
@@ -1146,7 +1672,7 @@ var _ = Describe("Slice", func() {
 				s := []float32{el}
 				sPtr := []*float32{&el}
 
-				m := models.TypeSliceFloat32{
+				m := models.RequiredSliceFloat32{
 					SliceFloat32:        s,
 					PointerSliceFloat32: &s,
 					// SlicePointerFloat32:        sPtr,
@@ -1164,7 +1690,7 @@ var _ = Describe("Slice", func() {
 				s := []float32{el}
 				sPtr := []*float32{&el}
 
-				m := models.TypeSliceFloat32{
+				m := models.RequiredSliceFloat32{
 					SliceFloat32:        s,
 					PointerSliceFloat32: &s,
 					SlicePointerFloat32: sPtr,
@@ -1184,7 +1710,7 @@ var _ = Describe("Slice", func() {
 				s := []float64{el}
 				sPtr := []*float64{&el}
 
-				m := models.TypeSliceFloat64{
+				m := models.RequiredSliceFloat64{
 					SliceFloat64:               s,
 					PointerSliceFloat64:        &s,
 					SlicePointerFloat64:        sPtr,
@@ -1200,7 +1726,7 @@ var _ = Describe("Slice", func() {
 				s := []float64{el}
 				sPtr := []*float64{&el}
 
-				m := models.TypeSliceFloat64{
+				m := models.RequiredSliceFloat64{
 					// SliceFloat64:               s,
 					PointerSliceFloat64:        &s,
 					SlicePointerFloat64:        sPtr,
@@ -1218,7 +1744,7 @@ var _ = Describe("Slice", func() {
 				s := []float64{el}
 				sPtr := []*float64{&el}
 
-				m := models.TypeSliceFloat64{
+				m := models.RequiredSliceFloat64{
 					SliceFloat64: s,
 					// PointerSliceFloat64:        &s,
 					SlicePointerFloat64:        sPtr,
@@ -1236,7 +1762,7 @@ var _ = Describe("Slice", func() {
 				s := []float64{el}
 				sPtr := []*float64{&el}
 
-				m := models.TypeSliceFloat64{
+				m := models.RequiredSliceFloat64{
 					SliceFloat64:        s,
 					PointerSliceFloat64: &s,
 					// SlicePointerFloat64:        sPtr,
@@ -1254,7 +1780,7 @@ var _ = Describe("Slice", func() {
 				s := []float64{el}
 				sPtr := []*float64{&el}
 
-				m := models.TypeSliceFloat64{
+				m := models.RequiredSliceFloat64{
 					SliceFloat64:        s,
 					PointerSliceFloat64: &s,
 					SlicePointerFloat64: sPtr,
@@ -1274,7 +1800,7 @@ var _ = Describe("Slice", func() {
 				s := []complex64{el}
 				sPtr := []*complex64{&el}
 
-				m := models.TypeSliceComplex64{
+				m := models.RequiredSliceComplex64{
 					SliceComplex64:               s,
 					PointerSliceComplex64:        &s,
 					SlicePointerComplex64:        sPtr,
@@ -1290,7 +1816,7 @@ var _ = Describe("Slice", func() {
 				s := []complex64{el}
 				sPtr := []*complex64{&el}
 
-				m := models.TypeSliceComplex64{
+				m := models.RequiredSliceComplex64{
 					// SliceComplex64:               s,
 					PointerSliceComplex64:        &s,
 					SlicePointerComplex64:        sPtr,
@@ -1308,7 +1834,7 @@ var _ = Describe("Slice", func() {
 				s := []complex64{el}
 				sPtr := []*complex64{&el}
 
-				m := models.TypeSliceComplex64{
+				m := models.RequiredSliceComplex64{
 					SliceComplex64: s,
 					// PointerSliceComplex64:        &s,
 					SlicePointerComplex64:        sPtr,
@@ -1326,7 +1852,7 @@ var _ = Describe("Slice", func() {
 				s := []complex64{el}
 				sPtr := []*complex64{&el}
 
-				m := models.TypeSliceComplex64{
+				m := models.RequiredSliceComplex64{
 					SliceComplex64:        s,
 					PointerSliceComplex64: &s,
 					// SlicePointerComplex64:        sPtr,
@@ -1344,7 +1870,7 @@ var _ = Describe("Slice", func() {
 				s := []complex64{el}
 				sPtr := []*complex64{&el}
 
-				m := models.TypeSliceComplex64{
+				m := models.RequiredSliceComplex64{
 					SliceComplex64:        s,
 					PointerSliceComplex64: &s,
 					SlicePointerComplex64: sPtr,
@@ -1364,7 +1890,7 @@ var _ = Describe("Slice", func() {
 				s := []complex128{el}
 				sPtr := []*complex128{&el}
 
-				m := models.TypeSliceComplex128{
+				m := models.RequiredSliceComplex128{
 					SliceComplex128:               s,
 					PointerSliceComplex128:        &s,
 					SlicePointerComplex128:        sPtr,
@@ -1380,7 +1906,7 @@ var _ = Describe("Slice", func() {
 				s := []complex128{el}
 				sPtr := []*complex128{&el}
 
-				m := models.TypeSliceComplex128{
+				m := models.RequiredSliceComplex128{
 					// SliceComplex128:               s,
 					PointerSliceComplex128:        &s,
 					SlicePointerComplex128:        sPtr,
@@ -1398,7 +1924,7 @@ var _ = Describe("Slice", func() {
 				s := []complex128{el}
 				sPtr := []*complex128{&el}
 
-				m := models.TypeSliceComplex128{
+				m := models.RequiredSliceComplex128{
 					SliceComplex128: s,
 					// PointerSliceComplex128:        &s,
 					SlicePointerComplex128:        sPtr,
@@ -1416,7 +1942,7 @@ var _ = Describe("Slice", func() {
 				s := []complex128{el}
 				sPtr := []*complex128{&el}
 
-				m := models.TypeSliceComplex128{
+				m := models.RequiredSliceComplex128{
 					SliceComplex128:        s,
 					PointerSliceComplex128: &s,
 					// SlicePointerComplex128:        sPtr,
@@ -1434,7 +1960,7 @@ var _ = Describe("Slice", func() {
 				s := []complex128{el}
 				sPtr := []*complex128{&el}
 
-				m := models.TypeSliceComplex128{
+				m := models.RequiredSliceComplex128{
 					SliceComplex128:        s,
 					PointerSliceComplex128: &s,
 					SlicePointerComplex128: sPtr,
@@ -1447,6 +1973,450 @@ var _ = Describe("Slice", func() {
 				Expect(errs[0].Tag()).To(Equal("required"))
 			})
 		})
+	})
 
+	When("Numbers", func() {
+		It("should fail to validate all numbers", func() {
+			m := models.RequiredNumber{}
+
+			errs := m.Validate()
+			Expect(errs).To(HaveLen(30))
+		})
+	})
+
+	When("Map", func() {
+
+		When("MapStringToInterface", func() {
+			It("should empty validation", func() {
+				d := map[string]interface{}{
+					"name": "Chico Bento",
+				}
+
+				m := models.RequiredMapStringToInterface{
+					MapStringToInterface:        d,
+					PointerMapStringToInterface: &d,
+				}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(0))
+			})
+
+			It("should fail to validate empty struct", func() {
+				m := models.RequiredMapStringToInterface{}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(2))
+				Expect(errs[0].Field()).To(Equal("MapStringToInterface"))
+				Expect(errs[0].Tag()).To(Equal("required"))
+				Expect(errs[1].Field()).To(Equal("PointerMapStringToInterface"))
+				Expect(errs[1].Tag()).To(Equal("required"))
+			})
+
+			It("should fail to validate without field `MapStringToInterface`", func() {
+				d := map[string]interface{}{
+					"name": "Chico Bento",
+				}
+
+				m := models.RequiredMapStringToInterface{
+					// MapStringToInterface:        d,
+					PointerMapStringToInterface: &d,
+				}
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(1))
+				Expect(errs[0].Field()).To(Equal("MapStringToInterface"))
+				Expect(errs[0].Tag()).To(Equal("required"))
+			})
+
+			It("should fail to validate without field `PointerMapStringToInterface`", func() {
+				d := map[string]interface{}{
+					"name": "Chico Bento",
+				}
+
+				m := models.RequiredMapStringToInterface{
+					MapStringToInterface: d,
+					// PointerMapStringToInterface: &d,
+				}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(1))
+				Expect(errs[0].Field()).To(Equal("PointerMapStringToInterface"))
+				Expect(errs[0].Tag()).To(Equal("required"))
+			})
+		})
+
+		When("MapStringToString", func() {
+			It("should empty validation", func() {
+				d := map[string]string{
+					"name": "Chico Bento",
+				}
+
+				m := models.RequiredMapStringToString{
+					MapStringToString:        d,
+					PointerMapStringToString: &d,
+				}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(0))
+			})
+
+			It("should fail to validate empty struct", func() {
+				m := models.RequiredMapStringToString{}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(2))
+				Expect(errs[0].Field()).To(Equal("MapStringToString"))
+				Expect(errs[0].Tag()).To(Equal("required"))
+				Expect(errs[1].Field()).To(Equal("PointerMapStringToString"))
+				Expect(errs[1].Tag()).To(Equal("required"))
+			})
+
+			It("should fail to validate without field `MapStringToString`", func() {
+				d := map[string]string{
+					"name": "Chico Bento",
+				}
+
+				m := models.RequiredMapStringToString{
+					// MapStringToString:        d,
+					PointerMapStringToString: &d,
+				}
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(1))
+				Expect(errs[0].Field()).To(Equal("MapStringToString"))
+				Expect(errs[0].Tag()).To(Equal("required"))
+			})
+
+			It("should fail to validate without field `PointerMapStringToString`", func() {
+				d := map[string]string{
+					"name": "Chico Bento",
+				}
+
+				m := models.RequiredMapStringToString{
+					MapStringToString: d,
+					// PointerMapStringToString: &d,
+				}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(1))
+				Expect(errs[0].Field()).To(Equal("PointerMapStringToString"))
+				Expect(errs[0].Tag()).To(Equal("required"))
+			})
+		})
+
+		When("MapIntToString", func() {
+			It("should empty validation", func() {
+				d := map[int]string{
+					0: "Chico Bento",
+				}
+
+				m := models.RequiredMapIntToString{
+					MapIntToString:        d,
+					PointerMapIntToString: &d,
+				}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(0))
+			})
+
+			It("should fail to validate empty struct", func() {
+				m := models.RequiredMapIntToString{}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(2))
+				Expect(errs[0].Field()).To(Equal("MapIntToString"))
+				Expect(errs[0].Tag()).To(Equal("required"))
+				Expect(errs[1].Field()).To(Equal("PointerMapIntToString"))
+				Expect(errs[1].Tag()).To(Equal("required"))
+			})
+
+			It("should fail to validate without field `MapIntToString`", func() {
+				d := map[int]string{
+					0: "Chico Bento",
+				}
+
+				m := models.RequiredMapIntToString{
+					// MapIntToString:        d,
+					PointerMapIntToString: &d,
+				}
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(1))
+				Expect(errs[0].Field()).To(Equal("MapIntToString"))
+				Expect(errs[0].Tag()).To(Equal("required"))
+			})
+
+			It("should fail to validate without field `PointerMapIntToString`", func() {
+				d := map[int]string{
+					0: "Chico Bento",
+				}
+
+				m := models.RequiredMapIntToString{
+					MapIntToString: d,
+					// PointerMapIntToString: &d,
+				}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(1))
+				Expect(errs[0].Field()).To(Equal("PointerMapIntToString"))
+				Expect(errs[0].Tag()).To(Equal("required"))
+			})
+		})
+
+		When("MapIntToBool", func() {
+			It("should empty validation", func() {
+				d := map[int]bool{
+					0: false,
+				}
+
+				m := models.RequiredMapIntToBool{
+					MapIntToBool:        d,
+					PointerMapIntToBool: &d,
+				}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(0))
+			})
+
+			It("should fail to validate empty struct", func() {
+				m := models.RequiredMapIntToBool{}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(2))
+				Expect(errs[0].Field()).To(Equal("MapIntToBool"))
+				Expect(errs[0].Tag()).To(Equal("required"))
+				Expect(errs[1].Field()).To(Equal("PointerMapIntToBool"))
+				Expect(errs[1].Tag()).To(Equal("required"))
+			})
+
+			It("should fail to validate without field `MapIntToBool`", func() {
+				d := map[int]bool{
+					0: true,
+				}
+
+				m := models.RequiredMapIntToBool{
+					// MapIntToBool:        d,
+					PointerMapIntToBool: &d,
+				}
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(1))
+				Expect(errs[0].Field()).To(Equal("MapIntToBool"))
+				Expect(errs[0].Tag()).To(Equal("required"))
+			})
+
+			It("should fail to validate without field `PointerMapIntToBool`", func() {
+				d := map[int]bool{
+					0: false,
+				}
+
+				m := models.RequiredMapIntToBool{
+					MapIntToBool: d,
+					// PointerMapIntToBool: &d,
+				}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(1))
+				Expect(errs[0].Field()).To(Equal("PointerMapIntToBool"))
+				Expect(errs[0].Tag()).To(Equal("required"))
+			})
+		})
+
+		When("MapIntToStruct", func() {
+			It("should empty validation", func() {
+				dataA := models.MapTypeA{
+					Int:  22,
+					Bool: false,
+				}
+
+				dataB := models.MapTypeB{
+					Bool:   true,
+					String: "Chico Bento",
+					Float:  1.0,
+				}
+
+				a := map[int]models.MapTypeA{
+					0: dataA,
+				}
+
+				aPtr := map[int]*models.MapTypeA{
+					0: &dataA,
+				}
+
+				b := map[int]models.MapTypeB{
+					0: dataB,
+				}
+
+				bPtr := map[int]*models.MapTypeB{
+					0: &dataB,
+				}
+
+				m := models.RequiredMapIntToStruct{
+					MapIntToStructA:               a,
+					PointerMapIntToStructA:        aPtr,
+					MapIntToStructB:               &b,
+					PointerMapIntToStructPointerB: &bPtr,
+				}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(0))
+			})
+
+			It("should fail to validate empty struct", func() {
+				m := models.RequiredMapIntToStruct{}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(4))
+				Expect(errs[0].Field()).To(Equal("MapIntToStructA"))
+				Expect(errs[0].Tag()).To(Equal("required"))
+				Expect(errs[1].Field()).To(Equal("PointerMapIntToStructA"))
+				Expect(errs[1].Tag()).To(Equal("required"))
+				Expect(errs[2].Field()).To(Equal("MapIntToStructB"))
+				Expect(errs[2].Tag()).To(Equal("required"))
+				Expect(errs[3].Field()).To(Equal("PointerMapIntToStructPointerB"))
+				Expect(errs[3].Tag()).To(Equal("required"))
+			})
+
+			It("should fail to validate without field `MapIntToStructA`", func() {
+				dataA := models.MapTypeA{
+					Int:  22,
+					Bool: false,
+				}
+
+				dataB := models.MapTypeB{
+					Bool:   true,
+					String: "Chico Bento",
+					Float:  1.0,
+				}
+
+				aPtr := map[int]*models.MapTypeA{
+					0: &dataA,
+				}
+
+				b := map[int]models.MapTypeB{
+					0: dataB,
+				}
+
+				bPtr := map[int]*models.MapTypeB{
+					0: &dataB,
+				}
+
+				m := models.RequiredMapIntToStruct{
+					// MapIntToStructA:               a,
+					PointerMapIntToStructA:        aPtr,
+					MapIntToStructB:               &b,
+					PointerMapIntToStructPointerB: &bPtr,
+				}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(1))
+				Expect(errs[0].Field()).To(Equal("MapIntToStructA"))
+				Expect(errs[0].Tag()).To(Equal("required"))
+			})
+
+			It("should fail to validate without field `PointerMapIntToStructA`", func() {
+				dataA := models.MapTypeA{
+					Int:  22,
+					Bool: false,
+				}
+				dataB := models.MapTypeB{
+					Bool:   true,
+					String: "Chico Bento",
+					Float:  1.0,
+				}
+
+				a := map[int]models.MapTypeA{
+					0: dataA,
+				}
+
+				b := map[int]models.MapTypeB{
+					0: dataB,
+				}
+
+				bPtr := map[int]*models.MapTypeB{
+					0: &dataB,
+				}
+
+				m := models.RequiredMapIntToStruct{
+					MapIntToStructA: a,
+					// PointerMapIntToStructA:        aPtr,
+					MapIntToStructB:               &b,
+					PointerMapIntToStructPointerB: &bPtr,
+				}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(1))
+				Expect(errs[0].Field()).To(Equal("PointerMapIntToStructA"))
+				Expect(errs[0].Tag()).To(Equal("required"))
+			})
+
+			It("should fail to validate without field `MapIntToStructB`", func() {
+				dataA := models.MapTypeA{
+					Int:  22,
+					Bool: false,
+				}
+				dataB := models.MapTypeB{
+					Bool:   true,
+					String: "Chico Bento",
+					Float:  1.0,
+				}
+
+				a := map[int]models.MapTypeA{
+					0: dataA,
+				}
+
+				aPtr := map[int]*models.MapTypeA{
+					0: &dataA,
+				}
+
+				bPtr := map[int]*models.MapTypeB{
+					0: &dataB,
+				}
+
+				m := models.RequiredMapIntToStruct{
+					MapIntToStructA:        a,
+					PointerMapIntToStructA: aPtr,
+					// MapIntToStructB:               &b,
+					PointerMapIntToStructPointerB: &bPtr,
+				}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(1))
+				Expect(errs[0].Field()).To(Equal("MapIntToStructB"))
+				Expect(errs[0].Tag()).To(Equal("required"))
+			})
+
+			It("should fail to validate without field `PointerMapIntToStructPointerB`", func() {
+				dataA := models.MapTypeA{
+					Int:  22,
+					Bool: false,
+				}
+				dataB := models.MapTypeB{
+					Bool:   true,
+					String: "Chico Bento",
+					Float:  1.0,
+				}
+
+				a := map[int]models.MapTypeA{
+					0: dataA,
+				}
+
+				aPtr := map[int]*models.MapTypeA{
+					0: &dataA,
+				}
+
+				b := map[int]models.MapTypeB{
+					0: dataB,
+				}
+
+				m := models.RequiredMapIntToStruct{
+					MapIntToStructA:        a,
+					PointerMapIntToStructA: aPtr,
+					MapIntToStructB:        &b,
+					// PointerMapIntToStructPointerB: &bPtr,
+				}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(1))
+				Expect(errs[0].Field()).To(Equal("PointerMapIntToStructPointerB"))
+				Expect(errs[0].Tag()).To(Equal("required"))
+			})
+		})
 	})
 })
