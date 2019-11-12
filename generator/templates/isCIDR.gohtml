@@ -31,7 +31,7 @@ func isMAC(ref string) bool {
 // IsTCP4AddrResolvable is the validation function for validating if the field's value is a resolvable tcp4 address.
 func isTCP4AddrResolvable(ref string) bool {
 
-	if !isIP4Addr(fl) {
+	if !isIP4Addr(ref) {
 		return false
 	}
 
@@ -42,7 +42,7 @@ func isTCP4AddrResolvable(ref string) bool {
 // IsTCP6AddrResolvable is the validation function for validating if the field's value is a resolvable tcp6 address.
 func isTCP6AddrResolvable(ref string) bool {
 
-	if !isIP6Addr(fl) {
+	if !isIP6Addr(ref) {
 		return false
 	}
 
@@ -54,7 +54,7 @@ func isTCP6AddrResolvable(ref string) bool {
 // IsTCPAddrResolvable is the validation function for validating if the field's value is a resolvable tcp address.
 func isTCPAddrResolvable(ref string) bool {
 
-	if !isIP4Addr(fl) && !isIP6Addr(fl) {
+	if !isIP4Addr(ref) && !isIP6Addr(ref) {
 		return false
 	}
 
@@ -66,7 +66,7 @@ func isTCPAddrResolvable(ref string) bool {
 // IsUDP4AddrResolvable is the validation function for validating if the field's value is a resolvable udp4 address.
 func isUDP4AddrResolvable(ref string) bool {
 
-	if !isIP4Addr(fl) {
+	if !isIP4Addr(ref) {
 		return false
 	}
 
@@ -78,7 +78,7 @@ func isUDP4AddrResolvable(ref string) bool {
 // IsUDP6AddrResolvable is the validation function for validating if the field's value is a resolvable udp6 address.
 func isUDP6AddrResolvable(ref string) bool {
 
-	if !isIP6Addr(fl) {
+	if !isIP6Addr(ref) {
 		return false
 	}
 
@@ -90,7 +90,7 @@ func isUDP6AddrResolvable(ref string) bool {
 // IsUDPAddrResolvable is the validation function for validating if the field's value is a resolvable udp address.
 func isUDPAddrResolvable(ref string) bool {
 
-	if !isIP4Addr(fl) && !isIP6Addr(fl) {
+	if !isIP4Addr(ref) && !isIP6Addr(ref) {
 		return false
 	}
 
@@ -102,7 +102,7 @@ func isUDPAddrResolvable(ref string) bool {
 // IsIP4AddrResolvable is the validation function for validating if the field's value is a resolvable ip4 address.
 func isIP4AddrResolvable(ref string) bool {
 
-	if !isIPv4(fl) {
+	if !isIPv4(ref) {
 		return false
 	}
 
@@ -114,7 +114,7 @@ func isIP4AddrResolvable(ref string) bool {
 // IsIP6AddrResolvable is the validation function for validating if the field's value is a resolvable ip6 address.
 func isIP6AddrResolvable(ref string) bool {
 
-	if !isIPv6(fl) {
+	if !isIPv6(ref) {
 		return false
 	}
 
@@ -126,7 +126,7 @@ func isIP6AddrResolvable(ref string) bool {
 // IsIPAddrResolvable is the validation function for validating if the field's value is a resolvable ip address.
 func isIPAddrResolvable(ref string) bool {
 
-	if !isIP(fl) {
+	if !isIP(ref) {
 		return false
 	}
 

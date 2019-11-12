@@ -41,6 +41,78 @@ func (t *TypeChanUint) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (g *GtField) Validate() (errs ValidationErrors) {
+	if !g.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if len(g.Name) > 10 {
+		errs = append(errs, NewError("Name", "gt"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (g *GtFieldStrPointer) Validate() (errs ValidationErrors) {
+	if !g.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if g.Name == nil {
+		errs = append(errs, NewError("Name", "gt"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (g *GtFields) Validate() (errs ValidationErrors) {
+
+	if g.ID != 1 {
+		errs = append(errs, NewError("ID", "eq"))
+	}
+	if !g.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (g *GteField) Validate() (errs ValidationErrors) {
+	if !g.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if len(g.Name) >= 10 {
+		errs = append(errs, NewError("Name", "gte"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (g *GteFieldStrPointer) Validate() (errs ValidationErrors) {
+	if !g.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if g.Name == nil {
+		errs = append(errs, NewError("Name", "gte"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (g *GteFields) Validate() (errs ValidationErrors) {
+
+	if g.ID != 1 {
+		errs = append(errs, NewError("ID", "eq"))
+	}
+	if !g.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
 func (t *TypeInterface) Validate() (errs ValidationErrors) {
 	if IsValid(t.Interface) {
 		errs = append(errs, NewError("Interface", "required"))
@@ -78,6 +150,7 @@ func (l *LenFieldStrPointer) Validate() (errs ValidationErrors) {
 
 // Validate TODO
 func (l *LenFields) Validate() (errs ValidationErrors) {
+
 	if l.ID != 1 {
 		errs = append(errs, NewError("ID", "eq"))
 	}
@@ -91,6 +164,78 @@ func (l *LenFields) Validate() (errs ValidationErrors) {
 
 	if l.Subjects == nil {
 		errs = append(errs, NewError("Subjects", "len"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (l *LtField) Validate() (errs ValidationErrors) {
+	if !l.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if len(l.Name) < 10 {
+		errs = append(errs, NewError("Name", "lt"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (l *LtFieldStrPointer) Validate() (errs ValidationErrors) {
+	if !l.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if l.Name == nil {
+		errs = append(errs, NewError("Name", "lt"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (l *LtFields) Validate() (errs ValidationErrors) {
+
+	if l.ID != 1 {
+		errs = append(errs, NewError("ID", "eq"))
+	}
+	if !l.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (l *LteField) Validate() (errs ValidationErrors) {
+	if !l.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if len(l.Name) <= 10 {
+		errs = append(errs, NewError("Name", "lte"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (l *LteFieldStrPointer) Validate() (errs ValidationErrors) {
+	if !l.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if l.Name == nil {
+		errs = append(errs, NewError("Name", "lte"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (l *LteFields) Validate() (errs ValidationErrors) {
+
+	if l.ID != 1 {
+		errs = append(errs, NewError("ID", "eq"))
+	}
+	if !l.Status {
+		errs = append(errs, NewError("Status", "required"))
 	}
 	return errs
 }
@@ -164,6 +309,86 @@ func (t *TypeMapIntToStruct) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (m *MaxField) Validate() (errs ValidationErrors) {
+	if !m.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if len(m.Name) < 10 {
+		errs = append(errs, NewError("Name", "max"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (m *MaxFieldStrPointer) Validate() (errs ValidationErrors) {
+	if !m.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if m.Name == nil {
+		errs = append(errs, NewError("Name", "max"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (m *MaxFields) Validate() (errs ValidationErrors) {
+
+	if m.ID != 1 {
+		errs = append(errs, NewError("ID", "eq"))
+	}
+	if !m.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (m *MinField) Validate() (errs ValidationErrors) {
+	if !m.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if len(m.Name) > 10 {
+		errs = append(errs, NewError("Name", "min"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (m *MinFieldStrPointer) Validate() (errs ValidationErrors) {
+	if !m.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if m.Name == nil {
+		errs = append(errs, NewError("Name", "min"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (m *MinFields) Validate() (errs ValidationErrors) {
+
+	if m.ID != 1 {
+		errs = append(errs, NewError("ID", "eq"))
+	}
+	if !m.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if len(m.Names) > 2 {
+		errs = append(errs, NewError("Names", "min"))
+	}
+
+	if m.Subjects == nil {
+		errs = append(errs, NewError("Subjects", "min"))
+	}
+	return errs
+}
+
+// Validate TODO
 func (h *Home) Validate() (errs ValidationErrors) {
 	if IsInt(h.ID) {
 		errs = append(errs, NewError("ID", "required"))
@@ -204,94 +429,148 @@ func (u *User) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (n *NeField) Validate() (errs ValidationErrors) {
+	if !n.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if n.Name != "chico" {
+		errs = append(errs, NewError("Name", "ne"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (n *NeFieldStrPointer) Validate() (errs ValidationErrors) {
+	if !n.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if n.Name == nil {
+		errs = append(errs, NewError("Name", "ne"))
+	}
+	return errs
+}
+
+// Validate TODO
 func (t *TypeEqNumber) Validate() (errs ValidationErrors) {
+
 	if t.Uint != 1 {
 		errs = append(errs, NewError("Uint", "eq"))
 	}
+
 	if t.UintPointer == nil || *t.UintPointer != 2 {
 		errs = append(errs, NewError("UintPointer", "eq"))
 	}
+
 	if t.Uint8 != 3 {
 		errs = append(errs, NewError("Uint8", "eq"))
 	}
+
 	if t.Uint8Pointer == nil || *t.Uint8Pointer != 4 {
 		errs = append(errs, NewError("Uint8Pointer", "eq"))
 	}
+
 	if t.Uint16 != 5 {
 		errs = append(errs, NewError("Uint16", "eq"))
 	}
+
 	if t.Uint16Pointer == nil || *t.Uint16Pointer != 6 {
 		errs = append(errs, NewError("Uint16Pointer", "eq"))
 	}
+
 	if t.Uint32 != 7 {
 		errs = append(errs, NewError("Uint32", "eq"))
 	}
+
 	if t.Uint32Pointer == nil || *t.Uint32Pointer != 8 {
 		errs = append(errs, NewError("Uint32Pointer", "eq"))
 	}
+
 	if t.Uint64 != 9 {
 		errs = append(errs, NewError("Uint64", "eq"))
 	}
+
 	if t.Uint64Pointer == nil || *t.Uint64Pointer != 10 {
 		errs = append(errs, NewError("Uint64Pointer", "eq"))
 	}
+
 	if t.Uintptr != 11 {
 		errs = append(errs, NewError("Uintptr", "eq"))
 	}
+
 	if t.UintptrPointer == nil || *t.UintptrPointer != 12 {
 		errs = append(errs, NewError("UintptrPointer", "eq"))
 	}
+
 	if t.Int != 13 {
 		errs = append(errs, NewError("Int", "eq"))
 	}
+
 	if t.IntPointer == nil || *t.IntPointer != 14 {
 		errs = append(errs, NewError("IntPointer", "eq"))
 	}
+
 	if t.Int8 != 15 {
 		errs = append(errs, NewError("Int8", "eq"))
 	}
+
 	if t.Int8Pointer == nil || *t.Int8Pointer != 16 {
 		errs = append(errs, NewError("Int8Pointer", "eq"))
 	}
+
 	if t.Int16 != 17 {
 		errs = append(errs, NewError("Int16", "eq"))
 	}
+
 	if t.Int16Pointer == nil || *t.Int16Pointer != 18 {
 		errs = append(errs, NewError("Int16Pointer", "eq"))
 	}
+
 	if t.Int32 != 19 {
 		errs = append(errs, NewError("Int32", "eq"))
 	}
+
 	if t.Int32Pointer == nil || *t.Int32Pointer != 20 {
 		errs = append(errs, NewError("Int32Pointer", "eq"))
 	}
+
 	if t.Int64 != 21 {
 		errs = append(errs, NewError("Int64", "eq"))
 	}
+
 	if t.Int64Pointer == nil || *t.Int64Pointer != 22 {
 		errs = append(errs, NewError("Int64Pointer", "eq"))
 	}
+
 	if t.Float32 != 23 {
 		errs = append(errs, NewError("Float32", "eq"))
 	}
+
 	if t.Float32Pointer == nil || *t.Float32Pointer != 24 {
 		errs = append(errs, NewError("Float32Pointer", "eq"))
 	}
+
 	if t.Float64 != 25 {
 		errs = append(errs, NewError("Float64", "eq"))
 	}
+
 	if t.Float64Pointer == nil || *t.Float64Pointer != 26 {
 		errs = append(errs, NewError("Float64Pointer", "eq"))
 	}
+
 	if t.Complex64 != 27 {
 		errs = append(errs, NewError("Complex64", "eq"))
 	}
+
 	if t.Complex64Pointer == nil || *t.Complex64Pointer != 28 {
 		errs = append(errs, NewError("Complex64Pointer", "eq"))
 	}
+
 	if t.Complex128 != 29 {
 		errs = append(errs, NewError("Complex128", "eq"))
 	}
+
 	if t.Complex128Pointer == nil || *t.Complex128Pointer != 30 {
 		errs = append(errs, NewError("Complex128Pointer", "eq"))
 	}
@@ -448,6 +727,7 @@ func (r *RequiredWithFieldStrPointer) Validate() (errs ValidationErrors) {
 
 // Validate TODO
 func (r *RequiredWithFields) Validate() (errs ValidationErrors) {
+
 	if r.ID != 1 {
 		errs = append(errs, NewError("ID", "eq"))
 	}
@@ -455,7 +735,7 @@ func (r *RequiredWithFields) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if r.Name == nil && (r.ID == 1 || r.Status != false) {
+	if r.Name == nil && (r.ID != 1 || r.Status != false) {
 		errs = append(errs, NewError("Name", "required_with"))
 	}
 	return errs
@@ -487,6 +767,7 @@ func (r *RequiredWithAllFieldStrPointer) Validate() (errs ValidationErrors) {
 
 // Validate TODO
 func (r *RequiredWithAllFields) Validate() (errs ValidationErrors) {
+
 	if r.ID != 1 {
 		errs = append(errs, NewError("ID", "eq"))
 	}
@@ -494,7 +775,7 @@ func (r *RequiredWithAllFields) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if r.Name == nil && (r.ID == 1 && r.Status != false) {
+	if r.Name == nil && (r.ID != 1 && r.Status != false) {
 		errs = append(errs, NewError("Name", "required_with_all"))
 	}
 	return errs
@@ -526,6 +807,7 @@ func (r *RequiredWithoutFieldStrPointer) Validate() (errs ValidationErrors) {
 
 // Validate TODO
 func (r *RequiredWithoutFields) Validate() (errs ValidationErrors) {
+
 	if r.ID != 1 {
 		errs = append(errs, NewError("ID", "eq"))
 	}
@@ -533,7 +815,7 @@ func (r *RequiredWithoutFields) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if r.Name == nil && (r.ID == 1 || r.Status != false) {
+	if r.Name == nil && (r.ID != 1 || r.Status != false) {
 		errs = append(errs, NewError("Name", "required_without"))
 	}
 	return errs
@@ -565,6 +847,7 @@ func (r *RequiredWithoutAllFieldStrPointer) Validate() (errs ValidationErrors) {
 
 // Validate TODO
 func (r *RequiredWithoutAllFields) Validate() (errs ValidationErrors) {
+
 	if r.ID != 1 {
 		errs = append(errs, NewError("ID", "eq"))
 	}
@@ -572,7 +855,7 @@ func (r *RequiredWithoutAllFields) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if r.Name == nil && (r.ID == 1 && r.Status != false) {
+	if r.Name == nil && (r.ID != 1 && r.Status != false) {
 		errs = append(errs, NewError("Name", "required_without_all"))
 	}
 	return errs
@@ -912,9 +1195,11 @@ func (t *TypeString) Validate() (errs ValidationErrors) {
 
 // Validate TODO
 func (t *TypeEqString) Validate() (errs ValidationErrors) {
+
 	if t.String != "chico" {
 		errs = append(errs, NewError("String", "eq"))
 	}
+
 	if t.Pointer == nil || *t.Pointer != "bento" {
 		errs = append(errs, NewError("Pointer", "eq"))
 	}

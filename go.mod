@@ -9,7 +9,7 @@ require (
 	github.com/lab259/errors v2.1.0+incompatible // indirect
 	github.com/lab259/go-my-ast-hurts v0.0.3
 	github.com/lab259/rlog/v2 v2.1.0
-	github.com/leodido/go-urn v1.1.0 // indirect
+	github.com/leodido/go-urn v1.1.0
 	github.com/novln/macchiato v1.0.0
 	github.com/onsi/ginkgo v1.10.2
 	github.com/onsi/gomega v1.7.0

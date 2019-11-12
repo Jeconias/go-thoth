@@ -5,7 +5,14 @@
 	var pkg *myasthurts.Package
 -}@:package @pkg.Name
 
-import "fmt"
+import (
+	"fmt"
+	"net"
+	"net/url"
+	"os"
+	"strings"
+	"github.com/leodido/go-urn"
+)
 
 const fieldErrMsg = "Error: Validation of field '%s' failed on tag '%s'"
 
@@ -55,7 +62,6 @@ var (
 @{RenderIsURI(_buffer)}
 @{RenderIsUrnRFC2141(_buffer)}
 @{RenderIsFile(_buffer)}
-@{RenderIsISBN(_buffer)}
 @{RenderIsISBN10(_buffer)}
 @{RenderIsISBN13(_buffer)}
 @{RenderIsDataURI(_buffer)}
