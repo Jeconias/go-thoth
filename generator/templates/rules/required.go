@@ -183,7 +183,7 @@ func RenderRequired(_buffer io.StringWriter, input *RequiredInput) {
 			if c, ok := Condition[input.Ref]; ok {
 				Condition[input.Ref] = (c + " || ! " + input.Ref)
 			} else {
-				Condition[input.Ref] = input.Ref
+				Condition[input.Ref] = (input.Ref + "!= false")
 			}
 		case *myasthurts.StarRefType:
 

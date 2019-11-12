@@ -52,7 +52,7 @@ func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string)
 			Ref:   input.AttributeRef,
 		})
 	case "required_with":
-		var expressions = append(make([]string, 0), requiredWith(input.Field, input.AttributeRef))
+		var expressions = make([]string, 0)
 		for _, s := range args {
 			for _, f := range input.Struct.Fields {
 				if f.Name == s {
@@ -64,8 +64,9 @@ func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string)
 				}
 			}
 		}
-		condition := strings.Join(expressions, " || ")
-		rules.RenderEvaluation(_buffer, condition, input.Field, input.Tag)
+		condition := "(" + strings.Join(expressions, " || ") + ")"
+		exp := requiredWith(input.Field, input.AttributeRef)
+		rules.RenderEvaluation(_buffer, exp, condition, input.Field, input.Tag)
 	case "eq":
 		if len(args) == 1 {
 			rules.RenderEq(_buffer, &rules.EqInput{

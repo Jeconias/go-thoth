@@ -12,15 +12,17 @@ import (
 )
 
 // Evaluation generates templates/rules/evaluation.gohtml
-func Evaluation(condition string, field *myasthurts.Field, tag myasthurts.TagParam) string {
+func Evaluation(preCondition string, condition string, field *myasthurts.Field, tag myasthurts.TagParam) string {
 	var _b strings.Builder
-	RenderEvaluation(&_b, condition, field, tag)
+	RenderEvaluation(&_b, preCondition, condition, field, tag)
 	return _b.String()
 }
 
 // RenderEvaluation render templates/rules/evaluation.gohtml
-func RenderEvaluation(_buffer io.StringWriter, condition string, field *myasthurts.Field, tag myasthurts.TagParam) {
+func RenderEvaluation(_buffer io.StringWriter, preCondition string, condition string, field *myasthurts.Field, tag myasthurts.TagParam) {
 	_buffer.WriteString("\nif ")
+	_buffer.WriteString(gorazor.HTMLEscape(preCondition))
+	_buffer.WriteString(" && ")
 	_buffer.WriteString(gorazor.HTMLEscape(condition))
 	_buffer.WriteString(" {\n\terrs = append(errs, NewError(\"")
 	_buffer.WriteString(gorazor.HTMLEscape(field.Name))

@@ -385,7 +385,7 @@ func (r *RequiredWithField) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if Empty(len(r.Name)) || r.Status {
+	if Empty(len(r.Name)) && (r.Status != false) {
 		errs = append(errs, NewError("Name", "required_with"))
 	}
 	return errs
@@ -397,7 +397,7 @@ func (r *RequiredWithFieldStrPointer) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if r.Name == nil || r.Status {
+	if r.Name == nil && (r.Status != false) {
 		errs = append(errs, NewError("Name", "required_with"))
 	}
 	return errs
@@ -412,7 +412,7 @@ func (r *RequiredWithFields) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if r.Name == nil || r.ID == 1 || r.Status {
+	if r.Name == nil && (r.ID == 1 || r.Status != false) {
 		errs = append(errs, NewError("Name", "required_with"))
 	}
 	return errs

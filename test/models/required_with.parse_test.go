@@ -88,7 +88,7 @@ var _ = Describe("Required With", func() {
 			})
 		})
 
-		PWhen("Two Fields", func() {
+		When("Two Fields", func() {
 			var name = "Chico Bento"
 
 			It("should to validate required field", func() {
