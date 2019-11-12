@@ -10,7 +10,7 @@ var _ = Describe("Email", func() {
 
 	It("should empty validation", func() {
 		s := "chicobento@lab259.rocks"
-		m := models.EmailValidation{
+		m := models.EmailValidate{
 			Email:   s,
 			Pointer: &s,
 		}
@@ -21,7 +21,7 @@ var _ = Describe("Email", func() {
 
 	It("should fail validate email when email invalid", func() {
 		s := "invalid-email"
-		m := models.EmailValidation{
+		m := models.EmailValidate{
 			Email:   "chicobento@lab259.rocks",
 			Pointer: &s,
 		}
@@ -34,7 +34,7 @@ var _ = Describe("Email", func() {
 
 	It("should fail to validate without field `Email`", func() {
 		s := "chicobento@lab259.rocks"
-		m := models.EmailValidation{
+		m := models.EmailValidate{
 			// Email: s,
 			Pointer: &s,
 		}
@@ -47,7 +47,7 @@ var _ = Describe("Email", func() {
 
 	It("should fail to validater without field `Pointer`", func() {
 		s := "chicobento@lab259.rocks"
-		m := models.EmailValidation{
+		m := models.EmailValidate{
 			Email: s,
 			// Pointer: &s,
 		}

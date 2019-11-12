@@ -1,7 +1,7 @@
 package models
 
-// EmailValidation TODO
-type EmailValidation struct {
+// EmailValidate TODO
+type EmailValidate struct {
 	Email   string  `thoth:"email"`
 	Pointer *string `thoth:"email"`
 }

@@ -1,7 +1,7 @@
 package models
 
 // Validate TODO
-func (e *EmailValidation) Validate() (errs ValidationErrors) {
+func (e *EmailValidate) Validate() (errs ValidationErrors) {
 
 	if !emailRegex.MatchString(e.Email) {
 		errs = append(errs, NewError("Email", "email"))
@@ -152,37 +152,22 @@ func (e *EqString) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
-func (g *GtField) Validate() (errs ValidationErrors) {
-	if !g.Status {
-		errs = append(errs, NewError("Status", "required"))
-	}
+func (g *GtValidate) Validate() (errs ValidationErrors) {
 
-	if len(g.Name) > 10 {
+	if len(g.Name) < 5 {
 		errs = append(errs, NewError("Name", "gt"))
 	}
-	return errs
-}
 
-// Validate TODO
-func (g *GtFieldStrPointer) Validate() (errs ValidationErrors) {
-	if !g.Status {
-		errs = append(errs, NewError("Status", "required"))
+	if g.Password == nil || len(*g.Password) < 3 {
+		errs = append(errs, NewError("Password", "gt"))
 	}
 
-	if g.Name == nil {
-		errs = append(errs, NewError("Name", "gt"))
+	if g.Age < 22 {
+		errs = append(errs, NewError("Age", "gt"))
 	}
-	return errs
-}
 
-// Validate TODO
-func (g *GtFields) Validate() (errs ValidationErrors) {
-
-	if g.ID != 1 {
-		errs = append(errs, NewError("ID", "eq"))
-	}
-	if !g.Status {
-		errs = append(errs, NewError("Status", "required"))
+	if len(g.Contents) < 2 {
+		errs = append(errs, NewError("Contents", "gt"))
 	}
 	return errs
 }

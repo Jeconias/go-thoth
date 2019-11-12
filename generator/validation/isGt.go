@@ -31,7 +31,14 @@ func isGt(input *IsGtInput) string {
 	case "string":
 		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType, *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			return fmt.Sprintf(`len(%s) > %s`, input.Ref, input.Value.(string))
+			return fmt.Sprintf(`len(%s) < %s`, input.Ref, input.Value.(string))
+		case *myasthurts.StarRefType:
+			return fmt.Sprintf(`%s == nil || len(*%s) < %s`, input.Ref, input.Ref, input.Value)
+		}
+	case "int":
+		switch input.Field.RefType.(type) {
+		case *myasthurts.BaseRefType, *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
+			return fmt.Sprintf(`%s < %s`, input.Ref, input.Value.(string))
 		case *myasthurts.StarRefType:
 			return fmt.Sprintf(`%s == nil`, input.Ref)
 		}
