@@ -1,1 +1,107 @@
 # go-thoth
+
+## Validation implemented (WORK IN PROGRESS)
+
+- [x] required
+- [x] required_with
+- [x] required_with_all
+- [x] required_without
+- [x] required_without_all
+- [ ] isdefault
+- [x] len
+- [x] min
+- [x] max
+- [x] eq
+- [x] ne
+- [x] lt
+- [x] lte
+- [x] gt
+- [x] gte
+- [ ] eqfield
+- [ ] eqcsfield
+- [ ] necsfield
+- [ ] gtcsfield
+- [ ] gtecsfield
+- [ ] ltcsfield
+- [ ] ltecsfield
+- [ ] nefield
+- [ ] gtefield
+- [ ] gtfield
+- [ ] ltefield
+- [ ] ltfield
+- [ ] fieldcontains
+- [ ] fieldexcludes
+- [x] alpha
+- [x] alphanum
+- [x] alphaunicode
+- [x] alphanumunicode
+- [x] numeric
+- [x] number
+- [x] hexadecimal
+- [x] hexcolor
+- [x] rgb
+- [x] rgba
+- [x] hsl
+- [x] hsla
+- [x] email
+- [x] url
+- [x] uri
+- [x] urn_rfc2141
+- [x] file
+- [x] base64
+- [x] base64url
+- [ ] contains
+- [ ] containsany
+- [ ] containsrune
+- [ ] excludes
+- [ ] excludesall
+- [ ] excludesrune
+- [ ] startswith
+- [ ] endswith
+- [x] isbn
+- [x] isbn10
+- [x] isbn13
+- [x] eth_addr
+- [x] btc_addr
+- [x] btc_addr_bech32
+- [x] uuid
+- [x] uuid3
+- [x] uuid4
+- [x] uuid5
+- [x] uuid_rfc4122
+- [x] uuid3_rfc4122
+- [x] uuid4_rfc4122
+- [x] uuid5_rfc4122
+- [x] ascii
+- [x] printascii
+- [x] multibyte
+- [x] datauri
+- [ ] latitude
+- [ ] longitude
+- [x] ssn
+- [x] ipv4
+- [x] ipv6
+- [x] ip
+- [x] cidrv4
+- [x] cidrv6
+- [x] cidr
+- [x] tcp4_addr
+- [x] tcp6_addr
+- [x] tcp_addr
+- [x] udp4_addr
+- [x] udp6_addr
+- [x] udp_addr
+- [x] ip4_addr
+- [x] ip6_addr
+- [x] ip_addr
+- [x] unix_addr
+- [x] mac
+- [x] hostname
+- [x] hostname_rfc1123
+- [x] fqdn
+- [ ] unique
+- [ ] oneof
+- [x] html
+- [x] html_encoded
+- [x] url_encoded
+- [x] dir

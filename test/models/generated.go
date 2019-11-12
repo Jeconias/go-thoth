@@ -173,233 +173,64 @@ func (g *GtValidate) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
-func (g *GteField) Validate() (errs ValidationErrors) {
-	if !g.Status {
-		errs = append(errs, NewError("Status", "required"))
-	}
+func (g *GteValidate) Validate() (errs ValidationErrors) {
 
-	if len(g.Name) >= 10 {
+	if len(g.Name) <= 5 {
 		errs = append(errs, NewError("Name", "gte"))
 	}
-	return errs
-}
 
-// Validate TODO
-func (g *GteFieldStrPointer) Validate() (errs ValidationErrors) {
-	if !g.Status {
-		errs = append(errs, NewError("Status", "required"))
+	if g.Password == nil || len(*g.Password) <= 3 {
+		errs = append(errs, NewError("Password", "gte"))
 	}
 
-	if g.Name == nil {
-		errs = append(errs, NewError("Name", "gte"))
+	if g.Age <= 22 {
+		errs = append(errs, NewError("Age", "gte"))
 	}
-	return errs
-}
 
-// Validate TODO
-func (g *GteFields) Validate() (errs ValidationErrors) {
-
-	if g.ID != 1 {
-		errs = append(errs, NewError("ID", "eq"))
-	}
-	if !g.Status {
-		errs = append(errs, NewError("Status", "required"))
+	if len(g.Contents) <= 2 {
+		errs = append(errs, NewError("Contents", "gte"))
 	}
 	return errs
 }
 
 // Validate TODO
-func (l *LenField) Validate() (errs ValidationErrors) {
-	if !l.Status {
-		errs = append(errs, NewError("Status", "required"))
-	}
+func (l *LtValidate) Validate() (errs ValidationErrors) {
 
-	if len(l.Name) == 10 {
-		errs = append(errs, NewError("Name", "len"))
-	}
-	return errs
-}
-
-// Validate TODO
-func (l *LenFieldStrPointer) Validate() (errs ValidationErrors) {
-	if !l.Status {
-		errs = append(errs, NewError("Status", "required"))
-	}
-
-	if l.Name == nil {
-		errs = append(errs, NewError("Name", "len"))
-	}
-	return errs
-}
-
-// Validate TODO
-func (l *LenFields) Validate() (errs ValidationErrors) {
-
-	if l.ID != 1 {
-		errs = append(errs, NewError("ID", "eq"))
-	}
-	if !l.Status {
-		errs = append(errs, NewError("Status", "required"))
-	}
-
-	if len(l.Names) == 2 {
-		errs = append(errs, NewError("Names", "len"))
-	}
-
-	if l.Subjects == nil {
-		errs = append(errs, NewError("Subjects", "len"))
-	}
-	return errs
-}
-
-// Validate TODO
-func (l *LtField) Validate() (errs ValidationErrors) {
-	if !l.Status {
-		errs = append(errs, NewError("Status", "required"))
-	}
-
-	if len(l.Name) < 10 {
+	if len(l.Name) > 12 {
 		errs = append(errs, NewError("Name", "lt"))
 	}
-	return errs
-}
 
-// Validate TODO
-func (l *LtFieldStrPointer) Validate() (errs ValidationErrors) {
-	if !l.Status {
-		errs = append(errs, NewError("Status", "required"))
+	if l.Password == nil || len(*l.Password) > 3 {
+		errs = append(errs, NewError("Password", "lt"))
 	}
 
-	if l.Name == nil {
-		errs = append(errs, NewError("Name", "lt"))
+	if l.Age > 22 {
+		errs = append(errs, NewError("Age", "lt"))
 	}
-	return errs
-}
 
-// Validate TODO
-func (l *LtFields) Validate() (errs ValidationErrors) {
-
-	if l.ID != 1 {
-		errs = append(errs, NewError("ID", "eq"))
-	}
-	if !l.Status {
-		errs = append(errs, NewError("Status", "required"))
+	if len(l.Contents) > 2 {
+		errs = append(errs, NewError("Contents", "lt"))
 	}
 	return errs
 }
 
 // Validate TODO
-func (l *LteField) Validate() (errs ValidationErrors) {
-	if !l.Status {
-		errs = append(errs, NewError("Status", "required"))
-	}
+func (l *LteValidate) Validate() (errs ValidationErrors) {
 
-	if len(l.Name) <= 10 {
+	if len(l.Name) >= 12 {
 		errs = append(errs, NewError("Name", "lte"))
 	}
-	return errs
-}
 
-// Validate TODO
-func (l *LteFieldStrPointer) Validate() (errs ValidationErrors) {
-	if !l.Status {
-		errs = append(errs, NewError("Status", "required"))
+	if l.Password == nil || len(*l.Password) >= 3 {
+		errs = append(errs, NewError("Password", "lte"))
 	}
 
-	if l.Name == nil {
-		errs = append(errs, NewError("Name", "lte"))
-	}
-	return errs
-}
-
-// Validate TODO
-func (l *LteFields) Validate() (errs ValidationErrors) {
-
-	if l.ID != 1 {
-		errs = append(errs, NewError("ID", "eq"))
-	}
-	if !l.Status {
-		errs = append(errs, NewError("Status", "required"))
-	}
-	return errs
-}
-
-// Validate TODO
-func (m *MaxField) Validate() (errs ValidationErrors) {
-	if !m.Status {
-		errs = append(errs, NewError("Status", "required"))
+	if l.Age >= 22 {
+		errs = append(errs, NewError("Age", "lte"))
 	}
 
-	if len(m.Name) < 10 {
-		errs = append(errs, NewError("Name", "max"))
-	}
-	return errs
-}
-
-// Validate TODO
-func (m *MaxFieldStrPointer) Validate() (errs ValidationErrors) {
-	if !m.Status {
-		errs = append(errs, NewError("Status", "required"))
-	}
-
-	if m.Name == nil {
-		errs = append(errs, NewError("Name", "max"))
-	}
-	return errs
-}
-
-// Validate TODO
-func (m *MaxFields) Validate() (errs ValidationErrors) {
-
-	if m.ID != 1 {
-		errs = append(errs, NewError("ID", "eq"))
-	}
-	if !m.Status {
-		errs = append(errs, NewError("Status", "required"))
-	}
-	return errs
-}
-
-// Validate TODO
-func (m *MinField) Validate() (errs ValidationErrors) {
-	if !m.Status {
-		errs = append(errs, NewError("Status", "required"))
-	}
-
-	if len(m.Name) > 10 {
-		errs = append(errs, NewError("Name", "min"))
-	}
-	return errs
-}
-
-// Validate TODO
-func (m *MinFieldStrPointer) Validate() (errs ValidationErrors) {
-	if !m.Status {
-		errs = append(errs, NewError("Status", "required"))
-	}
-
-	if m.Name == nil {
-		errs = append(errs, NewError("Name", "min"))
-	}
-	return errs
-}
-
-// Validate TODO
-func (m *MinFields) Validate() (errs ValidationErrors) {
-
-	if m.ID != 1 {
-		errs = append(errs, NewError("ID", "eq"))
-	}
-	if !m.Status {
-		errs = append(errs, NewError("Status", "required"))
-	}
-
-	if len(m.Names) > 2 {
-		errs = append(errs, NewError("Names", "min"))
-	}
-
-	if m.Subjects == nil {
-		errs = append(errs, NewError("Subjects", "min"))
+	if len(l.Contents) >= 2 {
+		errs = append(errs, NewError("Contents", "lte"))
 	}
 	return errs
 }
@@ -441,30 +272,6 @@ func (u *User) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Name", "required"))
 	}
 
-	return errs
-}
-
-// Validate TODO
-func (n *NeField) Validate() (errs ValidationErrors) {
-	if !n.Status {
-		errs = append(errs, NewError("Status", "required"))
-	}
-
-	if n.Name != "chico" {
-		errs = append(errs, NewError("Name", "ne"))
-	}
-	return errs
-}
-
-// Validate TODO
-func (n *NeFieldStrPointer) Validate() (errs ValidationErrors) {
-	if !n.Status {
-		errs = append(errs, NewError("Status", "required"))
-	}
-
-	if n.Name == nil {
-		errs = append(errs, NewError("Name", "ne"))
-	}
 	return errs
 }
 

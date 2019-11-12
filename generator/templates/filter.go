@@ -117,39 +117,39 @@ func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string)
 		}
 	case "lt":
 		if len(args) == 1 {
-			validation.IsLt(_buffer, &validation.IsLtInput{
+			validation.IsCompare(_buffer, &validation.IsCompareInput{
 				Field: input.Field,
 				Tag:   input.Tag,
 				Ref:   input.Ref,
 				Value: args[0],
-			})
+			}, ">")
 		}
 	case "lte":
 		if len(args) == 1 {
-			validation.IsLte(_buffer, &validation.IsLteInput{
+			validation.IsCompare(_buffer, &validation.IsCompareInput{
 				Field: input.Field,
 				Tag:   input.Tag,
 				Ref:   input.Ref,
 				Value: args[0],
-			})
+			}, ">=")
 		}
 	case "gt":
 		if len(args) == 1 {
-			validation.IsGt(_buffer, &validation.IsGtInput{
+			validation.IsCompare(_buffer, &validation.IsCompareInput{
 				Field: input.Field,
 				Tag:   input.Tag,
 				Ref:   input.Ref,
 				Value: args[0],
-			})
+			}, "<")
 		}
 	case "gte":
 		if len(args) == 1 {
-			validation.IsGte(_buffer, &validation.IsGteInput{
+			validation.IsCompare(_buffer, &validation.IsCompareInput{
 				Field: input.Field,
 				Tag:   input.Tag,
 				Ref:   input.Ref,
 				Value: args[0],
-			})
+			}, "<=")
 		}
 	case "alpha":
 		validation.IsAlpha(_buffer, &validation.IsAlphaInput{
