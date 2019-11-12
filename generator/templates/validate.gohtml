@@ -10,6 +10,7 @@ import (
 	"net"
 	"net/url"
 	"os"
+	"regexp"
 	"strings"
 	"github.com/leodido/go-urn"
 )
@@ -68,3 +69,4 @@ var (
 @{RenderIsSSN(_buffer)}
 @{RenderIsIP(_buffer)}
 @{RenderIsCIDR(_buffer)}
+@{RenderRegexp(_buffer)}

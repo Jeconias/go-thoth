@@ -1,6 +1,7 @@
 package validation
 
 import (
+	"fmt"
 	"io"
 
 	myasthurts "github.com/lab259/go-my-ast-hurts"
@@ -18,8 +19,30 @@ type IsEmailInput struct {
 func IsEmail(_buffer io.StringWriter, input *IsEmailInput) {
 	rules.RenderCondition(
 		_buffer,
-		regexMatch("emailRegex", input.Ref),
+		isEmail(input),
 		input.Field,
 		input.Tag,
 	)
+}
+
+func isEmail(input *IsEmailInput) (condition string) {
+	condition = fmt.Sprintf("!%s", regexMatch("emailRegex", input.Ref))
+	switch input.Field.RefType.Name() {
+	case "string":
+		switch input.Field.RefType.(type) {
+		case *myasthurts.BaseRefType:
+			rules.MapCondition[input.Ref] = condition
+			return condition
+		case *myasthurts.StarRefType:
+			condition = fmt.Sprintf(`%s == nil || ! %s`, input.Ref, regexMatch("emailRegex", input.Ref, true))
+			rules.MapCondition[input.Ref] = condition
+			return condition
+		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
+			panic("not implemented")
+		}
+	default:
+		panic("not implemented")
+	}
+
+	return
 }

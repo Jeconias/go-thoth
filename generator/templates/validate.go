@@ -22,7 +22,7 @@ func Validate(pkg *myasthurts.Package) string {
 func RenderValidate(_buffer io.StringWriter, pkg *myasthurts.Package) {
 	_buffer.WriteString("package ")
 	_buffer.WriteString(gorazor.HTMLEscape(pkg.Name))
-	_buffer.WriteString("\n\nimport (\n\t\"fmt\"\n\t\"net\"\n\t\"net/url\"\n\t\"os\"\n\t\"strings\"\n\t\"github.com/leodido/go-urn\"\n)\n\nconst fieldErrMsg = \"Error: Validation of field '%s' failed on tag '%s'\"\n\n// FieldError contains all functions to get error details\ntype FieldError interface {\n\tTag() string\n\tField() string\n}\n\n// ValidationErrors is an array of FieldError's for use in custom error\n// messages post validation.\ntype ValidationErrors []FieldError\n\ntype fieldError struct {\n\ttag   string\n\tfield string\n}\n\n// Tag returns the validation tag that failed.\nfunc (f *fieldError) Tag() string {\n\treturn f.tag\n}\n\n// Field returns the fields name with the tag name taking precedence over the\n// fields actual name.\nfunc (f *fieldError) Field() string {\n\treturn f.field\n}\n\n// Error returns the fieldError's error message\nfunc (f *fieldError) Error() string {\n\treturn fmt.Sprintf(fieldErrMsg, f.Field(), f.Tag())\n}\n\nvar (\n\t// NewError TODO\n\tNewError = func(field, tag string) *fieldError {\n\t\treturn &fieldError{\n\t\t\ttag:   tag,\n\t\t\tfield: field,\n\t\t}\n\t}\n)")
+	_buffer.WriteString("\n\nimport (\n\t\"fmt\"\n\t\"net\"\n\t\"net/url\"\n\t\"os\"\n\t\"regexp\"\n\t\"strings\"\n\t\"github.com/leodido/go-urn\"\n)\n\nconst fieldErrMsg = \"Error: Validation of field '%s' failed on tag '%s'\"\n\n// FieldError contains all functions to get error details\ntype FieldError interface {\n\tTag() string\n\tField() string\n}\n\n// ValidationErrors is an array of FieldError's for use in custom error\n// messages post validation.\ntype ValidationErrors []FieldError\n\ntype fieldError struct {\n\ttag   string\n\tfield string\n}\n\n// Tag returns the validation tag that failed.\nfunc (f *fieldError) Tag() string {\n\treturn f.tag\n}\n\n// Field returns the fields name with the tag name taking precedence over the\n// fields actual name.\nfunc (f *fieldError) Field() string {\n\treturn f.field\n}\n\n// Error returns the fieldError's error message\nfunc (f *fieldError) Error() string {\n\treturn fmt.Sprintf(fieldErrMsg, f.Field(), f.Tag())\n}\n\nvar (\n\t// NewError TODO\n\tNewError = func(field, tag string) *fieldError {\n\t\treturn &fieldError{\n\t\t\ttag:   tag,\n\t\t\tfield: field,\n\t\t}\n\t}\n)")
 	RenderRules(_buffer)
 	RenderIsURL(_buffer)
 	RenderIsURI(_buffer)
@@ -34,5 +34,6 @@ func RenderValidate(_buffer io.StringWriter, pkg *myasthurts.Package) {
 	RenderIsSSN(_buffer)
 	RenderIsIP(_buffer)
 	RenderIsCIDR(_buffer)
+	RenderRegexp(_buffer)
 
 }

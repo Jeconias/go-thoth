@@ -126,7 +126,7 @@ var _ = Describe("Equal", func() {
 	When("String", func() {
 		It("should empty validation", func() {
 			s := "bento"
-			m := models.TypeEqString{
+			m := models.EqString{
 				String:  "chico",
 				Pointer: &s,
 			}
@@ -137,7 +137,7 @@ var _ = Describe("Equal", func() {
 
 		It("should to validate field `String`", func() {
 			s := "bento"
-			m := models.TypeEqString{
+			m := models.EqString{
 				// String: s,
 				Pointer: &s,
 			}
@@ -150,7 +150,7 @@ var _ = Describe("Equal", func() {
 
 		It("should check if field `String Pointer`", func() {
 			s := "chico"
-			m := models.TypeEqString{
+			m := models.EqString{
 				String: s,
 				// Pointer: &s,
 			}

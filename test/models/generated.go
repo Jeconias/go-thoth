@@ -1,6 +1,157 @@
 package models
 
 // Validate TODO
+func (e *EmailValidation) Validate() (errs ValidationErrors) {
+
+	if !emailRegex.MatchString(e.Email) {
+		errs = append(errs, NewError("Email", "email"))
+	}
+
+	if e.Pointer == nil || !emailRegex.MatchString(*e.Pointer) {
+		errs = append(errs, NewError("Pointer", "email"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (e *EqNumber) Validate() (errs ValidationErrors) {
+
+	if e.Uint != 1 {
+		errs = append(errs, NewError("Uint", "eq"))
+	}
+
+	if e.UintPointer == nil || *e.UintPointer != 2 {
+		errs = append(errs, NewError("UintPointer", "eq"))
+	}
+
+	if e.Uint8 != 3 {
+		errs = append(errs, NewError("Uint8", "eq"))
+	}
+
+	if e.Uint8Pointer == nil || *e.Uint8Pointer != 4 {
+		errs = append(errs, NewError("Uint8Pointer", "eq"))
+	}
+
+	if e.Uint16 != 5 {
+		errs = append(errs, NewError("Uint16", "eq"))
+	}
+
+	if e.Uint16Pointer == nil || *e.Uint16Pointer != 6 {
+		errs = append(errs, NewError("Uint16Pointer", "eq"))
+	}
+
+	if e.Uint32 != 7 {
+		errs = append(errs, NewError("Uint32", "eq"))
+	}
+
+	if e.Uint32Pointer == nil || *e.Uint32Pointer != 8 {
+		errs = append(errs, NewError("Uint32Pointer", "eq"))
+	}
+
+	if e.Uint64 != 9 {
+		errs = append(errs, NewError("Uint64", "eq"))
+	}
+
+	if e.Uint64Pointer == nil || *e.Uint64Pointer != 10 {
+		errs = append(errs, NewError("Uint64Pointer", "eq"))
+	}
+
+	if e.Uintptr != 11 {
+		errs = append(errs, NewError("Uintptr", "eq"))
+	}
+
+	if e.UintptrPointer == nil || *e.UintptrPointer != 12 {
+		errs = append(errs, NewError("UintptrPointer", "eq"))
+	}
+
+	if e.Int != 13 {
+		errs = append(errs, NewError("Int", "eq"))
+	}
+
+	if e.IntPointer == nil || *e.IntPointer != 14 {
+		errs = append(errs, NewError("IntPointer", "eq"))
+	}
+
+	if e.Int8 != 15 {
+		errs = append(errs, NewError("Int8", "eq"))
+	}
+
+	if e.Int8Pointer == nil || *e.Int8Pointer != 16 {
+		errs = append(errs, NewError("Int8Pointer", "eq"))
+	}
+
+	if e.Int16 != 17 {
+		errs = append(errs, NewError("Int16", "eq"))
+	}
+
+	if e.Int16Pointer == nil || *e.Int16Pointer != 18 {
+		errs = append(errs, NewError("Int16Pointer", "eq"))
+	}
+
+	if e.Int32 != 19 {
+		errs = append(errs, NewError("Int32", "eq"))
+	}
+
+	if e.Int32Pointer == nil || *e.Int32Pointer != 20 {
+		errs = append(errs, NewError("Int32Pointer", "eq"))
+	}
+
+	if e.Int64 != 21 {
+		errs = append(errs, NewError("Int64", "eq"))
+	}
+
+	if e.Int64Pointer == nil || *e.Int64Pointer != 22 {
+		errs = append(errs, NewError("Int64Pointer", "eq"))
+	}
+
+	if e.Float32 != 23 {
+		errs = append(errs, NewError("Float32", "eq"))
+	}
+
+	if e.Float32Pointer == nil || *e.Float32Pointer != 24 {
+		errs = append(errs, NewError("Float32Pointer", "eq"))
+	}
+
+	if e.Float64 != 25 {
+		errs = append(errs, NewError("Float64", "eq"))
+	}
+
+	if e.Float64Pointer == nil || *e.Float64Pointer != 26 {
+		errs = append(errs, NewError("Float64Pointer", "eq"))
+	}
+
+	if e.Complex64 != 27 {
+		errs = append(errs, NewError("Complex64", "eq"))
+	}
+
+	if e.Complex64Pointer == nil || *e.Complex64Pointer != 28 {
+		errs = append(errs, NewError("Complex64Pointer", "eq"))
+	}
+
+	if e.Complex128 != 29 {
+		errs = append(errs, NewError("Complex128", "eq"))
+	}
+
+	if e.Complex128Pointer == nil || *e.Complex128Pointer != 30 {
+		errs = append(errs, NewError("Complex128Pointer", "eq"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (e *EqString) Validate() (errs ValidationErrors) {
+
+	if e.String != "chico" {
+		errs = append(errs, NewError("String", "eq"))
+	}
+
+	if e.Pointer == nil || *e.Pointer != "bento" {
+		errs = append(errs, NewError("Pointer", "eq"))
+	}
+	return errs
+}
+
+// Validate TODO
 func (g *GtField) Validate() (errs ValidationErrors) {
 	if !g.Status {
 		errs = append(errs, NewError("Status", "required"))
@@ -328,131 +479,6 @@ func (n *NeFieldStrPointer) Validate() (errs ValidationErrors) {
 
 	if n.Name == nil {
 		errs = append(errs, NewError("Name", "ne"))
-	}
-	return errs
-}
-
-// Validate TODO
-func (t *EqNumber) Validate() (errs ValidationErrors) {
-
-	if t.Uint != 1 {
-		errs = append(errs, NewError("Uint", "eq"))
-	}
-
-	if t.UintPointer == nil || *t.UintPointer != 2 {
-		errs = append(errs, NewError("UintPointer", "eq"))
-	}
-
-	if t.Uint8 != 3 {
-		errs = append(errs, NewError("Uint8", "eq"))
-	}
-
-	if t.Uint8Pointer == nil || *t.Uint8Pointer != 4 {
-		errs = append(errs, NewError("Uint8Pointer", "eq"))
-	}
-
-	if t.Uint16 != 5 {
-		errs = append(errs, NewError("Uint16", "eq"))
-	}
-
-	if t.Uint16Pointer == nil || *t.Uint16Pointer != 6 {
-		errs = append(errs, NewError("Uint16Pointer", "eq"))
-	}
-
-	if t.Uint32 != 7 {
-		errs = append(errs, NewError("Uint32", "eq"))
-	}
-
-	if t.Uint32Pointer == nil || *t.Uint32Pointer != 8 {
-		errs = append(errs, NewError("Uint32Pointer", "eq"))
-	}
-
-	if t.Uint64 != 9 {
-		errs = append(errs, NewError("Uint64", "eq"))
-	}
-
-	if t.Uint64Pointer == nil || *t.Uint64Pointer != 10 {
-		errs = append(errs, NewError("Uint64Pointer", "eq"))
-	}
-
-	if t.Uintptr != 11 {
-		errs = append(errs, NewError("Uintptr", "eq"))
-	}
-
-	if t.UintptrPointer == nil || *t.UintptrPointer != 12 {
-		errs = append(errs, NewError("UintptrPointer", "eq"))
-	}
-
-	if t.Int != 13 {
-		errs = append(errs, NewError("Int", "eq"))
-	}
-
-	if t.IntPointer == nil || *t.IntPointer != 14 {
-		errs = append(errs, NewError("IntPointer", "eq"))
-	}
-
-	if t.Int8 != 15 {
-		errs = append(errs, NewError("Int8", "eq"))
-	}
-
-	if t.Int8Pointer == nil || *t.Int8Pointer != 16 {
-		errs = append(errs, NewError("Int8Pointer", "eq"))
-	}
-
-	if t.Int16 != 17 {
-		errs = append(errs, NewError("Int16", "eq"))
-	}
-
-	if t.Int16Pointer == nil || *t.Int16Pointer != 18 {
-		errs = append(errs, NewError("Int16Pointer", "eq"))
-	}
-
-	if t.Int32 != 19 {
-		errs = append(errs, NewError("Int32", "eq"))
-	}
-
-	if t.Int32Pointer == nil || *t.Int32Pointer != 20 {
-		errs = append(errs, NewError("Int32Pointer", "eq"))
-	}
-
-	if t.Int64 != 21 {
-		errs = append(errs, NewError("Int64", "eq"))
-	}
-
-	if t.Int64Pointer == nil || *t.Int64Pointer != 22 {
-		errs = append(errs, NewError("Int64Pointer", "eq"))
-	}
-
-	if t.Float32 != 23 {
-		errs = append(errs, NewError("Float32", "eq"))
-	}
-
-	if t.Float32Pointer == nil || *t.Float32Pointer != 24 {
-		errs = append(errs, NewError("Float32Pointer", "eq"))
-	}
-
-	if t.Float64 != 25 {
-		errs = append(errs, NewError("Float64", "eq"))
-	}
-
-	if t.Float64Pointer == nil || *t.Float64Pointer != 26 {
-		errs = append(errs, NewError("Float64Pointer", "eq"))
-	}
-
-	if t.Complex64 != 27 {
-		errs = append(errs, NewError("Complex64", "eq"))
-	}
-
-	if t.Complex64Pointer == nil || *t.Complex64Pointer != 28 {
-		errs = append(errs, NewError("Complex64Pointer", "eq"))
-	}
-
-	if t.Complex128 != 29 {
-		errs = append(errs, NewError("Complex128", "eq"))
-	}
-
-	if t.Complex128Pointer == nil || *t.Complex128Pointer != 30 {
-		errs = append(errs, NewError("Complex128Pointer", "eq"))
 	}
 	return errs
 }
@@ -1217,19 +1243,6 @@ func (r *RequiredWithoutAllFields) Validate() (errs ValidationErrors) {
 
 	if r.Name == nil && (r.ID != 1 && r.Status != false) {
 		errs = append(errs, NewError("Name", "required_without_all"))
-	}
-	return errs
-}
-
-// Validate TODO
-func (t *EqString) Validate() (errs ValidationErrors) {
-
-	if t.String != "chico" {
-		errs = append(errs, NewError("String", "eq"))
-	}
-
-	if t.Pointer == nil || *t.Pointer != "bento" {
-		errs = append(errs, NewError("Pointer", "eq"))
 	}
 	return errs
 }
