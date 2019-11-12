@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	myasthurts "github.com/lab259/go-my-ast-hurts"
-	"github.com/lab259/go-thoth/generator/templates/rules"
+	"github.com/lab259/go-thoth/generator/validation"
 )
 
 func hasTag(structsThoth []*myasthurts.Struct) bool {
@@ -28,48 +28,43 @@ type FilterInput struct {
 	AttributeRef string
 }
 
-func requiredWith(field *myasthurts.Field, ref string) string {
-	switch field.RefType.Name() {
-	case "string":
-		switch field.RefType.(type) {
-		case *myasthurts.BaseRefType, *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			return " Empty(len(" + ref + "))"
-		case *myasthurts.StarRefType:
-			return ref + " == nil"
-		}
-	}
-	return ""
-}
-
 func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string) {
 	switch input.Tag.Value {
 	case "-":
 		// Skip field...
 	case "required":
-		rules.RenderRequired(_buffer, &rules.RequiredInput{
+		validation.HasValue(_buffer, &validation.RequiredInput{
 			Field: input.Field,
 			Tag:   input.Tag,
 			Ref:   input.AttributeRef,
 		})
 	case "required_with":
-		var expressions = make([]string, 0)
-		for _, s := range args {
-			for _, f := range input.Struct.Fields {
-				if f.Name == s {
-					ref := input.StructRef + "." + f.Name
-					for range f.Tag.Params {
-						expressions = append(expressions, rules.Condition[ref])
-					}
-
-				}
-			}
-		}
-		condition := "(" + strings.Join(expressions, " || ") + ")"
-		exp := requiredWith(input.Field, input.AttributeRef)
-		rules.RenderEvaluation(_buffer, exp, condition, input.Field, input.Tag)
+		validation.RequiredWith(_buffer, &validation.RequiredWithInput{
+			Struct:       input.Struct,
+			StructRef:    input.StructRef,
+			Field:        input.Field,
+			Tag:          input.Tag,
+			AttributeRef: input.AttributeRef,
+		}, args...)
+	case "required_with_all":
+		validation.RequiredWithAll(_buffer, &validation.RequiredWithAllInput{
+			Struct:       input.Struct,
+			StructRef:    input.StructRef,
+			Field:        input.Field,
+			Tag:          input.Tag,
+			AttributeRef: input.AttributeRef,
+		}, args...)
+	case "required_without":
+		validation.RequiredWithout(_buffer, &validation.RequiredWithoutInput{
+			Struct:       input.Struct,
+			StructRef:    input.StructRef,
+			Field:        input.Field,
+			Tag:          input.Tag,
+			AttributeRef: input.AttributeRef,
+		}, args...)
 	case "eq":
 		if len(args) == 1 {
-			rules.RenderEq(_buffer, &rules.EqInput{
+			validation.IsEq(_buffer, &validation.IsEqInput{
 				Field: input.Field,
 				Tag:   input.Tag,
 				Ref:   input.AttributeRef,

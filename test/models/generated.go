@@ -419,6 +419,45 @@ func (r *RequiredWithFields) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (r *RequiredWithAllField) Validate() (errs ValidationErrors) {
+	if !r.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if Empty(len(r.Name)) && (r.Status != false) {
+		errs = append(errs, NewError("Name", "required_with_all"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (r *RequiredWithAllFieldStrPointer) Validate() (errs ValidationErrors) {
+	if !r.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if r.Name == nil && (r.Status != false) {
+		errs = append(errs, NewError("Name", "required_with_all"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (r *RequiredWithAllFields) Validate() (errs ValidationErrors) {
+	if r.ID != 1 {
+		errs = append(errs, NewError("ID", "eq"))
+	}
+	if !r.Status {
+		errs = append(errs, NewError("Status", "required"))
+	}
+
+	if r.Name == nil && (r.ID == 1 && r.Status != false) {
+		errs = append(errs, NewError("Name", "required_with_all"))
+	}
+	return errs
+}
+
+// Validate TODO
 func (t *TypeSliceString) Validate() (errs ValidationErrors) {
 	if Empty(len(t.SliceString)) {
 		errs = append(errs, NewError("SliceString", "required"))
