@@ -1,0 +1,19 @@
+
+func isISBN13(ref string) bool {
+    s := strings.Replace(strings.Replace(ref, "-", "", 4), " ", "", 4)
+
+	if !iSBN13Regex.MatchString(s) {
+		return false
+	}
+
+	var checksum int32
+	var i int32
+
+	factor := []int32{1, 3}
+
+	for i = 0; i < 12; i++ {
+		checksum += factor[i%2] * int32(s[i]-'0')
+	}
+
+	return (int32(s[12]-'0'))-((10-(checksum%10))%10) == 0
+}

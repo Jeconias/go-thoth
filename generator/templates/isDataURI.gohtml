@@ -1,0 +1,14 @@
+
+func isDataURI(ref string) bool {
+    uri := strings.SplitN(ref, ",", 2)
+
+	if len(uri) != 2 {
+		return false
+	}
+
+	if !dataURIRegex.MatchString(uri[0]) {
+		return false
+	}
+
+	return base64Regex.MatchString(uri[1])
+}

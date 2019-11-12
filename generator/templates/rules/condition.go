@@ -21,7 +21,7 @@ func Condition(condition string, field *myasthurts.Field, tag myasthurts.TagPara
 // RenderCondition render templates/rules/condition.gohtml
 func RenderCondition(_buffer io.StringWriter, condition string, field *myasthurts.Field, tag myasthurts.TagParam) {
 	_buffer.WriteString("\n\nif ")
-	_buffer.WriteString(gorazor.HTMLEscape(condition))
+	_buffer.WriteString((condition))
 	_buffer.WriteString(" {\n\terrs = append(errs, NewError(\"")
 	_buffer.WriteString(gorazor.HTMLEscape(field.Name))
 	_buffer.WriteString("\", \"")

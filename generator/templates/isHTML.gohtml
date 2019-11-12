@@ -1,0 +1,12 @@
+
+func isURLEncoded(source string) bool {
+	return uRLEncodedRegex.MatchString(source)
+}
+
+func isHTMLEncoded(source string) bool {
+	return hTMLEncodedRegex.MatchString(source)
+}
+
+func isHTML(source string) bool {
+	return hTMLRegex.MatchString(source)
+}

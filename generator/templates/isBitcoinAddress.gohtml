@@ -1,0 +1,34 @@
+
+func isBitcoinAddress(address string) bool {
+	if !btcAddressRegex.MatchString(address) {
+		return false
+	}
+
+	alphabet := []byte("123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz")
+
+	decode := [25]byte{}
+
+	for _, n := range []byte(address) {
+		d := bytes.IndexByte(alphabet, n)
+
+		for i := 24; i >= 0; i-- {
+			d += 58 * int(decode[i])
+			decode[i] = byte(d % 256)
+			d /= 256
+		}
+	}
+
+	h := sha256.New()
+	_, _ = h.Write(decode[:21])
+	d := h.Sum([]byte{})
+	h = sha256.New()
+	_, _ = h.Write(d)
+
+	validchecksum := [4]byte{}
+	computedchecksum := [4]byte{}
+
+	copy(computedchecksum[:], h.Sum(d[:0]))
+	copy(validchecksum[:], decode[21:])
+
+	return validchecksum == computedchecksum
+}

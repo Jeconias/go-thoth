@@ -7,6 +7,6 @@
 	var tag myasthurts.TagParam
 -}
 
-@:if @condition {
+@:if @raw(condition) {
 	errs = append(errs, NewError("@field.Name", "@tag.Value"))
 }

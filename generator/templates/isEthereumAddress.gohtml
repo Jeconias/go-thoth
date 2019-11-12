@@ -1,0 +1,15 @@
+
+func isEthereumAddress(ref string) bool {
+	address := ref
+	if !ethAddressRegex.MatchString(address) {
+		return false
+	}
+
+	if ethaddressRegexUpper.MatchString(address) || ethAddressRegexLower.MatchString(address) {
+		return true
+	}
+
+	// checksum validation is blocked by https://github.com/golang/crypto/pull/28
+
+	return true
+}

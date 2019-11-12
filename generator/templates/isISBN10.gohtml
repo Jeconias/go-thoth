@@ -1,0 +1,23 @@
+
+func isISBN10(ref string) bool {
+	s := strings.Replace(strings.Replace(ref, "-", "", 3), " ", "", 3)
+
+	if !iSBN10Regex.MatchString(s) {
+		return false
+	}
+
+	var checksum int32
+	var i int32
+
+	for i = 0; i < 9; i++ {
+		checksum += (i + 1) * int32(s[i]-'0')
+	}
+
+	if s[9] == 'X' {
+		checksum += 10 * 10
+	} else {
+		checksum += 10 * int32(s[9]-'0')
+	}
+
+	return checksum%11 == 0
+}

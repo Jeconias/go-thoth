@@ -1,0 +1,8 @@
+
+func isSSN(ref string) bool {
+	if len(ref) != 11 {
+		return false
+	}
+
+	return sSNRegex.MatchString(ref)
+}

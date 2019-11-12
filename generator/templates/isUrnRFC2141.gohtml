@@ -1,0 +1,6 @@
+
+func isUrnRFC2141(ref string) bool {
+	s := ref
+	_, match := urn.Parse([]byte(s))
+    return match
+}

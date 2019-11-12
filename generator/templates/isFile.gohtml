@@ -1,0 +1,19 @@
+
+func isFile(ref string) bool {
+	fileInfo, err := os.Stat(ref)
+    if err != nil {
+        return false
+    }
+
+    return !fileInfo.IsDir()
+}
+
+// IsDir is the validation function for validating if the current field's value is a valid directory.
+func isDir(dir string) bool {
+    fileInfo, err := os.Stat(dir)
+    if err != nil {
+        return false
+    }
+
+    return fileInfo.IsDir()
+}
