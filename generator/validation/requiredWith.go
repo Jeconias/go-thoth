@@ -1,7 +1,9 @@
 package validation
 
 import (
+	"fmt"
 	"io"
+	"strings"
 
 	myasthurts "github.com/lab259/go-my-ast-hurts"
 	"github.com/lab259/go-thoth/generator/templates/rules"
@@ -22,7 +24,7 @@ func RequiredWith(_buffer io.StringWriter, input *RequiredWithInput, args ...str
 	for _, s := range args {
 		for _, f := range input.Struct.Fields {
 			if f.Name == s {
-				ref := input.StructRef + "." + f.Name
+				ref := fmt.Sprintf("%s.%s", input.StructRef, f.Name)
 				for range f.Tag.Params {
 					expressions = append(expressions, rules.MapCondition[ref])
 				}
@@ -31,18 +33,38 @@ func RequiredWith(_buffer io.StringWriter, input *RequiredWithInput, args ...str
 		}
 	}
 	exp := requiredWith(input.Field, input.Ref)
-	rules.RenderEvaluation(_buffer, exp, expressions, " || ", input.Field, input.Tag)
+	preCondition := fmt.Sprintf("(%s)", strings.Join(expressions, " || "))
+	condition := fmt.Sprintf("%s && %s", preCondition, exp)
+	rules.RenderCondition(_buffer, condition, input.Field, input.Tag)
 }
 
-func requiredWith(field *myasthurts.Field, ref string) string {
+func requiredWith(field *myasthurts.Field, ref string) (condition string) {
 	switch field.RefType.Name() {
 	case "string":
 		switch field.RefType.(type) {
 		case *myasthurts.BaseRefType, *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			return " Empty(len(" + ref + "))"
+			condition = fmt.Sprintf(`Empty(len(%s))`, ref)
+			rules.MapCondition[ref] = condition
+			return
 		case *myasthurts.StarRefType:
-			return ref + " == nil"
+			condition = fmt.Sprintf(`%s == nil`, ref)
+			rules.MapCondition[ref] = condition
+			return
 		}
+	case "bool":
+		switch field.RefType.(type) {
+		case *myasthurts.BaseRefType:
+			condition = fmt.Sprintf("! %s", ref)
+			rules.MapCondition[ref] = condition
+			return
+		case *myasthurts.StarRefType:
+			condition = fmt.Sprintf("! %s == nil || * %s", ref, ref)
+			rules.MapCondition[ref] = condition
+			return
+		}
+	default:
+		panic(NewErrTypeNotSupported("required_with", field))
 	}
-	return ""
+
+	return
 }

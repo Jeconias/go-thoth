@@ -29,8 +29,8 @@ func RequiredWithAll(_buffer io.StringWriter, input *RequiredWithAllInput, args 
 			}
 		}
 	}
-	exp := requiredWith(input.Field, input.Ref)
-	rules.RenderEvaluation(_buffer, exp, expressions, " && ", input.Field, input.Tag)
+	exp := requiredWithAll(input.Field, input.Ref)
+	rules.RenderEvaluation(_buffer, exp, "&&", expressions, " && ", input.Field, input.Tag)
 }
 
 func requiredWithAll(field *myasthurts.Field, ref string) string {

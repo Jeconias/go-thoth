@@ -20,3 +20,9 @@ type RequiredWithFields struct {
 	Status bool    `thoth:"required"`
 	Name   *string `thoth:"required_with=ID Status"`
 }
+
+// RequiredWithConfirmation TODO
+type RequiredWithConfirmation struct {
+	URL              string `thoth:"url"`
+	NeedConfirmation bool   `thoth:"required_with=URL"`
+}

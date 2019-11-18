@@ -156,11 +156,7 @@
 			@:if ! @input.Ref {
 			@:	errs = append(errs, NewError("@input.Field.Name", "@input.Tag.Value"))
 			@:}
-			if c, ok := MapCondition[input.Ref]; ok {
-				MapCondition[input.Ref] = (c+" || ! "+ input.Ref)
-			} else {
-				MapCondition[input.Ref] = (input.Ref + "!= false")
-			}
+			MapCondition[input.Ref] = input.Ref
 		case *myasthurts.StarRefType:
 			@:if @input.Ref == nil || * @input.Ref == 0{
 			@:	errs = append(errs, NewError("@input.Field.Name", "@input.Tag.Value"))

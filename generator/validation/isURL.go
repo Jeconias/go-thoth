@@ -17,9 +17,12 @@ type IsURLInput struct {
 
 // IsURL TODO
 func IsURL(_buffer io.StringWriter, input *IsURLInput) {
+	condition := fmt.Sprintf("! isURL(%s)", input.Ref)
+	rules.MapCondition[input.Ref] = fmt.Sprintf("isURL(%s)", input.Ref)
+
 	rules.RenderCondition(
 		_buffer,
-		fmt.Sprintf("isURL(%s)", input.Ref),
+		condition,
 		input.Field,
 		input.Tag,
 	)

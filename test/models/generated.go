@@ -992,7 +992,7 @@ func (r *RequiredWithField) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if Empty(len(r.Name)) && (r.Status != false) {
+	if (r.Status) && Empty(len(r.Name)) {
 		errs = append(errs, NewError("Name", "required_with"))
 	}
 	return errs
@@ -1004,7 +1004,7 @@ func (r *RequiredWithFieldStrPointer) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if r.Name == nil && (r.Status != false) {
+	if (r.Status) && r.Name == nil {
 		errs = append(errs, NewError("Name", "required_with"))
 	}
 	return errs
@@ -1016,12 +1016,26 @@ func (r *RequiredWithFields) Validate() (errs ValidationErrors) {
 	if r.ID != 1 {
 		errs = append(errs, NewError("ID", "eq"))
 	}
+
 	if !r.Status {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if r.Name == nil && (r.ID != 1 || r.Status != false) {
+	if (r.ID != 1 || r.Status) && r.Name == nil {
 		errs = append(errs, NewError("Name", "required_with"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (r *RequiredWithConfirmation) Validate() (errs ValidationErrors) {
+
+	if !isURL(r.URL) {
+		errs = append(errs, NewError("URL", "url"))
+	}
+
+	if (isURL(r.URL)) && !r.NeedConfirmation {
+		errs = append(errs, NewError("NeedConfirmation", "required_with"))
 	}
 	return errs
 }
@@ -1032,7 +1046,7 @@ func (r *RequiredWithAllField) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if Empty(len(r.Name)) && (r.Status != false) {
+	if Empty(len(r.Name)) && (r.Status) {
 		errs = append(errs, NewError("Name", "required_with_all"))
 	}
 	return errs
@@ -1044,7 +1058,7 @@ func (r *RequiredWithAllFieldStrPointer) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if r.Name == nil && (r.Status != false) {
+	if r.Name == nil && (r.Status) {
 		errs = append(errs, NewError("Name", "required_with_all"))
 	}
 	return errs
@@ -1060,7 +1074,7 @@ func (r *RequiredWithAllFields) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if r.Name == nil && (r.ID != 1 && r.Status != false) {
+	if r.Name == nil && (r.ID != 1 && r.Status) {
 		errs = append(errs, NewError("Name", "required_with_all"))
 	}
 	return errs
@@ -1072,7 +1086,7 @@ func (r *RequiredWithoutField) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if Empty(len(r.Name)) && (r.Status != false) {
+	if !Empty(len(r.Name)) && (r.Status) {
 		errs = append(errs, NewError("Name", "required_without"))
 	}
 	return errs
@@ -1084,7 +1098,7 @@ func (r *RequiredWithoutFieldStrPointer) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if r.Name == nil && (r.Status != false) {
+	if r.Name != nil && (r.Status) {
 		errs = append(errs, NewError("Name", "required_without"))
 	}
 	return errs
@@ -1100,7 +1114,7 @@ func (r *RequiredWithoutFields) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if r.Name == nil && (r.ID != 1 || r.Status != false) {
+	if r.Name != nil && (r.ID != 1 || r.Status) {
 		errs = append(errs, NewError("Name", "required_without"))
 	}
 	return errs
@@ -1112,7 +1126,7 @@ func (r *RequiredWithoutAllField) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if Empty(len(r.Name)) && (r.Status != false) {
+	if Empty(len(r.Name)) && (r.Status) {
 		errs = append(errs, NewError("Name", "required_without_all"))
 	}
 	return errs
@@ -1124,7 +1138,7 @@ func (r *RequiredWithoutAllFieldStrPointer) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if r.Name == nil && (r.Status != false) {
+	if r.Name == nil && (r.Status) {
 		errs = append(errs, NewError("Name", "required_without_all"))
 	}
 	return errs
@@ -1140,7 +1154,7 @@ func (r *RequiredWithoutAllFields) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if r.Name == nil && (r.ID != 1 && r.Status != false) {
+	if r.Name == nil && (r.ID != 1 && r.Status) {
 		errs = append(errs, NewError("Name", "required_without_all"))
 	}
 	return errs

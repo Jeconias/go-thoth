@@ -29,8 +29,8 @@ func RequiredWithout(_buffer io.StringWriter, input *RequiredWithoutInput, args 
 			}
 		}
 	}
-	exp := requiredWith(input.Field, input.Ref)
-	rules.RenderEvaluation(_buffer, exp, expressions, " || ", input.Field, input.Tag)
+	exp := requiredWithout(input.Field, input.Ref)
+	rules.RenderEvaluation(_buffer, exp, "&&", expressions, " || ", input.Field, input.Tag)
 }
 
 func requiredWithout(field *myasthurts.Field, ref string) string {

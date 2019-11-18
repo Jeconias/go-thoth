@@ -180,11 +180,7 @@ func RenderRequired(_buffer io.StringWriter, input *RequiredInput) {
 
 			_buffer.WriteString("}")
 
-			if c, ok := MapCondition[input.Ref]; ok {
-				MapCondition[input.Ref] = (c + " || ! " + input.Ref)
-			} else {
-				MapCondition[input.Ref] = (input.Ref + "!= false")
-			}
+			MapCondition[input.Ref] = input.Ref
 		case *myasthurts.StarRefType:
 
 			_buffer.WriteString("if ")

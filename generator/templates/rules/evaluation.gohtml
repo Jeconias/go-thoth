@@ -4,12 +4,13 @@
 		"github.com/lab259/go-my-ast-hurts"
 	)
 	var condition string
+	var op string
 	var expressions []string
 	var operator string
 	var field *myasthurts.Field
 	var tag myasthurts.TagParam
 -}
 
-@:if @condition && ( @raw(strings.Join(expressions, operator)) ) {
+@:if @raw(@condition) @raw(op) ( @raw(strings.Join(expressions, operator)) ) {
 	errs = append(errs, NewError("@field.Name", "@tag.Value"))
 }

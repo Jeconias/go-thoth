@@ -141,5 +141,54 @@ var _ = Describe("Required With", func() {
 				Expect(errs[0].Tag()).To(Equal("required"))
 			})
 		})
+
+		When("Required with url confirmation", func() {
+			It("should to validate required field", func() {
+				m := models.RequiredWithConfirmation{
+					URL:              "https://gerson.name",
+					NeedConfirmation: true,
+				}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(0))
+			})
+
+			It("should fail to validate required with field (URL)", func() {
+				m := models.RequiredWithConfirmation{
+					// URL:              "https://gerson.name",
+					NeedConfirmation: true,
+				}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(1))
+				Expect(errs[0].Field()).To(Equal("URL"))
+				Expect(errs[0].Tag()).To(Equal("url"))
+			})
+
+			It("should required with field validation (NeedConfirmation)", func() {
+				m := models.RequiredWithConfirmation{
+					URL: "https://gerson.name",
+					// NeedConfirmation: true,
+				}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(1))
+				Expect(errs[0].Field()).To(Equal("NeedConfirmation"))
+				Expect(errs[0].Tag()).To(Equal("required_with"))
+			})
+
+			It("should fail to validate required with field (NeedConfirmation)", func() {
+				m := models.RequiredWithConfirmation{
+					URL: "invalid-url",
+					// NeedConfirmation: true,
+				}
+
+				errs := m.Validate()
+				Expect(errs).To(HaveLen(1))
+				Expect(errs[0].Field()).To(Equal("URL"))
+				Expect(errs[0].Tag()).To(Equal("url"))
+			})
+		})
+
 	})
 })
