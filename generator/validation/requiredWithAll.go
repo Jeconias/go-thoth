@@ -1,7 +1,9 @@
 package validation
 
 import (
+	"fmt"
 	"io"
+	"strings"
 
 	myasthurts "github.com/lab259/go-my-ast-hurts"
 	"github.com/lab259/go-thoth/generator/templates/rules"
@@ -29,19 +31,32 @@ func RequiredWithAll(_buffer io.StringWriter, input *RequiredWithAllInput, args 
 			}
 		}
 	}
-	exp := requiredWithAll(input.Field, input.Ref)
-	rules.RenderEvaluation(_buffer, exp, "&&", expressions, " && ", input.Field, input.Tag)
+
+	exp := requiredWith(input.Field, input.Ref)
+	preCondition := fmt.Sprintf("(%s)", strings.Join(expressions, " && "))
+	condition := fmt.Sprintf("%s && %s", preCondition, exp)
+	rules.RenderCondition(_buffer, condition, input.Field, input.Tag)
+
+	// exp := requiredWithAll(input.Field, input.Ref)
+	// rules.RenderEvaluation(_buffer, exp, "&&", expressions, " && ", input.Field, input.Tag)
 }
 
-func requiredWithAll(field *myasthurts.Field, ref string) string {
+func requiredWithAll(field *myasthurts.Field, ref string) (condition string) {
 	switch field.RefType.Name() {
 	case "string":
 		switch field.RefType.(type) {
 		case *myasthurts.BaseRefType, *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			return " Empty(len(" + ref + "))"
+			condition = fmt.Sprintf("Empty(len(%s))", ref)
+			rules.MapCondition[ref] = condition
+			return
 		case *myasthurts.StarRefType:
-			return ref + " == nil"
+			condition = fmt.Sprintf("%s == nil", ref)
+			rules.MapCondition[ref] = condition
+			return
 		}
+	default:
+		panic(NewErrTypeNotSupported("required_with_all", field))
 	}
-	return ""
+
+	return
 }

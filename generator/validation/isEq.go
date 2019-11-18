@@ -44,7 +44,7 @@ func isEq(input *IsEqInput) (condition string) {
 		switch input.Field.RefType.(type) {
 		case *myasthurts.BaseRefType:
 			condition = fmt.Sprintf(`%s != %s`, input.Ref, input.Value)
-			rules.MapCondition[input.Ref] = condition
+			rules.MapCondition[input.Ref] = fmt.Sprintf(`%s == %s`, input.Ref, input.Value)
 			return condition
 		case *myasthurts.StarRefType:
 			condition = fmt.Sprintf(`%s == nil || *%s != %s`, input.Ref, input.Ref, input.Value)
