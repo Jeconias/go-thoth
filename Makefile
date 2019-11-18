@@ -34,5 +34,6 @@ generate:
 	@go generate ./...
 
 dev: generate
+	@rm ./test/models/generated.go
 	@go run ./generator/cli/thoth/main.go gen --t generate
 	@go fmt ./...

@@ -14,6 +14,16 @@ func (e *EmailValidate) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (e *EmailSliceValidate) Validate() (errs ValidationErrors) {
+	for _, v := range e.Emails {
+		if !emailRegex.MatchString(v) {
+			errs = append(errs, NewError("Emails", "email"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
 func (e *EqNumber) Validate() (errs ValidationErrors) {
 
 	if e.Uint != 1 {
@@ -189,6 +199,103 @@ func (g *GteValidate) Validate() (errs ValidationErrors) {
 
 	if len(g.Contents) <= 2 {
 		errs = append(errs, NewError("Contents", "gte"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (l *LenStringValidate) Validate() (errs ValidationErrors) {
+
+	if len(l.String) != 5 {
+		errs = append(errs, NewError("String", "len"))
+	}
+
+	if l.Pointer == nil || len(*l.Pointer) != 5 {
+		errs = append(errs, NewError("Pointer", "len"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (l *LenChanValidate) Validate() (errs ValidationErrors) {
+
+	if len(l.ChanString) != 2 {
+		errs = append(errs, NewError("ChanString", "len"))
+	}
+
+	if len(l.ChanStringPointer) != 2 {
+		errs = append(errs, NewError("ChanStringPointer", "len"))
+	}
+
+	if len(l.ChanUint) != 2 {
+		errs = append(errs, NewError("ChanUint", "len"))
+	}
+
+	if len(l.ChanUintPointer) != 2 {
+		errs = append(errs, NewError("ChanUintPointer", "len"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (l *LenSliceStringValidate) Validate() (errs ValidationErrors) {
+
+	if len(l.String) != 5 {
+		errs = append(errs, NewError("String", "len"))
+	}
+
+	if len(l.SlicePointer) != 5 {
+		errs = append(errs, NewError("SlicePointer", "len"))
+	}
+
+	if l.PointerSlice == nil || len(*l.PointerSlice) != 5 {
+		errs = append(errs, NewError("PointerSlice", "len"))
+	}
+
+	if l.PointerSlicePointer == nil || len(*l.PointerSlicePointer) != 5 {
+		errs = append(errs, NewError("PointerSlicePointer", "len"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (l *LenSliceIntValidate) Validate() (errs ValidationErrors) {
+
+	if len(l.Int) != 5 {
+		errs = append(errs, NewError("Int", "len"))
+	}
+
+	if len(l.SlicePointer) != 5 {
+		errs = append(errs, NewError("SlicePointer", "len"))
+	}
+
+	if l.PointerSlice == nil || len(*l.PointerSlice) != 5 {
+		errs = append(errs, NewError("PointerSlice", "len"))
+	}
+
+	if l.PointerSlicePointer == nil || len(*l.PointerSlicePointer) != 5 {
+		errs = append(errs, NewError("PointerSlicePointer", "len"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (l *LenSliceFloat64Validate) Validate() (errs ValidationErrors) {
+
+	if len(l.Float64) != 5 {
+		errs = append(errs, NewError("Float64", "len"))
+	}
+
+	if len(l.SlicePointer) != 5 {
+		errs = append(errs, NewError("SlicePointer", "len"))
+	}
+
+	if l.PointerSlice == nil || len(*l.PointerSlice) != 5 {
+		errs = append(errs, NewError("PointerSlice", "len"))
+	}
+
+	if l.PointerSlicePointer == nil || len(*l.PointerSlicePointer) != 5 {
+		errs = append(errs, NewError("PointerSlicePointer", "len"))
 	}
 	return errs
 }
