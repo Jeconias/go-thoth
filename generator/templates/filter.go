@@ -122,7 +122,7 @@ func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string)
 				Tag:   input.Tag,
 				Ref:   input.Ref,
 				Value: args[0],
-			}, ">")
+			}, ">", "lt")
 		}
 	case "lte":
 		if len(args) == 1 {
@@ -131,7 +131,7 @@ func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string)
 				Tag:   input.Tag,
 				Ref:   input.Ref,
 				Value: args[0],
-			}, ">=")
+			}, ">=", "lte")
 		}
 	case "gt":
 		if len(args) == 1 {
@@ -140,7 +140,7 @@ func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string)
 				Tag:   input.Tag,
 				Ref:   input.Ref,
 				Value: args[0],
-			}, "<")
+			}, "<", "gt")
 		}
 	case "gte":
 		if len(args) == 1 {
@@ -149,7 +149,7 @@ func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string)
 				Tag:   input.Tag,
 				Ref:   input.Ref,
 				Value: args[0],
-			}, "<=")
+			}, "<=", "gte")
 		}
 	case "alpha":
 		validation.IsAlpha(_buffer, &validation.IsAlphaInput{

@@ -19,21 +19,13 @@ type HasMinOfInput struct {
 func HasMinOf(_buffer io.StringWriter, input *HasMinOfInput, args ...string) {
 	rules.RenderCondition(
 		_buffer,
-		hasMinOf(input),
+		isCompare(&IsCompareInput{
+			Field: input.Field,
+			Tag:   input.Tag,
+			Ref:   input.Ref,
+			Value: input.Value,
+		}, "<=", "min"),
 		input.Field,
 		input.Tag,
 	)
-}
-
-func hasMinOf(input *HasMinOfInput) string {
-	switch input.Field.RefType.Name() {
-	case "string":
-		switch input.Field.RefType.(type) {
-		case *myasthurts.BaseRefType, *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			return " len(" + input.Ref + ") > " + input.Value.(string)
-		case *myasthurts.StarRefType:
-			return input.Ref + " == nil"
-		}
-	}
-	return ""
 }

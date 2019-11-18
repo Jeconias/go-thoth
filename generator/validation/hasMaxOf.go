@@ -19,21 +19,13 @@ type HasMaxOfInput struct {
 func HasMaxOf(_buffer io.StringWriter, input *HasMaxOfInput, args ...string) {
 	rules.RenderCondition(
 		_buffer,
-		hasMaxOf(input),
+		isCompare(&IsCompareInput{
+			Field: input.Field,
+			Tag:   input.Tag,
+			Ref:   input.Ref,
+			Value: input.Value,
+		}, ">=", "max"),
 		input.Field,
 		input.Tag,
 	)
-}
-
-func hasMaxOf(input *HasMaxOfInput) string {
-	switch input.Field.RefType.Name() {
-	case "string":
-		switch input.Field.RefType.(type) {
-		case *myasthurts.BaseRefType, *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
-			return " len(" + input.Ref + ") < " + input.Value.(string)
-		case *myasthurts.StarRefType:
-			return input.Ref + " == nil"
-		}
-	}
-	return ""
 }
