@@ -343,6 +343,56 @@ func (l *LteValidate) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (m *MaxValidate) Validate() (errs ValidationErrors) {
+
+	if len(m.Name) >= 10 {
+		errs = append(errs, NewError("Name", "max"))
+	}
+
+	if m.Password == nil || len(*m.Password) >= 8 {
+		errs = append(errs, NewError("Password", "max"))
+	}
+
+	if m.Age >= 50 {
+		errs = append(errs, NewError("Age", "max"))
+	}
+
+	if len(m.Contents) >= 2 {
+		errs = append(errs, NewError("Contents", "max"))
+	}
+
+	if len(m.Attributes) >= 3 {
+		errs = append(errs, NewError("Attributes", "max"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (m *MinValidate) Validate() (errs ValidationErrors) {
+
+	if len(m.Name) <= 3 {
+		errs = append(errs, NewError("Name", "min"))
+	}
+
+	if m.Password == nil || len(*m.Password) <= 3 {
+		errs = append(errs, NewError("Password", "min"))
+	}
+
+	if m.Age <= 22 {
+		errs = append(errs, NewError("Age", "min"))
+	}
+
+	if len(m.Contents) <= 1 {
+		errs = append(errs, NewError("Contents", "min"))
+	}
+
+	if len(m.Attributes) <= 2 {
+		errs = append(errs, NewError("Attributes", "min"))
+	}
+	return errs
+}
+
+// Validate TODO
 func (h *Home) Validate() (errs ValidationErrors) {
 	if IsInt(h.ID) {
 		errs = append(errs, NewError("ID", "required"))
@@ -379,6 +429,144 @@ func (u *User) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Name", "required"))
 	}
 
+	return errs
+}
+
+// Validate TODO
+func (n *NeNumber) Validate() (errs ValidationErrors) {
+
+	if n.Uint == 1 {
+		errs = append(errs, NewError("Uint", "ne"))
+	}
+
+	if n.UintPointer == nil || *n.UintPointer == 2 {
+		errs = append(errs, NewError("UintPointer", "ne"))
+	}
+
+	if n.Uint8 == 3 {
+		errs = append(errs, NewError("Uint8", "ne"))
+	}
+
+	if n.Uint8Pointer == nil || *n.Uint8Pointer == 4 {
+		errs = append(errs, NewError("Uint8Pointer", "ne"))
+	}
+
+	if n.Uint16 == 5 {
+		errs = append(errs, NewError("Uint16", "ne"))
+	}
+
+	if n.Uint16Pointer == nil || *n.Uint16Pointer == 6 {
+		errs = append(errs, NewError("Uint16Pointer", "ne"))
+	}
+
+	if n.Uint32 == 7 {
+		errs = append(errs, NewError("Uint32", "ne"))
+	}
+
+	if n.Uint32Pointer == nil || *n.Uint32Pointer == 8 {
+		errs = append(errs, NewError("Uint32Pointer", "ne"))
+	}
+
+	if n.Uint64 == 9 {
+		errs = append(errs, NewError("Uint64", "ne"))
+	}
+
+	if n.Uint64Pointer == nil || *n.Uint64Pointer == 10 {
+		errs = append(errs, NewError("Uint64Pointer", "ne"))
+	}
+
+	if n.Uintptr == 11 {
+		errs = append(errs, NewError("Uintptr", "ne"))
+	}
+
+	if n.UintptrPointer == nil || *n.UintptrPointer == 12 {
+		errs = append(errs, NewError("UintptrPointer", "ne"))
+	}
+
+	if n.Int == 13 {
+		errs = append(errs, NewError("Int", "ne"))
+	}
+
+	if n.IntPointer == nil || *n.IntPointer == 14 {
+		errs = append(errs, NewError("IntPointer", "ne"))
+	}
+
+	if n.Int8 == 15 {
+		errs = append(errs, NewError("Int8", "ne"))
+	}
+
+	if n.Int8Pointer == nil || *n.Int8Pointer == 16 {
+		errs = append(errs, NewError("Int8Pointer", "ne"))
+	}
+
+	if n.Int16 == 17 {
+		errs = append(errs, NewError("Int16", "ne"))
+	}
+
+	if n.Int16Pointer == nil || *n.Int16Pointer == 18 {
+		errs = append(errs, NewError("Int16Pointer", "ne"))
+	}
+
+	if n.Int32 == 19 {
+		errs = append(errs, NewError("Int32", "ne"))
+	}
+
+	if n.Int32Pointer == nil || *n.Int32Pointer == 20 {
+		errs = append(errs, NewError("Int32Pointer", "ne"))
+	}
+
+	if n.Int64 == 21 {
+		errs = append(errs, NewError("Int64", "ne"))
+	}
+
+	if n.Int64Pointer == nil || *n.Int64Pointer == 22 {
+		errs = append(errs, NewError("Int64Pointer", "ne"))
+	}
+
+	if n.Float32 == 23 {
+		errs = append(errs, NewError("Float32", "ne"))
+	}
+
+	if n.Float32Pointer == nil || *n.Float32Pointer == 24 {
+		errs = append(errs, NewError("Float32Pointer", "ne"))
+	}
+
+	if n.Float64 == 25 {
+		errs = append(errs, NewError("Float64", "ne"))
+	}
+
+	if n.Float64Pointer == nil || *n.Float64Pointer == 26 {
+		errs = append(errs, NewError("Float64Pointer", "ne"))
+	}
+
+	if n.Complex64 == 27 {
+		errs = append(errs, NewError("Complex64", "ne"))
+	}
+
+	if n.Complex64Pointer == nil || *n.Complex64Pointer == 28 {
+		errs = append(errs, NewError("Complex64Pointer", "ne"))
+	}
+
+	if n.Complex128 == 29 {
+		errs = append(errs, NewError("Complex128", "ne"))
+	}
+
+	if n.Complex128Pointer == nil || *n.Complex128Pointer == 30 {
+		errs = append(errs, NewError("Complex128Pointer", "ne"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (n *NeString) Validate() (errs ValidationErrors) {
+
+	if n.String == "chico" {
+		errs = append(errs, NewError("String", "ne"))
+	}
+
+	if n.Pointer == nil || *n.Pointer == "bento" {
+		errs = append(errs, NewError("Pointer", "ne"))
+	}
 	return errs
 }
 
