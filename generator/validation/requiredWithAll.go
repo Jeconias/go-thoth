@@ -36,9 +36,6 @@ func RequiredWithAll(_buffer io.StringWriter, input *RequiredWithAllInput, args 
 	preCondition := fmt.Sprintf("(%s)", strings.Join(expressions, " && "))
 	condition := fmt.Sprintf("%s && %s", preCondition, exp)
 	rules.RenderCondition(_buffer, condition, input.Field, input.Tag)
-
-	// exp := requiredWithAll(input.Field, input.Ref)
-	// rules.RenderEvaluation(_buffer, exp, "&&", expressions, " && ", input.Field, input.Tag)
 }
 
 func requiredWithAll(field *myasthurts.Field, ref string) (condition string) {

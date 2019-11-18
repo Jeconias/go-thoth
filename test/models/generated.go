@@ -1085,7 +1085,7 @@ func (r *RequiredWithoutField) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if !Empty(len(r.Name)) && (r.Status) {
+	if (r.Status) && Empty(len(r.Name)) {
 		errs = append(errs, NewError("Name", "required_without"))
 	}
 	return errs
@@ -1097,7 +1097,7 @@ func (r *RequiredWithoutFieldStrPointer) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if r.Name != nil && (r.Status) {
+	if (r.Status) && r.Name == nil {
 		errs = append(errs, NewError("Name", "required_without"))
 	}
 	return errs
@@ -1113,8 +1113,21 @@ func (r *RequiredWithoutFields) Validate() (errs ValidationErrors) {
 		errs = append(errs, NewError("Status", "required"))
 	}
 
-	if r.Name != nil && (r.ID == 1 || r.Status) {
+	if (r.ID == 1 || r.Status) && r.Name == nil {
 		errs = append(errs, NewError("Name", "required_without"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (r *RequiredWithoutConfirmation) Validate() (errs ValidationErrors) {
+
+	if !isURL(r.URL) {
+		errs = append(errs, NewError("URL", "url"))
+	}
+
+	if (isURL(r.URL)) && !r.NeedConfirmation {
+		errs = append(errs, NewError("NeedConfirmation", "required_without"))
 	}
 	return errs
 }
