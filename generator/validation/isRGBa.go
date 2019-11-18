@@ -18,7 +18,7 @@ type IsRGBaInput struct {
 func IsRGBa(_buffer io.StringWriter, input *IsRGBaInput) {
 	rules.RenderCondition(
 		_buffer,
-		regexMatch("rgbaRegex", input.Ref),
+		isRegex("rgbaRegex", input.Field, input.Ref, "rgba"),
 		input.Field,
 		input.Tag,
 	)

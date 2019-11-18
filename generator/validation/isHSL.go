@@ -18,7 +18,7 @@ type IsHSLInput struct {
 func IsHSL(_buffer io.StringWriter, input *IsHSLInput) {
 	rules.RenderCondition(
 		_buffer,
-		regexMatch("hslRegex", input.Ref),
+		isRegex("hslRegex", input.Field, input.Ref, "hsl"),
 		input.Field,
 		input.Tag,
 	)

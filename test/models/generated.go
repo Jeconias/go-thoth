@@ -204,6 +204,45 @@ func (g *GteValidate) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (h *HexcolorValidate) Validate() (errs ValidationErrors) {
+
+	if !hexcolorRegex.MatchString(h.Hexcolor) {
+		errs = append(errs, NewError("Hexcolor", "hexcolor"))
+	}
+
+	if h.Pointer == nil || !hexcolorRegex.MatchString(*h.Pointer) {
+		errs = append(errs, NewError("Pointer", "hexcolor"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (h *HSLValidate) Validate() (errs ValidationErrors) {
+
+	if !hslRegex.MatchString(h.HSL) {
+		errs = append(errs, NewError("HSL", "hsl"))
+	}
+
+	if h.Pointer == nil || !hslRegex.MatchString(*h.Pointer) {
+		errs = append(errs, NewError("Pointer", "hsl"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (h *HSLAValidate) Validate() (errs ValidationErrors) {
+
+	if !hslaRegex.MatchString(h.HSLA) {
+		errs = append(errs, NewError("HSLA", "hsla"))
+	}
+
+	if h.Pointer == nil || !hslaRegex.MatchString(*h.Pointer) {
+		errs = append(errs, NewError("Pointer", "hsla"))
+	}
+	return errs
+}
+
+// Validate TODO
 func (l *LenStringValidate) Validate() (errs ValidationErrors) {
 
 	if len(l.String) != 5 {
@@ -1356,6 +1395,32 @@ func (r *RequiredWithoutAllFields) Validate() (errs ValidationErrors) {
 
 	if r.Name == nil && (r.ID == 1 && r.Status) {
 		errs = append(errs, NewError("Name", "required_without_all"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (r *RGBValidate) Validate() (errs ValidationErrors) {
+
+	if !rgbRegex.MatchString(r.RGB) {
+		errs = append(errs, NewError("RGB", "rgb"))
+	}
+
+	if r.Pointer == nil || !rgbRegex.MatchString(*r.Pointer) {
+		errs = append(errs, NewError("Pointer", "rgb"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (r *RGBAValidate) Validate() (errs ValidationErrors) {
+
+	if !rgbaRegex.MatchString(r.RGBA) {
+		errs = append(errs, NewError("RGBA", "rgba"))
+	}
+
+	if r.Pointer == nil || !rgbaRegex.MatchString(*r.Pointer) {
+		errs = append(errs, NewError("Pointer", "rgba"))
 	}
 	return errs
 }
