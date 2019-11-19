@@ -16,10 +16,21 @@ type IsASCIIInput struct {
 
 // IsASCII TODO
 func IsASCII(_buffer io.StringWriter, input *IsASCIIInput) {
-	rules.RenderCondition(
-		_buffer,
-		regexMatch("aSCIIRegex", input.Ref),
-		input.Field,
-		input.Tag,
-	)
+	condition, isLoop := isRegex("aSCIIRegex", input.Field, input.Ref, "ascii")
+	if isLoop {
+		rules.RenderLoop(
+			_buffer,
+			condition,
+			input.Ref,
+			input.Field,
+			input.Tag,
+		)
+	} else {
+		rules.RenderCondition(
+			_buffer,
+			condition,
+			input.Field,
+			input.Tag,
+		)
+	}
 }

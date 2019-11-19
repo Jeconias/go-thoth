@@ -1,6 +1,25 @@
 package models
 
 // Validate TODO
+func (a *ASCIIValidate) Validate() (errs ValidationErrors) {
+
+	if !aSCIIRegex.MatchString(a.ASCII) {
+		errs = append(errs, NewError("ASCII", "ascii"))
+	}
+
+	if a.Pointer == nil || !aSCIIRegex.MatchString(*a.Pointer) {
+		errs = append(errs, NewError("Pointer", "ascii"))
+	}
+
+	for _, v := range a.Slice {
+		if !aSCIIRegex.MatchString(v) {
+			errs = append(errs, NewError("Slice", "ascii"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
 func (b *Base64Validate) Validate() (errs ValidationErrors) {
 
 	if !base64Regex.MatchString(b.Base64) {
