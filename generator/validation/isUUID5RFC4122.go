@@ -16,10 +16,21 @@ type IsUUID5RFC4122Input struct {
 
 // IsUUID5RFC4122 TODO
 func IsUUID5RFC4122(_buffer io.StringWriter, input *IsUUID5RFC4122Input) {
-	rules.RenderCondition(
-		_buffer,
-		regexMatch("uUID5RFC4122Regex", input.Ref),
-		input.Field,
-		input.Tag,
-	)
+	condition, isLoop := isRegex("uUID5RFC4122Regex", input.Field, input.Ref, "uuid5_rfc4122")
+	if isLoop {
+		rules.RenderLoop(
+			_buffer,
+			condition,
+			input.Ref,
+			input.Field,
+			input.Tag,
+		)
+	} else {
+		rules.RenderCondition(
+			_buffer,
+			condition,
+			input.Field,
+			input.Tag,
+		)
+	}
 }

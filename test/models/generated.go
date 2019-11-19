@@ -1614,3 +1614,155 @@ func (u *URNValidate) Validate() (errs ValidationErrors) {
 	}
 	return errs
 }
+
+// Validate TODO
+func (u *UUIDValidate) Validate() (errs ValidationErrors) {
+
+	if !uUIDRegex.MatchString(u.UUID) {
+		errs = append(errs, NewError("UUID", "uuid"))
+	}
+
+	if u.Pointer == nil || !uUIDRegex.MatchString(*u.Pointer) {
+		errs = append(errs, NewError("Pointer", "uuid"))
+	}
+
+	for _, v := range u.Slice {
+		if !uUIDRegex.MatchString(v) {
+			errs = append(errs, NewError("Slice", "uuid"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (u *UUID3Validate) Validate() (errs ValidationErrors) {
+
+	if !uUID3Regex.MatchString(u.UUID3) {
+		errs = append(errs, NewError("UUID3", "uuid3"))
+	}
+
+	if u.Pointer == nil || !uUID3Regex.MatchString(*u.Pointer) {
+		errs = append(errs, NewError("Pointer", "uuid3"))
+	}
+
+	for _, v := range u.Slice {
+		if !uUID3Regex.MatchString(v) {
+			errs = append(errs, NewError("Slice", "uuid3"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (u *UUID4Validate) Validate() (errs ValidationErrors) {
+
+	if !uUID4Regex.MatchString(u.UUID4) {
+		errs = append(errs, NewError("UUID4", "uuid4"))
+	}
+
+	if u.Pointer == nil || !uUID4Regex.MatchString(*u.Pointer) {
+		errs = append(errs, NewError("Pointer", "uuid4"))
+	}
+
+	for _, v := range u.Slice {
+		if !uUID4Regex.MatchString(v) {
+			errs = append(errs, NewError("Slice", "uuid4"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (u *UUID5Validate) Validate() (errs ValidationErrors) {
+
+	if !uUID5Regex.MatchString(u.UUID5) {
+		errs = append(errs, NewError("UUID5", "uuid5"))
+	}
+
+	if u.Pointer == nil || !uUID5Regex.MatchString(*u.Pointer) {
+		errs = append(errs, NewError("Pointer", "uuid5"))
+	}
+
+	for _, v := range u.Slice {
+		if !uUID5Regex.MatchString(v) {
+			errs = append(errs, NewError("Slice", "uuid5"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (u *UUIDrfc4122Validate) Validate() (errs ValidationErrors) {
+
+	if !uUIDRFC4122Regex.MatchString(u.UUID) {
+		errs = append(errs, NewError("UUID", "uuid_rfc4122"))
+	}
+
+	if u.Pointer == nil || !uUIDRFC4122Regex.MatchString(*u.Pointer) {
+		errs = append(errs, NewError("Pointer", "uuid_rfc4122"))
+	}
+
+	for _, v := range u.Slice {
+		if !uUIDRFC4122Regex.MatchString(v) {
+			errs = append(errs, NewError("Slice", "uuid_rfc4122"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (u *UUID3rfc4122Validate) Validate() (errs ValidationErrors) {
+
+	if !uUID3RFC4122Regex.MatchString(u.UUID3rfc4122) {
+		errs = append(errs, NewError("UUID3rfc4122", "uuid3_rfc4122"))
+	}
+
+	if u.Pointer == nil || !uUID3RFC4122Regex.MatchString(*u.Pointer) {
+		errs = append(errs, NewError("Pointer", "uuid3_rfc4122"))
+	}
+
+	for _, v := range u.Slice {
+		if !uUID3RFC4122Regex.MatchString(v) {
+			errs = append(errs, NewError("Slice", "uuid3_rfc4122"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (u *UUID4rfc4122Validate) Validate() (errs ValidationErrors) {
+
+	if !uUID4RFC4122Regex.MatchString(u.UUID4rfc4122) {
+		errs = append(errs, NewError("UUID4rfc4122", "uuid4_rfc4122"))
+	}
+
+	if u.Pointer == nil || !uUID4RFC4122Regex.MatchString(*u.Pointer) {
+		errs = append(errs, NewError("Pointer", "uuid4_rfc4122"))
+	}
+
+	for _, v := range u.Slice {
+		if !uUID4RFC4122Regex.MatchString(v) {
+			errs = append(errs, NewError("Slice", "uuid4_rfc4122"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (u *UUID5rfc4122Validate) Validate() (errs ValidationErrors) {
+
+	if !uUID5RFC4122Regex.MatchString(u.UUID5rfc4122) {
+		errs = append(errs, NewError("UUID5rfc4122", "uuid5_rfc4122"))
+	}
+
+	if u.Pointer == nil || !uUID5RFC4122Regex.MatchString(*u.Pointer) {
+		errs = append(errs, NewError("Pointer", "uuid5_rfc4122"))
+	}
+
+	for _, v := range u.Slice {
+		if !uUID5RFC4122Regex.MatchString(v) {
+			errs = append(errs, NewError("Slice", "uuid5_rfc4122"))
+		}
+	}
+	return errs
+}
