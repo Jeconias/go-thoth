@@ -494,7 +494,17 @@ func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string)
 			Ref:   input.Ref,
 		})
 	case "url_encoded":
+		validation.IsURLEncoded(_buffer, &validation.IsURLEncodedInput{
+			Field: input.Field,
+			Tag:   input.Tag,
+			Ref:   input.Ref,
+		})
 	case "dir":
+		validation.IsDir(_buffer, &validation.IsDirInput{
+			Field: input.Field,
+			Tag:   input.Tag,
+			Ref:   input.Ref,
+		})
 	default:
 		// TODO: (@edumarcal) to fix not match rule
 		k, v := splitArgs(input.Tag)

@@ -1,6 +1,25 @@
 package models
 
 // Validate TODO
+func (d *DirValidate) Validate() (errs ValidationErrors) {
+
+	if !isDir(d.Dir) {
+		errs = append(errs, NewError("Dir", "dir"))
+	}
+
+	if d.Pointer == nil || !isDir(*d.Pointer) {
+		errs = append(errs, NewError("Pointer", "dir"))
+	}
+
+	for _, v := range d.Slice {
+		if !isDir(v) {
+			errs = append(errs, NewError("Slice", "dir"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
 func (e *EmailValidate) Validate() (errs ValidationErrors) {
 
 	if !emailRegex.MatchString(e.Email) {
@@ -157,6 +176,25 @@ func (e *EqString) Validate() (errs ValidationErrors) {
 
 	if e.Pointer == nil || *e.Pointer != "bento" {
 		errs = append(errs, NewError("Pointer", "eq"))
+	}
+	return errs
+}
+
+// Validate TODO
+func (f *FileValidate) Validate() (errs ValidationErrors) {
+
+	if !isFile(f.File) {
+		errs = append(errs, NewError("File", "file"))
+	}
+
+	if f.Pointer == nil || !isFile(*f.Pointer) {
+		errs = append(errs, NewError("Pointer", "file"))
+	}
+
+	for _, v := range f.Slice {
+		if !isFile(v) {
+			errs = append(errs, NewError("Slice", "file"))
+		}
 	}
 	return errs
 }
