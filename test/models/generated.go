@@ -20,6 +20,25 @@ func (b *Base64Validate) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (b *Base64urlValidate) Validate() (errs ValidationErrors) {
+
+	if !base64URLRegex.MatchString(b.Base64url) {
+		errs = append(errs, NewError("Base64url", "base64url"))
+	}
+
+	if b.Pointer == nil || !base64URLRegex.MatchString(*b.Pointer) {
+		errs = append(errs, NewError("Pointer", "base64url"))
+	}
+
+	for _, v := range b.Slice {
+		if !base64URLRegex.MatchString(v) {
+			errs = append(errs, NewError("Slice", "base64url"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
 func (d *DirValidate) Validate() (errs ValidationErrors) {
 
 	if !isDir(d.Dir) {
