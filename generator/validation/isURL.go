@@ -1,7 +1,6 @@
 package validation
 
 import (
-	"fmt"
 	"io"
 
 	myasthurts "github.com/lab259/go-my-ast-hurts"
@@ -17,13 +16,21 @@ type IsURLInput struct {
 
 // IsURL TODO
 func IsURL(_buffer io.StringWriter, input *IsURLInput) {
-	condition := fmt.Sprintf("! isURL(%s)", input.Ref)
-	rules.MapCondition[input.Ref] = fmt.Sprintf("isURL(%s)", input.Ref)
-
-	rules.RenderCondition(
-		_buffer,
-		condition,
-		input.Field,
-		input.Tag,
-	)
+	condition, isLoop := isFunc("isURL", input.Field, input.Ref, "url")
+	if isLoop {
+		rules.RenderLoop(
+			_buffer,
+			condition,
+			input.Ref,
+			input.Field,
+			input.Tag,
+		)
+	} else {
+		rules.RenderCondition(
+			_buffer,
+			condition,
+			input.Field,
+			input.Tag,
+		)
+	}
 }

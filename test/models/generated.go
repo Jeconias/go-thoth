@@ -1424,3 +1424,41 @@ func (r *RGBAValidate) Validate() (errs ValidationErrors) {
 	}
 	return errs
 }
+
+// Validate TODO
+func (u *URIValidate) Validate() (errs ValidationErrors) {
+
+	if !isURI(u.URI) {
+		errs = append(errs, NewError("URI", "uri"))
+	}
+
+	if u.Pointer == nil || !isURI(*u.Pointer) {
+		errs = append(errs, NewError("Pointer", "uri"))
+	}
+
+	for _, v := range u.Slice {
+		if !isURI(v) {
+			errs = append(errs, NewError("Slice", "uri"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (u *URLValidate) Validate() (errs ValidationErrors) {
+
+	if !isURL(u.URL) {
+		errs = append(errs, NewError("URL", "url"))
+	}
+
+	if u.Pointer == nil || !isURL(*u.Pointer) {
+		errs = append(errs, NewError("Pointer", "url"))
+	}
+
+	for _, v := range u.Slice {
+		if !isURL(v) {
+			errs = append(errs, NewError("Slice", "url"))
+		}
+	}
+	return errs
+}

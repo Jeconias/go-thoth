@@ -1,7 +1,6 @@
 package validation
 
 import (
-	"fmt"
 	"io"
 
 	myasthurts "github.com/lab259/go-my-ast-hurts"
@@ -17,10 +16,21 @@ type IsURIInput struct {
 
 // IsURI TODO
 func IsURI(_buffer io.StringWriter, input *IsURIInput) {
-	rules.RenderCondition(
-		_buffer,
-		fmt.Sprintf("isURI(%s)", input.Ref),
-		input.Field,
-		input.Tag,
-	)
+	condition, isLoop := isFunc("isURI", input.Field, input.Ref, "url")
+	if isLoop {
+		rules.RenderLoop(
+			_buffer,
+			condition,
+			input.Ref,
+			input.Field,
+			input.Tag,
+		)
+	} else {
+		rules.RenderCondition(
+			_buffer,
+			condition,
+			input.Field,
+			input.Tag,
+		)
+	}
 }
