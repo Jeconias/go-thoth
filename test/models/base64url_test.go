@@ -37,6 +37,19 @@ var _ = Describe("Base64url", func() {
 		Expect(errs[0].Tag()).To(Equal("base64url"))
 	})
 
+	It("should fail validate base64url when slice field is invalid", func() {
+		m := models.Base64urlValidate{
+			Base64url: s,
+			Pointer:   &s,
+			Slice:     []string{"VGhpcyBpcyBzaW1wbGUgQVNDSUkgQmFzZTY0IGZvciBTdGFja092ZXJmbG93IGV4YW1wbGUu", "localhost"},
+		}
+
+		errs := m.Validate()
+		Expect(errs).To(HaveLen(1))
+		Expect(errs[0].Field()).To(Equal("Slice"))
+		Expect(errs[0].Tag()).To(Equal("base64url"))
+	})
+
 	It("should fail to validate without field `Base64url`", func() {
 		m := models.Base64urlValidate{
 			// Base64url: s,

@@ -37,6 +37,19 @@ var _ = Describe("URL", func() {
 		Expect(errs[0].Tag()).To(Equal("url"))
 	})
 
+	It("should fail validate url when Slice url is invalid", func() {
+		m := models.URLValidate{
+			URL:     s,
+			Pointer: &s,
+			Slice:   []string{"invalid-url", "http://roberta.biz"},
+		}
+
+		errs := m.Validate()
+		Expect(errs).To(HaveLen(1))
+		Expect(errs[0].Field()).To(Equal("Slice"))
+		Expect(errs[0].Tag()).To(Equal("url"))
+	})
+
 	It("should fail to validate without field `URL`", func() {
 		m := models.URLValidate{
 			// URL: s,

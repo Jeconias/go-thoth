@@ -41,6 +41,20 @@ var _ = Describe("File", func() {
 		Expect(errs[0].Tag()).To(Equal("file"))
 	})
 
+	It("should fail validate file when files contais file invalid", func() {
+		ss := []string{s, "invalid-file.txt"}
+		m := models.FileValidate{
+			File:    s,
+			Pointer: &s,
+			Slice:   ss,
+		}
+
+		errs := m.Validate()
+		Expect(errs).To(HaveLen(1))
+		Expect(errs[0].Field()).To(Equal("Slice"))
+		Expect(errs[0].Tag()).To(Equal("file"))
+	})
+
 	It("should fail to validate without field `File`", func() {
 		m := models.FileValidate{
 			// File: s,

@@ -37,6 +37,23 @@ var _ = Describe("URI", func() {
 		Expect(errs[0].Tag()).To(Equal("uri"))
 	})
 
+	It("should fail validate uri when Slice uri is invalid", func() {
+		m := models.URIValidate{
+			URI:     s,
+			Pointer: &s,
+			Slice: []string{
+				"http://example.org/absolute/URI/with/absolute/path/to/resource.txt",
+				"ftp://example.org/resource.txt",
+				"invalid-uri",
+			},
+		}
+
+		errs := m.Validate()
+		Expect(errs).To(HaveLen(1))
+		Expect(errs[0].Field()).To(Equal("Slice"))
+		Expect(errs[0].Tag()).To(Equal("uri"))
+	})
+
 	It("should fail to validate without field `URI`", func() {
 		m := models.URIValidate{
 			// URI: s,

@@ -319,6 +319,63 @@ func (h *HSLAValidate) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (i *ISBNValidate) Validate() (errs ValidationErrors) {
+
+	if !(isISBN10(i.ISBN) || isISBN13(i.ISBN)) {
+		errs = append(errs, NewError("ISBN", "isbn"))
+	}
+
+	if i.Pointer == nil || !(isISBN10(*i.Pointer) || isISBN13(*i.Pointer)) {
+		errs = append(errs, NewError("Pointer", "isbn"))
+	}
+
+	for _, v := range i.Slice {
+		if !(isISBN10(v) || isISBN13(v)) {
+			errs = append(errs, NewError("Slice", "isbn"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (i *ISBN10Validate) Validate() (errs ValidationErrors) {
+
+	if !isISBN10(i.ISBN10) {
+		errs = append(errs, NewError("ISBN10", "isbn10"))
+	}
+
+	if i.Pointer == nil || !isISBN10(*i.Pointer) {
+		errs = append(errs, NewError("Pointer", "isbn10"))
+	}
+
+	for _, v := range i.Slice {
+		if !isISBN10(v) {
+			errs = append(errs, NewError("Slice", "isbn10"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (i *ISBN13Validate) Validate() (errs ValidationErrors) {
+
+	if !isISBN13(i.ISBN13) {
+		errs = append(errs, NewError("ISBN13", "isbn13"))
+	}
+
+	if i.Pointer == nil || !isISBN13(*i.Pointer) {
+		errs = append(errs, NewError("Pointer", "isbn13"))
+	}
+
+	for _, v := range i.Slice {
+		if !isISBN13(v) {
+			errs = append(errs, NewError("Slice", "isbn13"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
 func (l *LenStringValidate) Validate() (errs ValidationErrors) {
 
 	if len(l.String) != 5 {

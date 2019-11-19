@@ -39,6 +39,19 @@ var _ = Describe("Dir", func() {
 		Expect(errs[0].Tag()).To(Equal("dir"))
 	})
 
+	It("should fail validate dir when Slice dirs invalid", func() {
+		m := models.DirValidate{
+			Dir:     s,
+			Pointer: &s,
+			Slice:   []string{s, "/home/host/workspace"},
+		}
+
+		errs := m.Validate()
+		Expect(errs).To(HaveLen(1))
+		Expect(errs[0].Field()).To(Equal("Slice"))
+		Expect(errs[0].Tag()).To(Equal("dir"))
+	})
+
 	It("should fail to validate without field `Dir`", func() {
 		m := models.DirValidate{
 			// Dir: s,

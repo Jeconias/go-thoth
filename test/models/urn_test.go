@@ -37,6 +37,23 @@ var _ = Describe("URN", func() {
 		Expect(errs[0].Tag()).To(Equal("urn_rfc2141"))
 	})
 
+	It("should fail validate urn when Slice urn invalid", func() {
+		m := models.URNValidate{
+			URN:     s,
+			Pointer: &s,
+			Slice: []string{
+				"urn:lex:br:federal:lei:2008-06-19;11705",
+				"urn:issn:0167-6423",
+				"http:urn:invalid-urn",
+			},
+		}
+
+		errs := m.Validate()
+		Expect(errs).To(HaveLen(1))
+		Expect(errs[0].Field()).To(Equal("Slice"))
+		Expect(errs[0].Tag()).To(Equal("urn_rfc2141"))
+	})
+
 	It("should fail to validate without field `URN`", func() {
 		m := models.URNValidate{
 			// URN: s,

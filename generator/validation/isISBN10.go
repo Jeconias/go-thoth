@@ -1,7 +1,6 @@
 package validation
 
 import (
-	"fmt"
 	"io"
 
 	myasthurts "github.com/lab259/go-my-ast-hurts"
@@ -17,10 +16,21 @@ type IsISBN10Input struct {
 
 // IsISBN10 TODO
 func IsISBN10(_buffer io.StringWriter, input *IsISBN10Input) {
-	rules.RenderCondition(
-		_buffer,
-		fmt.Sprintf("isISBN10(%s)", input.Ref),
-		input.Field,
-		input.Tag,
-	)
+	condition, isLoop := isFunc("isISBN10", input.Field, input.Ref, "isbn10")
+	if isLoop {
+		rules.RenderLoop(
+			_buffer,
+			condition,
+			input.Ref,
+			input.Field,
+			input.Tag,
+		)
+	} else {
+		rules.RenderCondition(
+			_buffer,
+			condition,
+			input.Field,
+			input.Tag,
+		)
+	}
 }
