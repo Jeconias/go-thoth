@@ -1,7 +1,6 @@
 package validation
 
 import (
-	"fmt"
 	"io"
 
 	myasthurts "github.com/lab259/go-my-ast-hurts"
@@ -17,10 +16,21 @@ type IsUrnRFC2141Input struct {
 
 // IsUrnRFC2141 TODO
 func IsUrnRFC2141(_buffer io.StringWriter, input *IsUrnRFC2141Input) {
-	rules.RenderCondition(
-		_buffer,
-		fmt.Sprintf("isUrnRFC2141(%s)", input.Ref),
-		input.Field,
-		input.Tag,
-	)
+	condition, isLoop := isFunc("isUrnRFC2141", input.Field, input.Ref, "urn_rfc2141")
+	if isLoop {
+		rules.RenderLoop(
+			_buffer,
+			condition,
+			input.Ref,
+			input.Field,
+			input.Tag,
+		)
+	} else {
+		rules.RenderCondition(
+			_buffer,
+			condition,
+			input.Field,
+			input.Tag,
+		)
+	}
 }

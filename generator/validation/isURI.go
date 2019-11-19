@@ -16,7 +16,7 @@ type IsURIInput struct {
 
 // IsURI TODO
 func IsURI(_buffer io.StringWriter, input *IsURIInput) {
-	condition, isLoop := isFunc("isURI", input.Field, input.Ref, "url")
+	condition, isLoop := isFunc("isURI", input.Field, input.Ref, "uri")
 	if isLoop {
 		rules.RenderLoop(
 			_buffer,

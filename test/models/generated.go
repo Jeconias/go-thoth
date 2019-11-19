@@ -1462,3 +1462,22 @@ func (u *URLValidate) Validate() (errs ValidationErrors) {
 	}
 	return errs
 }
+
+// Validate TODO
+func (u *URNValidate) Validate() (errs ValidationErrors) {
+
+	if !isUrnRFC2141(u.URN) {
+		errs = append(errs, NewError("URN", "urn_rfc2141"))
+	}
+
+	if u.Pointer == nil || !isUrnRFC2141(*u.Pointer) {
+		errs = append(errs, NewError("Pointer", "urn_rfc2141"))
+	}
+
+	for _, v := range u.Slice {
+		if !isUrnRFC2141(v) {
+			errs = append(errs, NewError("Slice", "urn_rfc2141"))
+		}
+	}
+	return errs
+}
