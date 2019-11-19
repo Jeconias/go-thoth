@@ -16,10 +16,21 @@ type IsBase64Input struct {
 
 // IsBase64 TODO
 func IsBase64(_buffer io.StringWriter, input *IsBase64Input) {
-	rules.RenderCondition(
-		_buffer,
-		regexMatch("base64Regex", input.Ref),
-		input.Field,
-		input.Tag,
-	)
+	condition, isLoop := isRegex("base64Regex", input.Field, input.Ref, "base64")
+	if isLoop {
+		rules.RenderLoop(
+			_buffer,
+			condition,
+			input.Ref,
+			input.Field,
+			input.Tag,
+		)
+	} else {
+		rules.RenderCondition(
+			_buffer,
+			condition,
+			input.Field,
+			input.Tag,
+		)
+	}
 }

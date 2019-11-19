@@ -16,10 +16,21 @@ type IsRGBInput struct {
 
 // IsRGB TODO
 func IsRGB(_buffer io.StringWriter, input *IsRGBInput) {
-	rules.RenderCondition(
-		_buffer,
-		isRegex("rgbRegex", input.Field, input.Ref, "rgb"),
-		input.Field,
-		input.Tag,
-	)
+	condition, isLoop := isRegex("rgbRegex", input.Field, input.Ref, "rgb")
+	if isLoop {
+		rules.RenderLoop(
+			_buffer,
+			condition,
+			input.Ref,
+			input.Field,
+			input.Tag,
+		)
+	} else {
+		rules.RenderCondition(
+			_buffer,
+			condition,
+			input.Field,
+			input.Tag,
+		)
+	}
 }

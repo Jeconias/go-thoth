@@ -253,6 +253,18 @@ func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string)
 			Tag:   input.Tag,
 			Ref:   input.Ref,
 		})
+	case "base64":
+		validation.IsBase64(_buffer, &validation.IsBase64Input{
+			Field: input.Field,
+			Tag:   input.Tag,
+			Ref:   input.Ref,
+		})
+	case "base64url":
+		validation.IsBase64URL(_buffer, &validation.IsBase64URLInput{
+			Field: input.Field,
+			Tag:   input.Tag,
+			Ref:   input.Ref,
+		})
 	case "isbn":
 		validation.IsISBN(_buffer, &validation.IsISBNInput{
 			Field: input.Field,

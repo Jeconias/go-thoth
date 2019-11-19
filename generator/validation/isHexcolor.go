@@ -16,10 +16,21 @@ type IsHexcolorInput struct {
 
 // IsHexcolor TODO
 func IsHexcolor(_buffer io.StringWriter, input *IsHexcolorInput) {
-	rules.RenderCondition(
-		_buffer,
-		isRegex("hexcolorRegex", input.Field, input.Ref, "hexcolor"),
-		input.Field,
-		input.Tag,
-	)
+	condition, isLoop := isRegex("hexcolorRegex", input.Field, input.Ref, "hexcolor")
+	if isLoop {
+		rules.RenderLoop(
+			_buffer,
+			condition,
+			input.Ref,
+			input.Field,
+			input.Tag,
+		)
+	} else {
+		rules.RenderCondition(
+			_buffer,
+			condition,
+			input.Field,
+			input.Tag,
+		)
+	}
 }

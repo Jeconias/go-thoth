@@ -16,10 +16,21 @@ type IsHSLAInput struct {
 
 // IsHSLA TODO
 func IsHSLA(_buffer io.StringWriter, input *IsHSLAInput) {
-	rules.RenderCondition(
-		_buffer,
-		isRegex("hslaRegex", input.Field, input.Ref, "hsla"),
-		input.Field,
-		input.Tag,
-	)
+	condition, isLoop := isRegex("hslaRegex", input.Field, input.Ref, "hsla")
+	if isLoop {
+		rules.RenderLoop(
+			_buffer,
+			condition,
+			input.Ref,
+			input.Field,
+			input.Tag,
+		)
+	} else {
+		rules.RenderCondition(
+			_buffer,
+			condition,
+			input.Field,
+			input.Tag,
+		)
+	}
 }

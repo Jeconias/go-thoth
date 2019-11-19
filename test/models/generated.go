@@ -1,6 +1,25 @@
 package models
 
 // Validate TODO
+func (b *Base64Validate) Validate() (errs ValidationErrors) {
+
+	if !base64Regex.MatchString(b.Base64) {
+		errs = append(errs, NewError("Base64", "base64"))
+	}
+
+	if b.Pointer == nil || !base64Regex.MatchString(*b.Pointer) {
+		errs = append(errs, NewError("Pointer", "base64"))
+	}
+
+	for _, v := range b.Slice {
+		if !base64Regex.MatchString(v) {
+			errs = append(errs, NewError("Slice", "base64"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
 func (d *DirValidate) Validate() (errs ValidationErrors) {
 
 	if !isDir(d.Dir) {
