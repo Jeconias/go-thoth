@@ -279,15 +279,14 @@ func isIP(ref string) bool {
 func isIPv4(ref string) bool {
 	ip := net.ParseIP(ref)
 
-	return ip != nil && ip.To4() == nil
+	return ip != nil && ip.To4() != nil
 }
 
 // IsIPv6 is the validation function for validating if the field's value is a valid v6 IP address.
 func isIPv6(ref string) bool {
 	ip := net.ParseIP(ref)
 
-	// TODO
-	return ip != nil && ip.To16() == nil
+	return ip != nil && ip.To4() == nil
 }
 
 // IsCIDRv4 is the validation function for validating if the field's value is a valid v4 CIDR address.

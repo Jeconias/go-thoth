@@ -21,10 +21,22 @@ func IsIP(_buffer io.StringWriter, input *IsIPInput, v ...string) {
 	if len(v) > 0 {
 		version = v[0]
 	}
-	rules.RenderCondition(
-		_buffer,
-		fmt.Sprintf("isIP%s(%s)", version, input.Ref),
-		input.Field,
-		input.Tag,
-	)
+
+	condition, isLoop := isFunc(fmt.Sprintf("isIP%s", version), input.Field, input.Ref, fmt.Sprintf("ip%s", version))
+	if isLoop {
+		rules.RenderLoop(
+			_buffer,
+			condition,
+			input.Ref,
+			input.Field,
+			input.Tag,
+		)
+	} else {
+		rules.RenderCondition(
+			_buffer,
+			condition,
+			input.Field,
+			input.Tag,
+		)
+	}
 }

@@ -338,6 +338,63 @@ func (h *HSLAValidate) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (i *IPValidate) Validate() (errs ValidationErrors) {
+
+	if !isIP(i.IP) {
+		errs = append(errs, NewError("IP", "ip"))
+	}
+
+	if i.Pointer == nil || !isIP(*i.Pointer) {
+		errs = append(errs, NewError("Pointer", "ip"))
+	}
+
+	for _, v := range i.Slice {
+		if !isIP(v) {
+			errs = append(errs, NewError("Slice", "ip"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (i *IPv4Validate) Validate() (errs ValidationErrors) {
+
+	if !isIPv4(i.IPv4) {
+		errs = append(errs, NewError("IPv4", "ipv4"))
+	}
+
+	if i.Pointer == nil || !isIPv4(*i.Pointer) {
+		errs = append(errs, NewError("Pointer", "ipv4"))
+	}
+
+	for _, v := range i.Slice {
+		if !isIPv4(v) {
+			errs = append(errs, NewError("Slice", "ipv4"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (i *IPv6Validate) Validate() (errs ValidationErrors) {
+
+	if !isIPv6(i.IPv6) {
+		errs = append(errs, NewError("IPv6", "ipv6"))
+	}
+
+	if i.Pointer == nil || !isIPv6(*i.Pointer) {
+		errs = append(errs, NewError("Pointer", "ipv6"))
+	}
+
+	for _, v := range i.Slice {
+		if !isIPv6(v) {
+			errs = append(errs, NewError("Slice", "ipv6"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
 func (i *ISBNValidate) Validate() (errs ValidationErrors) {
 
 	if !(isISBN10(i.ISBN) || isISBN13(i.ISBN)) {
