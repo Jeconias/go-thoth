@@ -21,10 +21,22 @@ func IsCIDR(_buffer io.StringWriter, input *IsCIDRInput, v ...string) {
 	if len(v) > 0 {
 		version = v[0]
 	}
-	rules.RenderCondition(
-		_buffer,
-		fmt.Sprintf("isCIDR%s(%s)", version, input.Ref),
-		input.Field,
-		input.Tag,
-	)
+
+	condition, isLoop := isFunc(fmt.Sprintf("isCIDR%s", version), input.Field, input.Ref, fmt.Sprintf("cidr%s", version))
+	if isLoop {
+		rules.RenderLoop(
+			_buffer,
+			condition,
+			input.Ref,
+			input.Field,
+			input.Tag,
+		)
+	} else {
+		rules.RenderCondition(
+			_buffer,
+			condition,
+			input.Field,
+			input.Tag,
+		)
+	}
 }

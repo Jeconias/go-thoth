@@ -58,6 +58,63 @@ func (b *Base64urlValidate) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (c *CIDRValidate) Validate() (errs ValidationErrors) {
+
+	if !isCIDR(c.CIDR) {
+		errs = append(errs, NewError("CIDR", "cidr"))
+	}
+
+	if c.Pointer == nil || !isCIDR(*c.Pointer) {
+		errs = append(errs, NewError("Pointer", "cidr"))
+	}
+
+	for _, v := range c.Slice {
+		if !isCIDR(v) {
+			errs = append(errs, NewError("Slice", "cidr"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (c *CIDRv4Validate) Validate() (errs ValidationErrors) {
+
+	if !isCIDRv4(c.CIDRv4) {
+		errs = append(errs, NewError("CIDRv4", "cidrv4"))
+	}
+
+	if c.Pointer == nil || !isCIDRv4(*c.Pointer) {
+		errs = append(errs, NewError("Pointer", "cidrv4"))
+	}
+
+	for _, v := range c.Slice {
+		if !isCIDRv4(v) {
+			errs = append(errs, NewError("Slice", "cidrv4"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (c *CIDRv6Validate) Validate() (errs ValidationErrors) {
+
+	if !isCIDRv6(c.CIDRv6) {
+		errs = append(errs, NewError("CIDRv6", "cidrv6"))
+	}
+
+	if c.Pointer == nil || !isCIDRv6(*c.Pointer) {
+		errs = append(errs, NewError("Pointer", "cidrv6"))
+	}
+
+	for _, v := range c.Slice {
+		if !isCIDRv6(v) {
+			errs = append(errs, NewError("Slice", "cidrv6"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
 func (d *DirValidate) Validate() (errs ValidationErrors) {
 
 	if !isDir(d.Dir) {
