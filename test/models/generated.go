@@ -1844,6 +1844,63 @@ func (s *SSNValidate) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (t *TCPAddrValidate) Validate() (errs ValidationErrors) {
+
+	if !isTCPAddrResolvable(t.TCPAddr) {
+		errs = append(errs, NewError("TCPAddr", "tcp_addr"))
+	}
+
+	if t.Pointer == nil || !isTCPAddrResolvable(*t.Pointer) {
+		errs = append(errs, NewError("Pointer", "tcp_addr"))
+	}
+
+	for _, v := range t.Slice {
+		if !isTCPAddrResolvable(v) {
+			errs = append(errs, NewError("Slice", "tcp_addr"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TCP4AddrValidate) Validate() (errs ValidationErrors) {
+
+	if !isTCP4AddrResolvable(t.TCP4Addr) {
+		errs = append(errs, NewError("TCP4Addr", "tcp4_addr"))
+	}
+
+	if t.Pointer == nil || !isTCP4AddrResolvable(*t.Pointer) {
+		errs = append(errs, NewError("Pointer", "tcp4_addr"))
+	}
+
+	for _, v := range t.Slice {
+		if !isTCP4AddrResolvable(v) {
+			errs = append(errs, NewError("Slice", "tcp4_addr"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (t *TCP6AddrValidate) Validate() (errs ValidationErrors) {
+
+	if !isTCP6AddrResolvable(t.TCP6Addr) {
+		errs = append(errs, NewError("TCP6Addr", "tcp6_addr"))
+	}
+
+	if t.Pointer == nil || !isTCP6AddrResolvable(*t.Pointer) {
+		errs = append(errs, NewError("Pointer", "tcp6_addr"))
+	}
+
+	for _, v := range t.Slice {
+		if !isTCP6AddrResolvable(v) {
+			errs = append(errs, NewError("Slice", "tcp6_addr"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
 func (u *URIValidate) Validate() (errs ValidationErrors) {
 
 	if !isURI(u.URI) {
