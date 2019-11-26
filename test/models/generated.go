@@ -1901,6 +1901,63 @@ func (t *TCP6AddrValidate) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (u *UDPAddrValidate) Validate() (errs ValidationErrors) {
+
+	if !isUDPAddrResolvable(u.UDPAddr) {
+		errs = append(errs, NewError("UDPAddr", "udp_addr"))
+	}
+
+	if u.Pointer == nil || !isUDPAddrResolvable(*u.Pointer) {
+		errs = append(errs, NewError("Pointer", "udp_addr"))
+	}
+
+	for _, v := range u.Slice {
+		if !isUDPAddrResolvable(v) {
+			errs = append(errs, NewError("Slice", "udp_addr"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (u *UDP4AddrValidate) Validate() (errs ValidationErrors) {
+
+	if !isUDP4AddrResolvable(u.UDP4Addr) {
+		errs = append(errs, NewError("UDP4Addr", "udp4_addr"))
+	}
+
+	if u.Pointer == nil || !isUDP4AddrResolvable(*u.Pointer) {
+		errs = append(errs, NewError("Pointer", "udp4_addr"))
+	}
+
+	for _, v := range u.Slice {
+		if !isUDP4AddrResolvable(v) {
+			errs = append(errs, NewError("Slice", "udp4_addr"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (u *UDP6AddrValidate) Validate() (errs ValidationErrors) {
+
+	if !isUDP6AddrResolvable(u.UDP6Addr) {
+		errs = append(errs, NewError("UDP6Addr", "udp6_addr"))
+	}
+
+	if u.Pointer == nil || !isUDP6AddrResolvable(*u.Pointer) {
+		errs = append(errs, NewError("Pointer", "udp6_addr"))
+	}
+
+	for _, v := range u.Slice {
+		if !isUDP6AddrResolvable(v) {
+			errs = append(errs, NewError("Slice", "udp6_addr"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
 func (u *URIValidate) Validate() (errs ValidationErrors) {
 
 	if !isURI(u.URI) {
