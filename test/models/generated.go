@@ -566,6 +566,63 @@ func (i *IPv6Validate) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (i *IPAddrValidate) Validate() (errs ValidationErrors) {
+
+	if !isIPAddrResolvable(i.IPAddr) {
+		errs = append(errs, NewError("IPAddr", "ip_addr"))
+	}
+
+	if i.Pointer == nil || !isIPAddrResolvable(*i.Pointer) {
+		errs = append(errs, NewError("Pointer", "ip_addr"))
+	}
+
+	for _, v := range i.Slice {
+		if !isIPAddrResolvable(v) {
+			errs = append(errs, NewError("Slice", "ip_addr"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (i *IP4AddrValidate) Validate() (errs ValidationErrors) {
+
+	if !isIP4AddrResolvable(i.IP4Addr) {
+		errs = append(errs, NewError("IP4Addr", "ip4_addr"))
+	}
+
+	if i.Pointer == nil || !isIP4AddrResolvable(*i.Pointer) {
+		errs = append(errs, NewError("Pointer", "ip4_addr"))
+	}
+
+	for _, v := range i.Slice {
+		if !isIP4AddrResolvable(v) {
+			errs = append(errs, NewError("Slice", "ip4_addr"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (i *IP6AddrValidate) Validate() (errs ValidationErrors) {
+
+	if !isIP6AddrResolvable(i.IP6Addr) {
+		errs = append(errs, NewError("IP6Addr", "ip6_addr"))
+	}
+
+	if i.Pointer == nil || !isIP6AddrResolvable(*i.Pointer) {
+		errs = append(errs, NewError("Pointer", "ip6_addr"))
+	}
+
+	for _, v := range i.Slice {
+		if !isIP6AddrResolvable(v) {
+			errs = append(errs, NewError("Slice", "ip6_addr"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
 func (i *ISBNValidate) Validate() (errs ValidationErrors) {
 
 	if !(isISBN10(i.ISBN) || isISBN13(i.ISBN)) {

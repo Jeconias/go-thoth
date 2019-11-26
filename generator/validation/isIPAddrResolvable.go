@@ -21,10 +21,22 @@ func IsIPAddrResolvable(_buffer io.StringWriter, input *IsIPAddrResolvableInput,
 	if len(v) > 0 {
 		version = v[0]
 	}
-	rules.RenderCondition(
-		_buffer,
-		fmt.Sprintf("isIPAddrResolvable%s(%s)", version, input.Ref),
-		input.Field,
-		input.Tag,
-	)
+
+	condition, isLoop := isFunc(fmt.Sprintf("isIP%sAddrResolvable", version), input.Field, input.Ref, fmt.Sprintf("ip%s_addr", version))
+	if isLoop {
+		rules.RenderLoop(
+			_buffer,
+			condition,
+			input.Ref,
+			input.Field,
+			input.Tag,
+		)
+	} else {
+		rules.RenderCondition(
+			_buffer,
+			condition,
+			input.Field,
+			input.Tag,
+		)
+	}
 }
