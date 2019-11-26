@@ -648,6 +648,25 @@ func (l *LteValidate) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (m *MACValidate) Validate() (errs ValidationErrors) {
+
+	if !isMAC(m.MAC) {
+		errs = append(errs, NewError("MAC", "mac"))
+	}
+
+	if m.Pointer == nil || !isMAC(*m.Pointer) {
+		errs = append(errs, NewError("Pointer", "mac"))
+	}
+
+	for _, v := range m.Slice {
+		if !isMAC(v) {
+			errs = append(errs, NewError("Slice", "mac"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
 func (m *MaxValidate) Validate() (errs ValidationErrors) {
 
 	if len(m.Name) >= 10 {

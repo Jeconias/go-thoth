@@ -300,7 +300,6 @@ func isCIDRv4(ref string) bool {
 func isCIDRv6(ref string) bool {
 	ip, _, err := net.ParseCIDR(ref)
 
-	// TODO
 	return err == nil && ip.To4() == nil
 }
 
