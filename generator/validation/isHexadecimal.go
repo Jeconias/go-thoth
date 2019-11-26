@@ -16,10 +16,21 @@ type IsHexadecimalInput struct {
 
 // IsHexadecimal TODO
 func IsHexadecimal(_buffer io.StringWriter, input *IsHexadecimalInput) {
-	rules.RenderCondition(
-		_buffer,
-		regexMatch("hexadecimalRegex", input.Ref),
-		input.Field,
-		input.Tag,
-	)
+	condition, isLoop := isRegex("hexadecimalRegex", input.Field, input.Ref, "hexadecimal")
+	if isLoop {
+		rules.RenderLoop(
+			_buffer,
+			condition,
+			input.Ref,
+			input.Field,
+			input.Tag,
+		)
+	} else {
+		rules.RenderCondition(
+			_buffer,
+			condition,
+			input.Field,
+			input.Tag,
+		)
+	}
 }

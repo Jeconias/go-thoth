@@ -356,6 +356,25 @@ func (g *GteValidate) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (h *HexadecimalValidate) Validate() (errs ValidationErrors) {
+
+	if !hexadecimalRegex.MatchString(h.Hexadecimal) {
+		errs = append(errs, NewError("Hexadecimal", "hexadecimal"))
+	}
+
+	if h.Pointer == nil || !hexadecimalRegex.MatchString(*h.Pointer) {
+		errs = append(errs, NewError("Pointer", "hexadecimal"))
+	}
+
+	for _, v := range h.Slice {
+		if !hexadecimalRegex.MatchString(v) {
+			errs = append(errs, NewError("Slice", "hexadecimal"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
 func (h *HexcolorValidate) Validate() (errs ValidationErrors) {
 
 	if !hexcolorRegex.MatchString(h.Hexcolor) {
