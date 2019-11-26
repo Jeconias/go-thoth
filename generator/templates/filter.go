@@ -373,6 +373,12 @@ func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string)
 			Tag:   input.Tag,
 			Ref:   input.Ref,
 		})
+	case "ssn":
+		validation.IsSSN(_buffer, &validation.IsSSNInput{
+			Field: input.Field,
+			Tag:   input.Tag,
+			Ref:   input.Ref,
+		})
 	case "ip":
 		validation.IsIP(_buffer, &validation.IsIPInput{
 			Field: input.Field,

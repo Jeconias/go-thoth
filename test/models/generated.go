@@ -1825,6 +1825,25 @@ func (r *RGBAValidate) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (s *SSNValidate) Validate() (errs ValidationErrors) {
+
+	if !isSSN(s.SSN) {
+		errs = append(errs, NewError("SSN", "ssn"))
+	}
+
+	if s.Pointer == nil || !isSSN(*s.Pointer) {
+		errs = append(errs, NewError("Pointer", "ssn"))
+	}
+
+	for _, v := range s.Slice {
+		if !isSSN(v) {
+			errs = append(errs, NewError("Slice", "ssn"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
 func (u *URIValidate) Validate() (errs ValidationErrors) {
 
 	if !isURI(u.URI) {
