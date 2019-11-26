@@ -369,6 +369,44 @@ func (h *HexcolorValidate) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (h *HostnameRFC952Validate) Validate() (errs ValidationErrors) {
+
+	if !hostnameRegexRFC952.MatchString(h.HostnameRFC952) {
+		errs = append(errs, NewError("HostnameRFC952", "hostname"))
+	}
+
+	if h.Pointer == nil || !hostnameRegexRFC952.MatchString(*h.Pointer) {
+		errs = append(errs, NewError("Pointer", "hostname"))
+	}
+
+	for _, v := range h.Slice {
+		if !hostnameRegexRFC952.MatchString(v) {
+			errs = append(errs, NewError("Slice", "hostname"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (h *HostnameRFC1123Validate) Validate() (errs ValidationErrors) {
+
+	if !hostnameRegexRFC1123.MatchString(h.HostnameRFC1123) {
+		errs = append(errs, NewError("HostnameRFC1123", "hostname_rfc1123"))
+	}
+
+	if h.Pointer == nil || !hostnameRegexRFC1123.MatchString(*h.Pointer) {
+		errs = append(errs, NewError("Pointer", "hostname_rfc1123"))
+	}
+
+	for _, v := range h.Slice {
+		if !hostnameRegexRFC1123.MatchString(v) {
+			errs = append(errs, NewError("Slice", "hostname_rfc1123"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
 func (h *HSLValidate) Validate() (errs ValidationErrors) {
 
 	if !hslRegex.MatchString(h.HSL) {

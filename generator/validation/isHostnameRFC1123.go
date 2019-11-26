@@ -1,7 +1,6 @@
 package validation
 
 import (
-	"fmt"
 	"io"
 
 	myasthurts "github.com/lab259/go-my-ast-hurts"
@@ -17,10 +16,21 @@ type IsHostnameRFC1123Input struct {
 
 // IsHostnameRFC1123 TODO
 func IsHostnameRFC1123(_buffer io.StringWriter, input *IsHostnameRFC1123Input) {
-	rules.RenderCondition(
-		_buffer,
-		fmt.Sprintf("isHostnameRFC1123(%s)", input.Ref),
-		input.Field,
-		input.Tag,
-	)
+	condition, isLoop := isRegex("hostnameRegexRFC1123", input.Field, input.Ref, "hostname")
+	if isLoop {
+		rules.RenderLoop(
+			_buffer,
+			condition,
+			input.Ref,
+			input.Field,
+			input.Tag,
+		)
+	} else {
+		rules.RenderCondition(
+			_buffer,
+			condition,
+			input.Field,
+			input.Tag,
+		)
+	}
 }
