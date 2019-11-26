@@ -1,7 +1,6 @@
 package validation
 
 import (
-	"fmt"
 	"io"
 
 	myasthurts "github.com/lab259/go-my-ast-hurts"
@@ -17,10 +16,21 @@ type IsHTMLEncodedInput struct {
 
 // IsHTMLEncoded TODO
 func IsHTMLEncoded(_buffer io.StringWriter, input *IsHTMLEncodedInput) {
-	rules.RenderCondition(
-		_buffer,
-		fmt.Sprintf("isHTMLEncoded(%s)", input.Ref),
-		input.Field,
-		input.Tag,
-	)
+	condition, isLoop := isRegex("hTMLEncodedRegex", input.Field, input.Ref, "html_encoded")
+	if isLoop {
+		rules.RenderLoop(
+			_buffer,
+			condition,
+			input.Ref,
+			input.Field,
+			input.Tag,
+		)
+	} else {
+		rules.RenderCondition(
+			_buffer,
+			condition,
+			input.Field,
+			input.Tag,
+		)
+	}
 }
