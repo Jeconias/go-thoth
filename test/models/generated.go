@@ -314,6 +314,25 @@ func (f *FileValidate) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (f *FQDNValidate) Validate() (errs ValidationErrors) {
+
+	if !isFQDN(f.FQDN) {
+		errs = append(errs, NewError("FQDN", "fqdn"))
+	}
+
+	if f.Pointer == nil || !isFQDN(*f.Pointer) {
+		errs = append(errs, NewError("Pointer", "fqdn"))
+	}
+
+	for _, v := range f.Slice {
+		if !isFQDN(v) {
+			errs = append(errs, NewError("Slice", "fqdn"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
 func (g *GtValidate) Validate() (errs ValidationErrors) {
 
 	if len(g.Name) < 5 {
