@@ -1,7 +1,6 @@
 package validation
 
 import (
-	"fmt"
 	"io"
 
 	myasthurts "github.com/lab259/go-my-ast-hurts"
@@ -17,10 +16,21 @@ type IsURLEncodedInput struct {
 
 // IsURLEncoded TODO
 func IsURLEncoded(_buffer io.StringWriter, input *IsURLEncodedInput) {
-	rules.RenderCondition(
-		_buffer,
-		fmt.Sprintf("isURLEncoded(%s)", input.Ref),
-		input.Field,
-		input.Tag,
-	)
+	condition, isLoop := isRegex("uRLEncodedRegex", input.Field, input.Ref, "url_encoded")
+	if isLoop {
+		rules.RenderLoop(
+			_buffer,
+			condition,
+			input.Ref,
+			input.Field,
+			input.Tag,
+		)
+	} else {
+		rules.RenderCondition(
+			_buffer,
+			condition,
+			input.Field,
+			input.Tag,
+		)
+	}
 }

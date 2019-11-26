@@ -471,6 +471,44 @@ func (h *HSLAValidate) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (h *HTMLValidate) Validate() (errs ValidationErrors) {
+
+	if !hTMLRegex.MatchString(h.HTML) {
+		errs = append(errs, NewError("HTML", "html"))
+	}
+
+	if h.Pointer == nil || !hTMLRegex.MatchString(*h.Pointer) {
+		errs = append(errs, NewError("Pointer", "html"))
+	}
+
+	for _, v := range h.Slice {
+		if !hTMLRegex.MatchString(v) {
+			errs = append(errs, NewError("Slice", "html"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (h *HTMLEncodedValidate) Validate() (errs ValidationErrors) {
+
+	if !hTMLEncodedRegex.MatchString(h.HTMLEncoded) {
+		errs = append(errs, NewError("HTMLEncoded", "html_encoded"))
+	}
+
+	if h.Pointer == nil || !hTMLEncodedRegex.MatchString(*h.Pointer) {
+		errs = append(errs, NewError("Pointer", "html_encoded"))
+	}
+
+	for _, v := range h.Slice {
+		if !hTMLEncodedRegex.MatchString(v) {
+			errs = append(errs, NewError("Slice", "html_encoded"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
 func (i *IPValidate) Validate() (errs ValidationErrors) {
 
 	if !isIP(i.IP) {
@@ -1819,6 +1857,25 @@ func (u *URLValidate) Validate() (errs ValidationErrors) {
 	for _, v := range u.Slice {
 		if !isURL(v) {
 			errs = append(errs, NewError("Slice", "url"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (u *URLEncodedValidate) Validate() (errs ValidationErrors) {
+
+	if !uRLEncodedRegex.MatchString(u.URLEncoded) {
+		errs = append(errs, NewError("URLEncoded", "url_encoded"))
+	}
+
+	if u.Pointer == nil || !uRLEncodedRegex.MatchString(*u.Pointer) {
+		errs = append(errs, NewError("Pointer", "url_encoded"))
+	}
+
+	for _, v := range u.Slice {
+		if !uRLEncodedRegex.MatchString(v) {
+			errs = append(errs, NewError("Slice", "url_encoded"))
 		}
 	}
 	return errs
