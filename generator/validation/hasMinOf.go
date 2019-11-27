@@ -19,7 +19,7 @@ type HasMinOfInput struct {
 func HasMinOf(_buffer io.StringWriter, input *HasMinOfInput, args ...string) {
 	rules.RenderCondition(
 		_buffer,
-		isCompare(&IsCompareInput{
+		isCompare(&ValidateInput{
 			Field: input.Field,
 			Tag:   input.Tag,
 			Ref:   input.Ref,

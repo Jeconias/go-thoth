@@ -1,7 +1,6 @@
 package validation
 
 import (
-	"fmt"
 	"io"
 
 	myasthurts "github.com/lab259/go-my-ast-hurts"
@@ -17,10 +16,21 @@ type IsUnixAddrResolvableInput struct {
 
 // IsUnixAddrResolvable TODO
 func IsUnixAddrResolvable(_buffer io.StringWriter, input *IsUnixAddrResolvableInput) {
-	rules.RenderCondition(
-		_buffer,
-		fmt.Sprintf("isUnixAddrResolvable(%s)", input.Ref),
-		input.Field,
-		input.Tag,
-	)
+	condition, isLoop := isFunc("isUnixAddrResolvable", input.Field, input.Ref, "unix_addr")
+	if isLoop {
+		rules.RenderLoop(
+			_buffer,
+			condition,
+			input.Ref,
+			input.Field,
+			input.Tag,
+		)
+	} else {
+		rules.RenderCondition(
+			_buffer,
+			condition,
+			input.Field,
+			input.Tag,
+		)
+	}
 }

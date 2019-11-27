@@ -19,7 +19,7 @@ type HasMaxOfInput struct {
 func HasMaxOf(_buffer io.StringWriter, input *HasMaxOfInput, args ...string) {
 	rules.RenderCondition(
 		_buffer,
-		isCompare(&IsCompareInput{
+		isCompare(&ValidateInput{
 			Field: input.Field,
 			Tag:   input.Tag,
 			Ref:   input.Ref,

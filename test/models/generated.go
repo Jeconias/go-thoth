@@ -1066,6 +1066,23 @@ func (n *NeString) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (o *OmitemptyValidate) Validate() (errs ValidationErrors) {
+
+	if !Empty(len(o.OmitEmptyString)) && !(len(o.OmitEmptyString) <= 5 && len(o.OmitEmptyString) >= 5) {
+		errs = append(errs, NewError("OmitEmptyString", "[min = 5] ~ [max = 5]"))
+	}
+
+	if !IsInt(o.OmitEmptyInt) && !(o.OmitEmptyInt <= 5 && o.OmitEmptyInt >= 5) {
+		errs = append(errs, NewError("OmitEmptyInt", "[min = 5] ~ [max = 5]"))
+	}
+
+	if !Empty(len(o.OmitEmptySliceString)) && !(len(o.OmitEmptySliceString) <= 1) {
+		errs = append(errs, NewError("OmitEmptySliceString", "[min = 1]"))
+	}
+	return errs
+}
+
+// Validate TODO
 func (r *RequiredChanString) Validate() (errs ValidationErrors) {
 	if Empty(len(r.ChanString)) {
 		errs = append(errs, NewError("ChanString", "required"))
@@ -2009,6 +2026,25 @@ func (u *UDP6AddrValidate) Validate() (errs ValidationErrors) {
 	for _, v := range u.Slice {
 		if !isUDP6AddrResolvable(v) {
 			errs = append(errs, NewError("Slice", "udp6_addr"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
+func (u *UNIXAddrValidate) Validate() (errs ValidationErrors) {
+
+	if !isUnixAddrResolvable(u.UNIXAddr) {
+		errs = append(errs, NewError("UNIXAddr", "unix_addr"))
+	}
+
+	if u.Pointer == nil || !isUnixAddrResolvable(*u.Pointer) {
+		errs = append(errs, NewError("Pointer", "unix_addr"))
+	}
+
+	for _, v := range u.Slice {
+		if !isUnixAddrResolvable(v) {
+			errs = append(errs, NewError("Slice", "unix_addr"))
 		}
 	}
 	return errs

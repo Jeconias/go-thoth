@@ -32,6 +32,12 @@ func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string)
 	switch input.Tag.Value {
 	case "-":
 		// Skip field...
+	case "omitempty":
+		validation.Omitempty(_buffer, &validation.OmitemptyInput{
+			Field: input.Field,
+			Tag:   input.Tag,
+			Ref:   input.Ref,
+		})
 	case "required":
 		validation.HasValue(_buffer, &validation.RequiredInput{
 			Field: input.Field,
@@ -117,7 +123,7 @@ func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string)
 		}
 	case "lt":
 		if len(args) == 1 {
-			validation.IsCompare(_buffer, &validation.IsCompareInput{
+			validation.IsCompare(_buffer, &validation.ValidateInput{
 				Field: input.Field,
 				Tag:   input.Tag,
 				Ref:   input.Ref,
@@ -126,7 +132,7 @@ func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string)
 		}
 	case "lte":
 		if len(args) == 1 {
-			validation.IsCompare(_buffer, &validation.IsCompareInput{
+			validation.IsCompare(_buffer, &validation.ValidateInput{
 				Field: input.Field,
 				Tag:   input.Tag,
 				Ref:   input.Ref,
@@ -135,7 +141,7 @@ func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string)
 		}
 	case "gt":
 		if len(args) == 1 {
-			validation.IsCompare(_buffer, &validation.IsCompareInput{
+			validation.IsCompare(_buffer, &validation.ValidateInput{
 				Field: input.Field,
 				Tag:   input.Tag,
 				Ref:   input.Ref,
@@ -144,7 +150,7 @@ func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string)
 		}
 	case "gte":
 		if len(args) == 1 {
-			validation.IsCompare(_buffer, &validation.IsCompareInput{
+			validation.IsCompare(_buffer, &validation.ValidateInput{
 				Field: input.Field,
 				Tag:   input.Tag,
 				Ref:   input.Ref,
@@ -524,22 +530,14 @@ func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string)
 			Ref:   input.Ref,
 		})
 	default:
-		// TODO: (@edumarcal) to fix not match rule
-		k, v := splitArgs(input.Tag)
-		input.Tag.Value = k
-		filterValidate(_buffer, input, v...)
-	}
-}
+		args := strings.Split(input.Tag.Value, "=")
 
-func splitArgs(tag myasthurts.TagParam) (string, []string) {
-	args := strings.Split(tag.Value, "=")
-	switch len(args) {
-	case 1:
-		return args[0], args[1:]
-	case 2:
-		v := strings.Split(args[1], " ")
-		return args[0], v
-	default:
-		return "", nil
+		// Set rule tag
+		input.Tag.Value = args[0]
+
+		// Split values
+		values := strings.Split(args[1], " ")
+
+		filterValidate(_buffer, input, values...)
 	}
 }

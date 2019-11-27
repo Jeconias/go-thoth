@@ -18,7 +18,7 @@ type IsCompareInput struct {
 }
 
 // IsCompare TODO
-func IsCompare(_buffer io.StringWriter, input *IsCompareInput, op string, rule string) {
+func IsCompare(_buffer io.StringWriter, input *ValidateInput, op string, rule string) {
 	rules.RenderCondition(
 		_buffer,
 		isCompare(input, op, rule),
@@ -27,7 +27,7 @@ func IsCompare(_buffer io.StringWriter, input *IsCompareInput, op string, rule s
 	)
 }
 
-func isCompare(input *IsCompareInput, op string, rule string) (condition string) {
+func isCompare(input *ValidateInput, op string, rule string) (condition string) {
 	switch input.Field.RefType.Name() {
 	case "string":
 		switch input.Field.RefType.(type) {

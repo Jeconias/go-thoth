@@ -1,0 +1,9 @@
+@{
+	var condition string
+	var field string
+	var tag string
+-}
+
+@:if @raw(condition) {
+	errs = append(errs, NewError("@field", "@tag"))
+}
