@@ -115,6 +115,25 @@ func (c *CIDRv6Validate) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (d *DataURIValidate) Validate() (errs ValidationErrors) {
+
+	if !isDataURI(d.DataURI) {
+		errs = append(errs, NewError("DataURI", "datauri"))
+	}
+
+	if d.Pointer == nil || !isDataURI(*d.Pointer) {
+		errs = append(errs, NewError("Pointer", "datauri"))
+	}
+
+	for _, v := range d.Slice {
+		if !isDataURI(v) {
+			errs = append(errs, NewError("Slice", "datauri"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
 func (d *DirValidate) Validate() (errs ValidationErrors) {
 
 	if !isDir(d.Dir) {
