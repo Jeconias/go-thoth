@@ -134,6 +134,28 @@ func (d *DirValidate) Validate() (errs ValidationErrors) {
 }
 
 // Validate TODO
+func (d *DiveValidate) Validate() (errs ValidationErrors) {
+	for _, v := range d.SliceString {
+		if Empty(len(v)) {
+			errs = append(errs, NewError("SliceString", "dive"))
+		}
+	}
+
+	for _, v := range d.SliceInt {
+		if IsInt(v) {
+			errs = append(errs, NewError("SliceInt", "dive"))
+		}
+	}
+
+	for _, v := range d.MapStringToString {
+		if Empty(len(v)) {
+			errs = append(errs, NewError("MapStringToString", "dive"))
+		}
+	}
+	return errs
+}
+
+// Validate TODO
 func (e *EmailValidate) Validate() (errs ValidationErrors) {
 
 	if !emailRegex.MatchString(e.Email) {

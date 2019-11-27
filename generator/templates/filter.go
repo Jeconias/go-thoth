@@ -38,6 +38,12 @@ func filterValidate(_buffer io.StringWriter, input *FilterInput, args ...string)
 			Tag:   input.Tag,
 			Ref:   input.Ref,
 		})
+	case "dive":
+		validation.Dive(_buffer, &validation.ValidateInput{
+			Field: input.Field,
+			Tag:   input.Tag,
+			Ref:   input.Ref,
+		})
 	case "required":
 		validation.HasValue(_buffer, &validation.RequiredInput{
 			Field: input.Field,
