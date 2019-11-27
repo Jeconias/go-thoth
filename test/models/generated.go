@@ -1079,6 +1079,10 @@ func (o *OmitemptyValidate) Validate() (errs ValidationErrors) {
 	if !Empty(len(o.OmitEmptySliceString)) && !(len(o.OmitEmptySliceString) <= 1) {
 		errs = append(errs, NewError("OmitEmptySliceString", "[min = 1]"))
 	}
+
+	if !Empty(len(o.OmitEmptySliceInt)) {
+		errs = append(errs, NewError("OmitEmptySliceInt", "omitempty"))
+	}
 	return errs
 }
 

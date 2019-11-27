@@ -43,6 +43,10 @@ func required(field *myasthurts.Field, ref string) (condition string) {
 			condition = fmt.Sprintf("IsInt(%s)", ref)
 			rules.MapCondition[ref] = fmt.Sprintf("! IsInt(%s)", ref)
 			return
+		case *myasthurts.ArrayRefType, *myasthurts.ChanRefType:
+			condition = fmt.Sprintf(`Empty(len(%s))`, ref)
+			rules.MapCondition[ref] = condition
+			return
 		}
 	case "bool":
 		switch field.RefType.(type) {

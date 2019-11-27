@@ -93,4 +93,17 @@ var _ = Describe("Omitempty", func() {
 		Expect(errs[0].Tag()).To(Equal("[min = 1]"))
 	})
 
+	It("should fail to validate when field `OmitEmptySliceInt` not is empty", func() {
+		m := models.OmitemptyValidate{
+			OmitEmptyString:      s,
+			OmitEmptyInt:         5,
+			OmitEmptySliceString: strSlice,
+			OmitEmptySliceInt:    []int{1, 23, 4},
+		}
+
+		errs := m.Validate()
+		Expect(errs).To(HaveLen(1))
+		Expect(errs[0].Tag()).To(Equal("omitempty"))
+	})
+
 })

@@ -51,11 +51,15 @@ func Omitempty(_buffer io.StringWriter, input *OmitemptyInput) {
 		}
 	}
 
-	exp := fmt.Sprintf("!%s", required(input.Field, input.Ref))
-	preCondition := fmt.Sprintf("!(%s)", strings.Join(expressions, " && "))
-	condition := fmt.Sprintf("%s && %s", exp, preCondition)
+	condition := fmt.Sprintf("!%s", required(input.Field, input.Ref))
 
-	tagValue = strings.Join(values, " ~ ")
+	if len(expressions) > 0 {
+		preCondition := fmt.Sprintf("!(%s)", strings.Join(expressions, " && "))
+		condition = fmt.Sprintf("%s && %s", condition, preCondition)
+		tagValue = strings.Join(values, " ~ ")
+	} else {
+		tagValue = "omitempty"
+	}
+
 	rules.RenderConditionWithValue(_buffer, condition, input.Field.Name, tagValue)
-	// rules.RenderCondition(_buffer, condition, input.Field, input.Tag)
 }
